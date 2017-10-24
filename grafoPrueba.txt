@@ -1,0 +1,31 @@
+TOPOLOGIAS
+buscar SNDLIB
+estan todas las topologias
+
+Todos los proyectos apuntas a "G:"
+El proyecto para algoritmo genético es el GA, desde el GA se llama al RMLSA para busar la ruta mas corta.
+Dentro del directorio "G:\Genetico\ga\src\ga\archivos\tipoRed\moga1" estan los archivos de parámetros para el GA
+y las "K" demandas solicitadas.
+Para generar las rutas mas cortas correr el proyecto de Ivan para gnerar los GA del proyecto de ysapy
+
+PREGUNTAR A YSAPY
+En la línea 575/576 porque resta -3 en el punto de cruce 1 
+y porque resta -2 en el punto de cruce 2
+
+Y la línea 598 porque le suma 1
+
+
+
+BPSK = 2000 km
+
+QPSK = 1000 km
+
+8QAM =  500 km
+
+R1 (A, C, 50 Gbps) 
+R2 (B, D, 35 Gbps)
+R3 (A, E, 100 Gbps)
+
+R1 (A-B-C, 700 km)
+R2 (B-C-D, 500 km)
+R3 (A-B-C-D-E, 1300 km)

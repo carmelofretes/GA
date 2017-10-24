@@ -1,0 +1,84 @@
+
+Solucion numero: 1
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99808.0
+Fitness: 1.814855975038412
+
+
+Solucion numero: 2
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99542.0
+Fitness: 1.812195975038412
+
+
+Solucion numero: 3
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99459.0
+Fitness: 1.8113659750384121
+
+
+Solucion numero: 4
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 98987.0
+Fitness: 1.806645975038412
+
+
+Solucion numero: 5
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 98992.0
+Fitness: 1.8066959750384122
+
+
+Solucion numero: 6
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99067.0
+Fitness: 1.8074459750384122
+
+
+Solucion numero: 7
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 97670.0
+Fitness: 1.7934759750384122
+
+
+Solucion numero: 8
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 98434.0
+Fitness: 1.801115975038412
+
+
+Solucion numero: 9
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99122.0
+Fitness: 1.807995975038412
+
+
+Solucion numero: 10
+Cantidad de bloqueados: 0
+Costo: 2.26841E7
+Distancia: 453682.0
+Espectro Mayor: 99340.0
+Fitness: 1.8101759750384119
+
+
+Tiempo inicial: 9:27:3
+Tiempo final: 10:12:13
+Diferencia: 1:-15:10
