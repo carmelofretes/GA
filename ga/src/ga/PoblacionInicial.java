@@ -1096,54 +1096,57 @@ public class PoblacionInicial {
         //poblacionActual.addAll(solucionesCompletas);
         
         int indiceSolucionNoDominada = -1;
-        boolean solucionNoDominada = true ;
+        boolean solucionDominada = true ;
         int grupoPareto = 0;
     
         while (!solucionesParetoAux.isEmpty()) {
             if (solucionesParetoAux.size() != 1) {
-                for (int i = 0; i < solucionesParetoAux.size(); i++) {
-                    for (int j = 0; j < solucionesParetoAux.size(); j++) {
+                for (int i = 0; i < solucionesParetoAux.size(); i++) {  //aqui recorro mi población tomo 1 y comparo con el resto
+                    solucionDominada = true;
+                    for (int j = 0; j < solucionesParetoAux.size(); j++) { //aqui recorro y comparo con el anterior
                         if (i != j) {
-                            if (solucionesParetoAux.get(i).getCosto() <= solucionesParetoAux.get(j).getCosto() &&
-                                solucionesParetoAux.get(i).getSaltos() <= solucionesParetoAux.get(j).getSaltos() &&
-                                solucionesParetoAux.get(i).getEspectro() <= solucionesParetoAux.get(j).getEspectro() &&
-                                (solucionesParetoAux.get(i).getCosto() < solucionesParetoAux.get(j).getCosto() ||
-                                solucionesParetoAux.get(i).getSaltos() < solucionesParetoAux.get(j).getSaltos() ||
-                                solucionesParetoAux.get(i).getEspectro() < solucionesParetoAux.get(j).getEspectro())) {
-                                //ENTONCES LA SOLUCION DADA ES NO DOMINADA POR SU PAR SIGUIENTE
-                                //solucionesCompletas.get(i).setPareto(grupoPareto);    
-                                indiceSolucionNoDominada = i;
-                                solucionNoDominada = true;
-                                solucionesParetoAux.get(i).setPareto(grupoPareto);                           
+                            Double vEspectroj = solucionesParetoAux.get(j).getEspectro();
+                            Double vEspectroi = solucionesParetoAux.get(i).getEspectro();
+                            
+                            if (solucionesParetoAux.get(j).getCosto() <= solucionesParetoAux.get(i).getCosto() &&
+                                solucionesParetoAux.get(j).getSaltos() <= solucionesParetoAux.get(i).getSaltos() &&
+                                solucionesParetoAux.get(j).getEspectro() <= solucionesParetoAux.get(i).getEspectro() &&
+                                (solucionesParetoAux.get(j).getCosto() < solucionesParetoAux.get(i).getCosto() ||
+                                solucionesParetoAux.get(j).getSaltos() < solucionesParetoAux.get(i).getSaltos() ||
+                                solucionesParetoAux.get(j).getEspectro() < solucionesParetoAux.get(i).getEspectro())) {
+                                //ENTONCES j le domina a i 
+                                solucionDominada = true;
+                                j = solucionesParetoAux.size();
                             }   else {
-                                    //solucionesPareto.remove(indiceSolucionNoDominada);
-                                    solucionNoDominada = false;
-                                    j = solucionesParetoAux.size();
-                                    solucionesParetoAux.get(i).setPareto(-1);
+                                    solucionDominada = false;
                             }
                         } //endif
                     } //endfor j
                     //aqui poner el codigo de asignación final del conjunto de soluciones pareto
-                    if (solucionNoDominada == true) {
+                    if (solucionDominada == false) {
+                        solucionesParetoAux.get(i).setPareto(grupoPareto);
                         poblacionActual.add(solucionesParetoAux.get(i));
-                        i = solucionesParetoAux.size();
+                        indiceSolucionNoDominada = i ;
+                        //AQUI SE APLICA EL RANKEO DE LAS SOLUCIONES
+                        //RANKEAR
+                        //i = solucionesParetoAux.size();
                     }
                 } //endfor i  
+                //aqui ver la manera que una vez que se encuentre en primer grupo del frente de pareto, se excluya
+                // los que forman parte del primer frente
+                //if (solucionDominada == false) {
+                    solucionesParetoAux.remove(indiceSolucionNoDominada);
+                    grupoPareto = grupoPareto + 1;
+                //} 
             } else { 
                 //aqui se inserta el ultimo grupo del conjunto de pareto que sobra
-                if (solucionNoDominada == true) {
+                //if (solucionDominada == true) {
                     indiceSolucionNoDominada = solucionesParetoAux.size()-1 ;
                     solucionesParetoAux.get(solucionesParetoAux.size()-1).setPareto(grupoPareto);
                     poblacionActual.add(solucionesParetoAux.get(solucionesParetoAux.size()-1)); 
-                }
+                    solucionesParetoAux.remove(indiceSolucionNoDominada);
+                //}
             } 
-            //aqui ver la manera que una vez que se encuentre en primer grupo del frente de pareto, se excluya
-            // los que forman parte del primer frente
-            if (solucionNoDominada == true) {
-                solucionesParetoAux.remove(indiceSolucionNoDominada);
-                grupoPareto = grupoPareto + 1;
-            }
-           // solucionesPareto.get(indiceSolucionNoDominada).setPareto(indiceSolucionNoDominada);
         }
         
     }
