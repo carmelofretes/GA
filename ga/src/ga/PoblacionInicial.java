@@ -469,7 +469,8 @@ public class PoblacionInicial {
 
         if (k == 1) {
             conjuntoPareto(poblacionActual);
-            return poblacionInicial;
+            return poblacionActual;
+            //return poblacionInicial;
         }
 
         int v = 1;
@@ -545,7 +546,6 @@ public class PoblacionInicial {
             // para el resto de mi poblacion nueva, cruzar el resto de las soluciones de la poblacion vieja
             elegirMejores (poblacionActual, aux, poblacionNueva);
             conjuntoPareto(poblacionActual);
-
 
             TFin = System.currentTimeMillis();
             v++;
@@ -1028,6 +1028,7 @@ public class PoblacionInicial {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
 
+            Collections.sort(conjuntoSoluciones);
             for (i = 0; i < conjuntoSoluciones.size(); i++) {
                 solucionNumero = i + 1;
                 wr.write("\nSolucion numero: " + solucionNumero);
@@ -1102,7 +1103,7 @@ public class PoblacionInicial {
         while (!solucionesParetoAux.isEmpty()) {
             if (solucionesParetoAux.size() != 1) {
                 for (int i = 0; i < solucionesParetoAux.size(); i++) {  //aqui recorro mi población tomo 1 y comparo con el resto
-                    if (solucionesParetoAux.get(i).getCantBloq() == 0) { ;
+                    //if (solucionesParetoAux.get(i).getCantBloq() == 0) { ;
                         solucionDominada = true;
                         for (int j = 0; j < solucionesParetoAux.size(); j++) { //aqui recorro y comparo con el anterior
                             if (i != j) {
@@ -1122,7 +1123,7 @@ public class PoblacionInicial {
                                 }   
                             } //endif
                         } //endfor j
-                    }    
+                    //}    
                     //aqui poner el codigo de asignación final del conjunto de soluciones pareto
                     if (solucionDominada == false) {
                         solucionesParetoAux.get(i).setPareto(grupoPareto);
@@ -1149,7 +1150,6 @@ public class PoblacionInicial {
                 //}
             } 
         }
-        
     }
 }
 
