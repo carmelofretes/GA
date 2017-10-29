@@ -1102,26 +1102,27 @@ public class PoblacionInicial {
         while (!solucionesParetoAux.isEmpty()) {
             if (solucionesParetoAux.size() != 1) {
                 for (int i = 0; i < solucionesParetoAux.size(); i++) {  //aqui recorro mi población tomo 1 y comparo con el resto
-                    solucionDominada = true;
-                    for (int j = 0; j < solucionesParetoAux.size(); j++) { //aqui recorro y comparo con el anterior
-                        if (i != j) {
-                            Double vEspectroj = solucionesParetoAux.get(j).getEspectro();
-                            Double vEspectroi = solucionesParetoAux.get(i).getEspectro();
-                            
-                            if (solucionesParetoAux.get(j).getCosto() <= solucionesParetoAux.get(i).getCosto() &&
-                                solucionesParetoAux.get(j).getSaltos() <= solucionesParetoAux.get(i).getSaltos() &&
-                                solucionesParetoAux.get(j).getEspectro() <= solucionesParetoAux.get(i).getEspectro() &&
-                                (solucionesParetoAux.get(j).getCosto() < solucionesParetoAux.get(i).getCosto() ||
-                                solucionesParetoAux.get(j).getSaltos() < solucionesParetoAux.get(i).getSaltos() ||
-                                solucionesParetoAux.get(j).getEspectro() < solucionesParetoAux.get(i).getEspectro())) {
-                                //ENTONCES j le domina a i 
-                                solucionDominada = true;
-                                j = solucionesParetoAux.size();
-                            }   else {
-                                    solucionDominada = false;
-                            }
-                        } //endif
-                    } //endfor j
+                    if (solucionesParetoAux.get(i).getCantBloq() == 0) { ;
+                        solucionDominada = true;
+                        for (int j = 0; j < solucionesParetoAux.size(); j++) { //aqui recorro y comparo con el anterior
+                            if (i != j) {
+                                Double vEspectroj = solucionesParetoAux.get(j).getEspectro();
+                                Double vEspectroi = solucionesParetoAux.get(i).getEspectro();
+                                if (solucionesParetoAux.get(j).getCosto() <= solucionesParetoAux.get(i).getCosto() &&
+                                    solucionesParetoAux.get(j).getSaltos() <= solucionesParetoAux.get(i).getSaltos() &&
+                                    solucionesParetoAux.get(j).getEspectro() <= solucionesParetoAux.get(i).getEspectro() &&
+                                    (solucionesParetoAux.get(j).getCosto() < solucionesParetoAux.get(i).getCosto() ||
+                                    solucionesParetoAux.get(j).getSaltos() < solucionesParetoAux.get(i).getSaltos() ||
+                                    solucionesParetoAux.get(j).getEspectro() < solucionesParetoAux.get(i).getEspectro())) {
+                                    //ENTONCES j le domina a i 
+                                    solucionDominada = true;
+                                    j = solucionesParetoAux.size();
+                                }   else {
+                                        solucionDominada = false;
+                                }   
+                            } //endif
+                        } //endfor j
+                    }    
                     //aqui poner el codigo de asignación final del conjunto de soluciones pareto
                     if (solucionDominada == false) {
                         solucionesParetoAux.get(i).setPareto(grupoPareto);
