@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by ysapy on 15/02/16.
  */
-public class Solucion {
+public class Solucion implements Comparable<Solucion>{
 
     private List<Ruteo> ruteos;
     private List<Enlace> enlaces;
@@ -55,6 +55,13 @@ public class Solucion {
         this.cantBloq = 0;
         this.fitness = 0.0;
         this.pareto = -1;
+    }
+    
+    @Override
+    public int compareTo(Solucion s) {
+        if (pareto < s.pareto) { return -1; }
+        if (pareto > s.pareto) { return 1 ; }
+        return 0;
     }
 
     public int getCantBloq() {
