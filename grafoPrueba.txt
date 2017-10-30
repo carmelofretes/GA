@@ -14,6 +14,9 @@ y porque resta -2 en el punto de cruce 2
 
 Y la línea 598 porque le suma 1
 
+en el métodp "generarSoluciones", demandas mayores tiene el mayor salto, demandasInfo tiene 2 caminos, 
+el camino con menor salto y el de mayor salto, pero siempre toma el menor camino.
+
 
 
 BPSK = 2000 km
