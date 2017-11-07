@@ -48,7 +48,7 @@ public class PoblacionInicial {
             cantDemandas.add(35);
             cantDemandas.add(100);
             //cantDemandas.add(200);
-            int k = 2;
+            int k = 2;   //Esta es la cantidad de caminos que tiene la demanda.
             int cantCantidadDeDemandas = 3;
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
             String archivoDeMaximos;
@@ -489,8 +489,7 @@ public class PoblacionInicial {
                 hijo2 = new Solucion();
 
 // elegir reproductores aleatoriamente
-// elegir 2 candidatos aleatoriamente, de los 2 candidatos tomar el de mejor fitness para ser un reproductor
-
+// elegir el índice de 2 candidatos aleatoriamente, de los 2 candidatos tomar el de mejor fitness para ser un reproductor
 //PARA EL REPRODUCTOR 1 - elige aleatoriamente
                 while(candidato1 == candidato2){
                     candidato1 = (int)(rnd.nextDouble() * poblacionActual.size());
@@ -544,9 +543,25 @@ public class PoblacionInicial {
 
             // de la poblacion vieja elegir solo las 2 primeras soluciones, las mejores y copiar a nueva poblacion
             // para el resto de mi poblacion nueva, cruzar el resto de las soluciones de la poblacion vieja
-            elegirMejores (poblacionActual, aux, poblacionNueva);
+            // aqui se envían, la poblacionActual, los dos individuos mejores de la poblacionActual que se eligieron
+            // para el cruce, mutación y por último la poblacionNueva (resultado del cruce, mutación)
+            //elegirMejores (poblacionActual, aux, poblacionNueva);
+            //AQUI ARMO R = P U Q
+            poblacionActual.addAll(aux);
+            poblacionActual.addAll(poblacionNueva);
+                 
             conjuntoPareto(poblacionActual);
-
+            Collections.sort(poblacionActual);
+            
+            List<Solucion> auxPoblacionActual = new ArrayList<>();
+            auxPoblacionActual.addAll(poblacionActual);
+            
+            poblacionActual = new ArrayList<>();
+            
+            for (int l = 0; l < cantSolucionesIniciales; l++) {
+                poblacionActual.add(auxPoblacionActual.get(l));
+            }
+            
             TFin = System.currentTimeMillis();
             v++;
         }
@@ -722,21 +737,20 @@ public class PoblacionInicial {
 //AQUI ARMO MI CONJUNTO DE SOLUCIONES R = P u Q       
         solucionesCompletas.addAll(poblacionActual);
         solucionesCompletas.addAll(poblacionNueva);
+        solucionesCompletas.addAll(poblacionResultado);
         
-
-        
-        
-//ESTO YO NO VOY A USAR///////////////////////////////////////////        
- //       ordenarPorBloqueados(solucionesCompletas);
-
         poblacionActual = new ArrayList<>();
         poblacionActual.addAll(solucionesCompletas);
-
+        poblacionResultado = new ArrayList<>();
+        poblacionResultado.addAll(poblacionActual);
+        
+//ESTO YO NO VOY A USAR///////////////////////////////////////////        
+//       ordenarPorBloqueados(solucionesCompletas);
 //        ordenarPorFitness (poblacionActual);
+//       for (int i = 0; i < cantSoluciones; i++) {
+//            poblacionResultado.add(poblacionActual.get(i));
+//        }
 ////////////////////////////////////////////////////////////////
-        for (int i = 0; i < cantSoluciones; i++) {
-            poblacionResultado.add(poblacionActual.get(i));
-        }
 
 //AQUI APLICAR EL RANKEO POR DOMINANCIA DE PARETO
 
@@ -750,12 +764,6 @@ public class PoblacionInicial {
         //2- Clasificacion por distancia de crowding
         //Pa calcular fmaxm, fminm        m= 1,2,3 de Ri
         // Pb Aplicar la formula de distancia de crowding
-        
-        
-        
-        
-        
-        
         
     }
 
@@ -1028,7 +1036,7 @@ public class PoblacionInicial {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
 
-            Collections.sort(conjuntoSoluciones);
+            //Collections.sort(conjuntoSoluciones);
             for (i = 0; i < conjuntoSoluciones.size(); i++) {
                 solucionNumero = i + 1;
                 wr.write("\nSolucion numero: " + solucionNumero);
