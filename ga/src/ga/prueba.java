@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author carmelo
  */
 public class prueba {
+    
     public static void main(String [] args) throws IOException {
-        System.out.println("Aqui creamos la lista:");
+ /*       System.out.println("Aqui creamos la lista:");
         System.out.println("List<String> ejemploLista = new ArrayList<>();");     
         List<Integer> ejemploLista = new ArrayList<>();
             ejemploLista.add(4);
@@ -31,7 +33,13 @@ public class prueba {
         Collections.sort(ejemploLista);
         for (int i = 0; i<=ejemploLista.size() - 1; i++) {
             System.out.println(ejemploLista.get(i));
-        }
+        }*/
+
+        Random rnd = new Random();
+        int numeroRandom = rnd.nextInt(5);
+        int numero = numeroRandom + 1;
+        System.out.println("Número aleatorio: " + numeroRandom + " + 1 = " + numero);
+        
         
     
             

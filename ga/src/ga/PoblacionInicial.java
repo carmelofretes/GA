@@ -44,7 +44,7 @@ public class PoblacionInicial {
         */
 
             List<Integer> cantDemandas = new ArrayList<>();
-            cantDemandas.add(50);
+            cantDemandas.add(50); //escenarios de demandas
             cantDemandas.add(35);
             cantDemandas.add(100);
             //cantDemandas.add(200);
@@ -74,6 +74,7 @@ public class PoblacionInicial {
 
                             TInicio = System.currentTimeMillis();
                             todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1)));
+
                             TFin = System.currentTimeMillis();
 
                             // guardar tambien las rutas y ranuras elegidas
@@ -468,13 +469,14 @@ public class PoblacionInicial {
         TInicio = System.currentTimeMillis();
 
         if (k == 1) {
-            conjuntoPareto(poblacionActual);
+            rankeoPareto(poblacionActual);
             return poblacionActual;
             //return poblacionInicial;
         }
 
         int v = 1;
         TFin = System.currentTimeMillis();
+        //int tiempoLimite = criterioDeParada * 60 * 1000;    //ESTE ES EL ANTERIOR
         int tiempoLimite = criterioDeParada * 60 * 1000;
 
         while ((TFin - TInicio) < tiempoLimite) {
@@ -483,7 +485,7 @@ public class PoblacionInicial {
             aux = new ArrayList<>();
             poblacionNueva = new ArrayList<>();
 
-            for (j = 0; j < poblacionInicial.size()/4; j++){
+            for (j = 0; j < poblacionInicial.size()/4; j++){  //PORQUE DIVIDE ENTRE 4
 
                 hijo1 = new Solucion();
                 hijo2 = new Solucion();
@@ -550,14 +552,15 @@ public class PoblacionInicial {
             poblacionActual.addAll(aux);
             poblacionActual.addAll(poblacionNueva);
                  
-            conjuntoPareto(poblacionActual);
-            Collections.sort(poblacionActual);
+            rankeoPareto(poblacionActual); //AQUI SE SE EL CONJUNTO DE SOLUCIONES QUIEN ES DOMINADO Y QUIEN NO
+            Collections.sort(poblacionActual);  //AQUI SE ORDENA EL COJUNTO ANTERIOR
             
             List<Solucion> auxPoblacionActual = new ArrayList<>();
             auxPoblacionActual.addAll(poblacionActual);
             
             poblacionActual = new ArrayList<>();
             
+            //EN ESTE FOR LO QUE HACEMOS ES SELECCIONAR LOS cantSolucionesIniciales DEL RANKEO POR PARETO
             for (int l = 0; l < cantSolucionesIniciales; l++) {
                 poblacionActual.add(auxPoblacionActual.get(l));
             }
@@ -588,40 +591,50 @@ public class PoblacionInicial {
         Random rnd = new Random();
 
 //AQUI TENGO PROBLEMAS PARA HALLAR EL PUNTO DE CRUCE
-//        int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size() - 3) + 0;
-//        int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 2) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1);
-        int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()) + 0;
-        int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size()) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1);
+//      int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()- 3) + 0;
+//      int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 2) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1);
+        
+        //DESDE AQUI ES DE CARMELO //////////////////////////////////////////////////////////
+        int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()-2); // -2 depende de la cantidad de rutas que haya
+        int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 1) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1) ;
+        // HASTA AQUI /////////////////////////////////////////////////////////////////////
 
+        //////////////////////////////////////////////////////////////////////////////////////
+        //Desde aqui agrego el conjunto de ruteo.         
         for (int i = 0; i <= puntoDeCruce1; i++) {
             ruteo = new Ruteo();
+            //Al ruteo1 le agrego la ruta del reproductor1
+            reproductor1.getRuteos().get(i).clonar(ruteo);
+            ruteo1.add(ruteo);
+            ruteo = new Ruteo();
+            //Al ruteo2 le agrego la ruta del reproductor2
+            reproductor2.getRuteos().get(i).clonar(ruteo);
+            ruteo2.add(ruteo);
+        }
+
+//      for (int i = puntoDeCruce1 + 1; i <= puntoDeCruce2; i++) {    //este es el anterior, porque le suma 1 al punto de cruce 1
+        for (int i = puntoDeCruce1 + 1; i <= puntoDeCruce2; i++) {  //se le suma uno porque tiene que ser la siguiente ruta a partir de pc1          
+            ruteo = new Ruteo();
+            //Al ruteo1 le agrego la ruta del reproductor2
+            reproductor2.getRuteos().get(i).clonar(ruteo);
+            ruteo1.add(ruteo);
+            ruteo = new Ruteo();
+            //Al ruteo2 le agrego la ruta del reproductor1
+            reproductor1.getRuteos().get(i).clonar(ruteo);
+            ruteo2.add(ruteo);
+        }
+
+//      for (int i = puntoDeCruce2 + 1; i < reproductor1.getRuteos().size(); i++) {
+        for (int i = puntoDeCruce2 + 1; i < reproductor1.getRuteos().size(); i++) {
+            ruteo = new Ruteo();
             reproductor1.getRuteos().get(i).clonar(ruteo);
             ruteo1.add(ruteo);
             ruteo = new Ruteo();
             reproductor2.getRuteos().get(i).clonar(ruteo);
             ruteo2.add(ruteo);
         }
-
-//        for (int i = puntoDeCruce1 + 1; i <= puntoDeCruce2; i++) {    //este es el anterior, porque le suma 1 al punto de cruce 1
-        for (int i = puntoDeCruce1; i < puntoDeCruce2; i++) {            
-            ruteo = new Ruteo();
-            reproductor2.getRuteos().get(i).clonar(ruteo);
-            ruteo1.add(ruteo);
-            ruteo = new Ruteo();
-            reproductor1.getRuteos().get(i).clonar(ruteo);
-            ruteo2.add(ruteo);
-        }
-
-//        for (int i = puntoDeCruce2 + 1; i < reproductor1.getRuteos().size(); i++) {
-        for (int i = puntoDeCruce2; i < reproductor1.getRuteos().size(); i++) {
-            ruteo = new Ruteo();
-            reproductor1.getRuteos().get(i).clonar(ruteo);
-            ruteo1.add(ruteo);
-            ruteo = new Ruteo();
-            reproductor2.getRuteos().get(i).clonar(ruteo);
-            ruteo2.add(ruteo);
-        }
-
+        //Hasta aqui agrego las rutas
+        //////////////////////////////////////////////////////////////////////////////////////
         hijo1.setRuteos(ruteo1);
         hijo2.setRuteos(ruteo2);
 
@@ -1096,7 +1109,7 @@ public class PoblacionInicial {
         return costoMayor;
     }
 
-    private static void conjuntoPareto(List<Solucion> poblacionActual) {
+    private static void rankeoPareto(List<Solucion> poblacionActual) {
 
         List<Solucion> solucionesPareto = new ArrayList<>();
         List<Solucion> solucionesParetoAux = new ArrayList<>(poblacionActual);

@@ -1,22 +1,33 @@
+0983 990011 green house
+
 TOPOLOGIAS
 buscar SNDLIB
 estan todas las topologias
 
 Todos los proyectos apuntas a "G:"
-El proyecto para algoritmo genético es el GA, desde el GA se llama al RMLSA para busar la ruta mas corta.
+El proyecto para algoritmo genético es el GA, desde el GA se llama al RMLSA para buscar la ruta mas corta.
 Dentro del directorio "G:\Genetico\ga\src\ga\archivos\tipoRed\moga1" estan los archivos de parámetros para el GA
 y las "K" demandas solicitadas.
 Para generar las rutas mas cortas correr el proyecto de Ivan para gnerar los GA del proyecto de ysapy
 
 PREGUNTAR A YSAPY
-En la línea 575/576 porque resta -3 en el punto de cruce 1 
+linea 126 porque hace el 30% y el 70%
+
+Linea 486 - Porque el tamaño de la poblacion (6) se divide entre 4
+
+En la línea 594/595 porque resta -3 en el punto de cruce 1 
 y porque resta -2 en el punto de cruce 2
 
 Y la línea 598 porque le suma 1
 
-en el métodp "generarSoluciones", demandas mayores tiene el mayor salto, demandasInfo tiene 2 caminos, 
+en el métodO "generarSoluciones", demandas mayores tiene el mayor salto, demandasInfo tiene 2 caminos, 
 el camino con menor salto y el de mayor salto, pero siempre toma el menor camino.
 
+
+
+PREGUNTAS PARA DIEGO
+Cuando K=1, no realiza ningún cruzamiento, mutación,etc; entonces no tengo un conjunto R (R=PuQ), mi poblacionActual(P) es igual a poblacionInicial(Q), 
+entonces, como hago para aplicar la agrupación (conjunto pareto).
 
 
 BPSK = 2000 km
