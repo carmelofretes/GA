@@ -49,7 +49,7 @@ public class PoblacionInicial {
             cantDemandas.add(100);
             //cantDemandas.add(200);
             int k = 2;   //Esta es la cantidad de caminos que tiene la demanda.
-            int cantCantidadDeDemandas = 3;
+            int cantCantidadDeDemandas = 3; // estos son los escenarios
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
             String archivoDeMaximos;
             String pathActual;
@@ -477,9 +477,9 @@ public class PoblacionInicial {
         int v = 1;
         TFin = System.currentTimeMillis();
         //int tiempoLimite = criterioDeParada * 60 * 1000;    //ESTE ES EL ANTERIOR
-        int tiempoLimite = criterioDeParada * 60 * 1000;
+        int tiempoLimite = criterioDeParada * 60 * 120000;
 
-        while ((TFin - TInicio) < tiempoLimite) {
+        while ((TFin - TInicio) < 15000) {
 
 //            System.out.println(v + ". Inicio: " + TInicio + ", Fin: " + TFin + ", Dif: " + (TFin - TInicio) + ", sigue: " + ((TFin - TInicio) < (240000)));
             aux = new ArrayList<>();
@@ -1054,10 +1054,10 @@ public class PoblacionInicial {
                 solucionNumero = i + 1;
                 wr.write("\nSolucion numero: " + solucionNumero);
                 
-                for (int m = 0; m < conjuntoSoluciones.get(m).getRuteos().size(); m++) {
-                    wr.write("\nRutas Seleccionadas: " + conjuntoSoluciones.get(m).getRuteos().get(m).getOriden() + 
-                            "-" + conjuntoSoluciones.get(m).getRuteos().get(m).getDestino());
-                }
+                //for (int m = 0; m < conjuntoSoluciones.get(m).getRuteos().size(); m++) {
+                //    wr.write("\nRutas Seleccionadas: " + conjuntoSoluciones.get(i).getRuteos().get(m).getOriden() + 
+                //            "-" + conjuntoSoluciones.get(i).getRuteos().get(m).getDestino());
+                //}
                 wr.write("\nCantidad de bloqueados: " + conjuntoSoluciones.get(i).getCantBloq());
                 wr.write("\nFitness: " + conjuntoSoluciones.get(i).getFitness());
                 wr.write("\nCosto: " + conjuntoSoluciones.get(i).getCosto());
@@ -1111,7 +1111,7 @@ public class PoblacionInicial {
 
     private static void rankeoPareto(List<Solucion> poblacionActual) {
 
-        List<Solucion> solucionesPareto = new ArrayList<>();
+        List<Integer> solucionesNoDominadas = new ArrayList<>();
         List<Solucion> solucionesParetoAux = new ArrayList<>(poblacionActual);
         
         poblacionActual = new ArrayList<>();
@@ -1149,7 +1149,7 @@ public class PoblacionInicial {
                     if (solucionDominada == false) {
                         solucionesParetoAux.get(i).setPareto(grupoPareto);
                         poblacionActual.add(solucionesParetoAux.get(i));
-                        indiceSolucionNoDominada = i ;
+                        solucionesNoDominadas.add(i) ;
                         //AQUI SE APLICA EL RANKEO DE LAS SOLUCIONES
                         //RANKEAR
                         //i = solucionesParetoAux.size();
@@ -1158,16 +1158,30 @@ public class PoblacionInicial {
                 //aqui ver la manera que una vez que se encuentre en primer grupo del frente de pareto, se excluya
                 // los que forman parte del primer frente
                 //if (solucionDominada == false) {
-                    solucionesParetoAux.remove(indiceSolucionNoDominada);
+                    //solucionesParetoAux.remove(indiceSolucionNoDominada);
                     grupoPareto = grupoPareto + 1;
+                    for (int p = 0; p < solucionesNoDominadas.size(); p++) { //aqui recorro y comparo con el anterior
+                        int indice = solucionesNoDominadas.get(p);
+                        solucionesParetoAux.remove(indice);
+                    }
+                    solucionesNoDominadas = new ArrayList<>(); 
                 //} 
             } else { 
                 //aqui se inserta el ultimo grupo del conjunto de pareto que sobra
                 //if (solucionDominada == true) {
                     indiceSolucionNoDominada = solucionesParetoAux.size()-1 ;
+                    
+                    
                     solucionesParetoAux.get(solucionesParetoAux.size()-1).setPareto(grupoPareto);
                     poblacionActual.add(solucionesParetoAux.get(solucionesParetoAux.size()-1)); 
-                    solucionesParetoAux.remove(indiceSolucionNoDominada);
+
+                    solucionesNoDominadas.add(solucionesParetoAux.size()-1); // -1 porque el tamaño no es igual al índice
+                    for (int p = 0; p < solucionesNoDominadas.size(); p++) { //aqui recorro y comparo con el anterior
+                        solucionesParetoAux.remove(p);
+                    }
+                    solucionesNoDominadas = new ArrayList<>(); 
+
+                    //solucionesParetoAux.remove(indiceSolucionNoDominada);
                 //}
             } 
         }
