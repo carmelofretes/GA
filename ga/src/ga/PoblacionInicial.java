@@ -1165,6 +1165,7 @@ public class PoblacionInicial {
                         solucionesParetoAux.remove(indice);
                     }
                     solucionesNoDominadas = new ArrayList<>(); 
+                    //
                 //} 
             } else { 
                 //aqui se inserta el ultimo grupo del conjunto de pareto que sobra
