@@ -16,6 +16,7 @@ public class Solucion implements Comparable<Solucion>{
     private Double saltos;
     private Double espectro;
     private int pareto;
+    private int indiceRankeo;
 
     public Double getSaltos() {
         return saltos;
@@ -39,6 +40,7 @@ public class Solucion implements Comparable<Solucion>{
         this.cantBloq = cantBloq;
         this.fitness = fitness;
         this.pareto = pareto;
+        this.indiceRankeo = indiceRankeo ;
     }
 
     public Solucion() {
@@ -47,6 +49,7 @@ public class Solucion implements Comparable<Solucion>{
         cantBloq = 0;
         fitness = 0.0;
         pareto = -1;
+        indiceRankeo = -99;
     }
 
     public Solucion (List<Enlace> enlaces){
@@ -55,6 +58,7 @@ public class Solucion implements Comparable<Solucion>{
         this.cantBloq = 0;
         this.fitness = 0.0;
         this.pareto = -1;
+        this.indiceRankeo = -99;
     }
     
     @Override
@@ -112,5 +116,12 @@ public class Solucion implements Comparable<Solucion>{
         this.espectro = espectro;
     }
 
+    public int getIndiceRankeo() {
+        return indiceRankeo;
+    }
+
+    public void setIndiceRankeo(int indiceRankeo) {
+        this.indiceRankeo = indiceRankeo;
+    }    
 
 }
