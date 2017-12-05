@@ -455,11 +455,21 @@ public class PoblacionInicial {
 
         int j, reproductor1, reproductor2, candidato1 = -1, candidato2 = -1;
         Solucion hijo1, hijo2; // inicializar con enlaces con ranuras vacias
-        //Aqui se genera la población inicial
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //AQUI SE GENERA LA POBLACION INICIAL
         List<Solucion> poblacionInicial = generarPoblacionInicial(topologia, cantSolucionesIniciales, totalRanuras, demandasInfo);
-        //----------------------------------------------
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         List<Solucion> poblacionActual = new ArrayList<>();
         poblacionActual.addAll(poblacionInicial);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //AQUI SE DETERMINA EL CONJUNTO DE PARETO DE LA POBLACIÓN INICIAL osea EL CONJUNTO P
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        rankeoPareto(poblacionActual); //AQUI EL CONJUNTO DE SOLUCIONES QUIEN ES DOMINADO Y QUIEN NO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //HASTA AQUI
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         List<Solucion> poblacionNueva;
         List<Solucion> aux ;
         Random rnd = new Random();
@@ -470,6 +480,7 @@ public class PoblacionInicial {
 
         if (k == 1) {
             rankeoPareto(poblacionActual);
+            Collections.sort(poblacionActual);  //AQUI SE ORDENA EL COJUNTO ANTERIOR
             return poblacionActual;
             //return poblacionInicial;
         }
@@ -477,19 +488,34 @@ public class PoblacionInicial {
         int v = 1;
         TFin = System.currentTimeMillis();
         //int tiempoLimite = criterioDeParada * 60 * 1000;    //ESTE ES EL ANTERIOR
-        int tiempoLimite = criterioDeParada * 60 * 120000;
+        int tiempoLimite = criterioDeParada * 60 * 1000;
 
-        while ((TFin - TInicio) < 15000) {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //DESDE AQUI SE HACE EL CRUZAMIENTO Y LA MUTACIÓN
+        //DESDE AQUI SE REALIZA LA ITERACCION DEL AG PARA ENCONTRAR UNA MEJOR SOLUCION, EN ESTE CASO
+        //COMO METODO DE PARADA ES EL TIEMPO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        while ((TFin - TInicio) < tiempoLimite) {
 
 //            System.out.println(v + ". Inicio: " + TInicio + ", Fin: " + TFin + ", Dif: " + (TFin - TInicio) + ", sigue: " + ((TFin - TInicio) < (240000)));
             aux = new ArrayList<>();
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //ESTE OBJETO SOLUCION, ES EL CONJUNTO "Q"
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             poblacionNueva = new ArrayList<>();
 
-            for (j = 0; j < poblacionInicial.size()/4; j++){  //PORQUE DIVIDE ENTRE 4
-
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //EN ESTE FOR LO QUE HAGO ES GENERAR EL CONJUNTO Q HASTA QUE SEA DE TAMAÑO IGUAL AL DE LA POBLACION ACTUAL
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //for (j = 0; j < poblacionInicial.size()/4; j++) {  //PORQUE DIVIDE ENTRE 4 - ESTE ES EL ANTERIOR
+            for (j = 0; j < poblacionActual.size(); j++) {  //PORQUE DIVIDE ENTRE 4
+                
                 hijo1 = new Solucion();
                 hijo2 = new Solucion();
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//AQUI SE HACE LA SELECCIÓN DE LOS PADRES PARA REPRODUCIRSE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // elegir reproductores aleatoriamente
 // elegir el índice de 2 candidatos aleatoriamente, de los 2 candidatos tomar el de mejor fitness para ser un reproductor
 //PARA EL REPRODUCTOR 1 - elige aleatoriamente
@@ -514,10 +540,21 @@ public class PoblacionInicial {
                 } else {
                     reproductor2 = candidato1;
                 }
-                
-//AQUI SE APLICA EL CRUCE
-                cruce (poblacionActual.get(reproductor1), poblacionActual.get(reproductor2), hijo1, hijo2, topologia, totalRanuras, demandasInfo);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
+//HASTA AQUI LA SELECCION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//AQUI SE APLICA EL CRUCE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                cruce (poblacionActual.get(reproductor1), poblacionActual.get(reproductor2), hijo1, hijo2, topologia, totalRanuras, demandasInfo);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASTA AQUI EL CRUCE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                //NO USO
+                /////////////////////////////////////////////////////////////////////////////////////////////////
                 // mantener poblacion actual para comparar con los hijos al final
                 // pero eliminar los reproductores ya elegidos para no repetir
                 aux.add(poblacionActual.get(reproductor1));
@@ -530,45 +567,74 @@ public class PoblacionInicial {
                     poblacionActual.remove(reproductor1);
                     poblacionActual.remove(reproductor2);
                 }
-                
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                //HASTA ACA NO USO
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //AQUI SE REALIZA LA MUTACIÓN
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 mutacion (hijo1, probabilidaMutacion, topologia, totalRanuras, demandasInfo);
                 mutacion (hijo2, probabilidaMutacion, topologia, totalRanuras, demandasInfo);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASTA AQUI LA MUTACION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                //AQUI SE AGREGAR EL HIJO DE LOS REPRODUCTORES A LA POBLACION NUEVA (Q), HASTA QUE EL TAMAÑO SEA
+                //IGUAL A LA POBLACIÓN ACTUAL
+                /////////////////////////////////////////////////////////////////////////////////////////////////
                 poblacionNueva.add(hijo1);
                 poblacionNueva.add(hijo2);
 
                 candidato1 = -1;
                 candidato2 = -1;
+                
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //AQUI SE CONTROLA QUE SI LA POBLACION NUEVA LLEGO AL NUMERO DE POBLACIÓN ACTUAL ENTONCES YA NO HACE FALTA
+                //SEGUIR SELECCIONANDO, CRUZANDO Y MUTANDO
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if (poblacionNueva.size() == poblacionActual.size()) {
+                    j = poblacionActual.size();  //AQUI ASIGNAMOS EL TAMAÑO DE LA POBALCIÓN ACTUAL PARA QUE PUEDA SALIR DEL FOR
+                } 
 
             }
-
             // de la poblacion vieja elegir solo las 2 primeras soluciones, las mejores y copiar a nueva poblacion
             // para el resto de mi poblacion nueva, cruzar el resto de las soluciones de la poblacion vieja
             // aqui se envían, la poblacionActual, los dos individuos mejores de la poblacionActual que se eligieron
             // para el cruce, mutación y por último la poblacionNueva (resultado del cruce, mutación)
-            //elegirMejores (poblacionActual, aux, poblacionNueva);
-            //AQUI ARMO R = P U Q
-            poblacionActual.addAll(aux);
+            // poblacionActual.addAll(aux);
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //AQUI SE HALLA EL CONJUNTO PARETO DEL CONJUNTO Q
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            rankeoPareto(poblacionNueva); //AQUI EL CONJUNTO DE SOLUCIONES QUIEN ES DOMINADO Y QUIEN NO
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //AQUI ARMO R = P U Q - YA RANKEADOS TODAS LAS SOLUCIONES
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             poblacionActual.addAll(poblacionNueva);
-                 
-            rankeoPareto(poblacionActual); //AQUI SE SE EL CONJUNTO DE SOLUCIONES QUIEN ES DOMINADO Y QUIEN NO
-            Collections.sort(poblacionActual);  //AQUI SE ORDENA EL COJUNTO ANTERIOR
+            Collections.sort(poblacionActual);  //AQUI SE ORDENA POR "PARETO" EL COJUNTO ANTERIOR
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //HASTA AQUI
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
             List<Solucion> auxPoblacionActual = new ArrayList<>();
             auxPoblacionActual.addAll(poblacionActual);
             
             poblacionActual = new ArrayList<>();
             
-            //EN ESTE FOR LO QUE HACEMOS ES SELECCIONAR LOS cantSolucionesIniciales DEL RANKEO POR PARETO
-            for (int l = 0; l < cantSolucionesIniciales; l++) {
-                poblacionActual.add(auxPoblacionActual.get(l));
-            }
+            //AQUI APLICAR EL CALCULO DE LA DISTANCIA DE CROWDING, ANTES SELECCIONAR LOS MEJORES DEL PRIMER FRETNE DE PARETO
+            elegirMejores (auxPoblacionActual, cantSolucionesIniciales, poblacionActual);
+            
+           
             
             TFin = System.currentTimeMillis();
             v++;
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //HASTA AQUI
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return poblacionActual;
 
     }
@@ -742,44 +808,213 @@ public class PoblacionInicial {
 //        solucion.setFitness(fitness);
 //    }
 
-    public static void elegirMejores (List<Solucion> poblacionResultado, List<Solucion> poblacionActual, List<Solucion> poblacionNueva) {
-        int cantSoluciones = poblacionActual.size();
-        List<Solucion> solucionesCompletas = new ArrayList<>();
+    public static List<Solucion> elegirMejores (List<Solucion> auxPoblacionActual, int cantSolucionesIniciales, List<Solucion> poblacionActual) {
+            int frente = 0 ;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //AQUI GUARDO EN UN AUXILIAR LA POBLACION R=PuQ, PARA PODER ELEGIR LOS MEJORES EN EL SIGUIENTE FOR
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<Solucion> auxPoblacionR = new ArrayList<>();
+            auxPoblacionR.addAll(auxPoblacionActual);
+            auxPoblacionActual = new ArrayList<>();    //REINICIO LA POBLACION ACTUAL PARA GUARDAR LOS MEJORES    
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
         
-//AQUI ARMO MI CONJUNTO DE SOLUCIONES R = P u Q       
-        solucionesCompletas.addAll(poblacionActual);
-        solucionesCompletas.addAll(poblacionNueva);
-        solucionesCompletas.addAll(poblacionResultado);
-        
-        poblacionActual = new ArrayList<>();
-        poblacionActual.addAll(solucionesCompletas);
-        poblacionResultado = new ArrayList<>();
-        poblacionResultado.addAll(poblacionActual);
-        
-//ESTO YO NO VOY A USAR///////////////////////////////////////////        
-//       ordenarPorBloqueados(solucionesCompletas);
-//        ordenarPorFitness (poblacionActual);
-//       for (int i = 0; i < cantSoluciones; i++) {
-//            poblacionResultado.add(poblacionActual.get(i));
-//        }
-////////////////////////////////////////////////////////////////
+            //CON ESTE FOR LO QUE HAGO ES COPIAR TODOS LOS INDIVIDUOS QUE ESTAN EN EL PRIMER FRENTE DE PARETO
+            for (int l = 0; l < cantSolucionesIniciales; l++) {
+                if (auxPoblacionR.get(l).getPareto() == frente) {
+                    auxPoblacionActual.add(auxPoblacionR.get(l));
+                    auxPoblacionR.get(l).setIndiceRankeo(-99);  // A LOS DEL PRIMER GRUPO SELECCIONADO LE ASIGNO 
+                                                               // -99 PARA LUEGO BORRARLOS
+                }    
+            }
+            //AQUI LO QUE HAGO ES BORRAR TODOS LOS INDIVIDUOS DEL PRIMER GRUPO DE PARETO
+            Iterator<Solucion> it = auxPoblacionR.iterator();
+            while (it.hasNext()) {
+                if (it.next().getIndiceRankeo() == -99) {
+                    it.remove();
+                }    
+            }             
+            frente++;
+        //AQUI PREGUNTO SI LA POBLACION ACTUAL ESTÁ COMPLETA DE ACUERDO A LA CANTIDAD DE SOLUCIONES DESEADA
+        while (auxPoblacionActual.size() != cantSolucionesIniciales) {
+        //LUEGO TENGO QUE SELECCIONAR EL MEJOR INDIVIDUO QUE TENGA MEJOR DISTANCIA DE CROWDING
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //AQUI CALCULO LA DISTANCIA DE CROWDING DE LOS DEMAS FRENTES DE PARETO QUE NO SON EL PRIMER FRENTE
+        //SOLO SE CALCULA LA DISTANCIA POR CADA FRENTE
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+            calcularDistanciaCrowding(auxPoblacionR);  //AQUI ENVIO EN CONJUNTO DE SOLUCIONES EN GRUPO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // HASTA AQUI
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //EN ESTE FOR LO QUE HAGO ES ELEGIR EL MEJOR CROWDING DEL SIGUIENTE FRENTE CON
+            //LA MEJOR DISTANCIA DE CROWDING 
+            for (int s = 0; s < auxPoblacionR.size(); s++) {
+                if (auxPoblacionR.get(s).getPareto() == frente  ) {
+                    auxPoblacionActual.add(auxPoblacionR.get(s)) ;
+                    auxPoblacionR.get(s).setIndiceRankeo(-99);
+                    if (auxPoblacionActual.size() == cantSolucionesIniciales) {
+                        s = auxPoblacionR.size();
+                    }
+                }
+            }        
+        }
+        auxPoblacionR = new ArrayList<>();
+        poblacionActual.addAll(auxPoblacionActual);
 
-//AQUI APLICAR EL RANKEO POR DOMINANCIA DE PARETO
+        return poblacionActual ;
+ 
+    }
+    
+    
+    public static void calcularDistanciaCrowding (List<Solucion> auxPoblacionActual) {
+        
+        List<Solucion> auxPoblacionOrdenada = new ArrayList<>();  //ESTE ARRAY LO CREO PARA TENER UN AUXILIAR DE LA 
+                                                                  //POBLACION ACTUAL
+        List<Solucion> auxFrenteIndividual = new ArrayList<>();   //ESTE ARRAY DE SOLUCIONES LO CREO PARA QUE PUEDA 
+                                                                  //TIRAR EL GRUPO DE UN MISMO CONJUNTO PARETO
 
-            /////////////////////////////////////
-            //seleccionar los mejores por dominancia
-            /////////////////////////////////////
-        //1- clasificar  solucion por dominancia en su conjunto no dominado (R0 < R1 < R2 ... Rn
-        //conjuntoPareto(poblacionResultado);
+        double fMinCos, fMaxCos, fMinSal, fMaxSal, fMinEs, fMaxEs ;
+        double auxCalculoCos, auxCalculoSal, auxCalculoEs ;
+        int grupoPareto = 1 ;
         
+        auxPoblacionOrdenada.addAll(auxPoblacionActual);
+        auxPoblacionActual = new ArrayList<>();
         
-        //2- Clasificacion por distancia de crowding
-        //Pa calcular fmaxm, fminm        m= 1,2,3 de Ri
-        // Pb Aplicar la formula de distancia de crowding
+////////////////////////////////////////////////
+//AQUI TENGO QUE RECORRER EL GRUPO SELECCIONADO     
+        while (!auxPoblacionOrdenada.isEmpty()) {
+            //EN ESTE FOR LO QUE HAGO ES APARTAR EL SIGUIENTE FRENTE DE PARETO PARA HALLAR
+            //LA DISTANCIA DE CROWDING 
+            for (int sFrente = 0; sFrente < auxPoblacionOrdenada.size(); sFrente++) {
+                if (auxPoblacionOrdenada.get(sFrente).getPareto() == grupoPareto  ) {
+                    auxFrenteIndividual.add(auxPoblacionOrdenada.get(sFrente)) ;
+                    auxPoblacionOrdenada.get(sFrente).setIndiceRankeo(-99);
+                }
+            }
+            //AQUI LO QUE HAGO ES BORRAR TODOS LOS INDIVIDUOS DEL GRUPO DE PARETO
+            Iterator<Solucion> it = auxPoblacionOrdenada.iterator();
+            while (it.hasNext()) {
+                if (it.next().getIndiceRankeo() == -99) {
+                    it.remove();
+                }    
+            }            
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //AQUI EMPIEZO EL CALCULO DE LA DISTANCIA DE CROWDING DE TODOS LA POBLACION, EN ESTE CASO PARA 3 OBJETIVOS
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+                for (int e = 0; e < auxFrenteIndividual.size(); e++) {
+                    auxFrenteIndividual.get(e).setPerimetroCuboide(0.0);
+                }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+            //CALCUAR LA DISTANCIA PARA EL OBJETIVO COSTO - OBJETIVO 1
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+            //AQUI ORDENAR EL CONJUNTO DE INDIVIDUOS auxPoblacionOrdenada POR COSTO
+                ordenarPorCosto(auxFrenteIndividual) ;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+               
+                //AQUI SE LE ASIGNA A LOS EXTREMOS EL MAXIMO VALOR DEL OBJETO Double PARA EL OBJETIVO COSTO
+                auxFrenteIndividual.get(0).setPerimetroCuboide(Double.MAX_VALUE);
+                auxFrenteIndividual.get(auxFrenteIndividual.size()-1).setPerimetroCuboide(Double.MAX_VALUE);  
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
         
+                fMinCos = auxFrenteIndividual.get(0).getCosto() ;
+                fMaxCos = auxFrenteIndividual.get(auxFrenteIndividual.size()-1).getCosto() ;
+
+                for (int indiceCos = 1; indiceCos < auxFrenteIndividual.size()-1; indiceCos++) {
+                    auxCalculoCos = Math.abs(auxFrenteIndividual.get(indiceCos + 1).getCosto() - auxFrenteIndividual.get(indiceCos - 1).getCosto());
+                    auxCalculoCos = auxCalculoCos / Math.abs(fMaxCos - fMinCos) ;
+                    auxFrenteIndividual.get(indiceCos).setPerimetroCuboide(auxFrenteIndividual.get(indiceCos).getPerimetroCuboide() + auxCalculoCos) ;
+                }        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //HASTA AQUI OBJETIVO COSTO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //CALCUAR LA DISTANCIA PARA EL OBJETIVO SALTO - OBJETIVO 2
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //AQUI ORDENAR EL CONJUNTO DE INDIVIDUOS auxPoblacionOrdenada POR SALTOS
+                ordenarPorSaltos(auxFrenteIndividual) ;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+       //AQUI SE LE ASIGNA A LOS EXTREMOS EL MAXIMO VALOR DEL OBJETO Double PARA EL OBJETIVO SALTOS
+                auxFrenteIndividual.get(0).setPerimetroCuboide(Double.MAX_VALUE);
+                auxFrenteIndividual.get(auxFrenteIndividual.size()-1).setPerimetroCuboide(Double.MAX_VALUE);  
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                fMinSal = auxFrenteIndividual.get(0).getSaltos() ;
+                fMaxSal = auxFrenteIndividual.get(auxFrenteIndividual.size()-1).getSaltos() ;
+
+                for (int indiceSal = 1; indiceSal < auxFrenteIndividual.size()-1; indiceSal++) {
+                    auxCalculoSal = Math.abs(auxFrenteIndividual.get(indiceSal + 1).getSaltos() - auxFrenteIndividual.get(indiceSal - 1).getSaltos());
+                    auxCalculoSal = auxCalculoSal / Math.abs(fMaxSal - fMinSal) ;
+                    auxFrenteIndividual.get(indiceSal).setPerimetroCuboide(auxFrenteIndividual.get(indiceSal).getPerimetroCuboide() + auxCalculoSal) ;
+                }        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //HASTA AQUI OBJETIVO SALTOS
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //CALCUAR LA DISTANCIA PARA EL OBJETIVO ESPECTRO - OBJETIVO 3
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //AQUI ORDENAR EL CONJUNTO DE INDIVIDUOS auxPoblacionOrdenada POR ESPECTRO
+                ordenarPorEspectro(auxFrenteIndividual) ;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       //AQUI SE LE ASIGNA A LOS EXTREMOS EL MAXIMO VALOR DEL OBJETO Double PARA EL OBJETIVO ESPECTRO
+                auxFrenteIndividual.get(0).setPerimetroCuboide(Double.MAX_VALUE);
+                auxFrenteIndividual.get(auxFrenteIndividual.size()-1).setPerimetroCuboide(Double.MAX_VALUE);  
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+                fMinEs = auxFrenteIndividual.get(0).getEspectro() ;
+                fMaxEs = auxFrenteIndividual.get(auxFrenteIndividual.size()-1).getEspectro() ;
+
+                for (int indiceEs = 1; indiceEs < auxFrenteIndividual.size()-1; indiceEs++) {
+                    auxCalculoEs = Math.abs(auxFrenteIndividual.get(indiceEs + 1).getEspectro() - auxFrenteIndividual.get(indiceEs - 1).getEspectro());
+                    auxCalculoEs = auxCalculoEs / Math.abs(fMaxEs - fMinEs) ;
+                    auxFrenteIndividual.get(indiceEs).setPerimetroCuboide(auxFrenteIndividual.get(indiceEs).getPerimetroCuboide() + auxCalculoEs) ;
+                }
+                grupoPareto++;
+            
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
+        //HASTA AQUI OBJETIVO ESPECTRO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////               indice++ ;
+            auxPoblacionActual.addAll(auxFrenteIndividual);
+            
+            auxFrenteIndividual = new ArrayList<>(); //CON ESTO REINICIO EL FRENTE PARA EL SIGUIENTE CALCULO CROWDING
+//HASTA AQUI            
+////////////////////////////////////      
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//ORDENAMIENTO DE LOS DISTINTOS OBJETIVOS, EN MI CASO SON 3 OBJETIVOS
+///////////////////////////////////////////////////////////////////////////////////////////////////    
+    public static void ordenarPorCosto (List<Solucion> auxPoblacionOrdenada) {
+        Collections.sort(auxPoblacionOrdenada, new Comparator<Solucion> () {
+            @Override
+            public int compare(Solucion uno, Solucion dos) {
+                return uno.getCosto().compareTo(dos.getCosto()) ;
+            }
+        });
     }
 
+    public static void ordenarPorSaltos (List<Solucion> auxPoblacionOrdenada) {
+        Collections.sort(auxPoblacionOrdenada, new Comparator<Solucion> () {
+            @Override
+            public int compare(Solucion uno, Solucion dos) {
+                return uno.getSaltos().compareTo(dos.getSaltos()) ;
+            }
+        });
+    }
+        
+    public static void ordenarPorEspectro (List<Solucion> auxPoblacionOrdenada) {
+        Collections.sort(auxPoblacionOrdenada, new Comparator<Solucion> () {
+            @Override
+            public int compare(Solucion uno, Solucion dos) {
+                return uno.getEspectro().compareTo(dos.getEspectro()) ;
+            }
+        });
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//HASTA AQUI EL ORDENAMIENTO
+///////////////////////////////////////////////////////////////////////////////////////////////////    
+    
     public static void ordenarPorBloqueados (List<Solucion> soluciones) {
 
         Solucion aux;
@@ -1146,24 +1381,23 @@ public class PoblacionInicial {
                         } //endfor j
                     //}    
                     //aqui poner el codigo de asignación final del conjunto de soluciones pareto
-                    if (solucionDominada == false) {
+                    if (solucionDominada == false) {                      
                         solucionesParetoAux.get(i).setPareto(grupoPareto);
+                        solucionesParetoAux.get(i).setIndiceRankeo(i);
                         poblacionActual.add(solucionesParetoAux.get(i));
                         solucionesNoDominadas.add(i) ;
-                        //AQUI SE APLICA EL RANKEO DE LAS SOLUCIONES
-                        //RANKEAR
-                        //i = solucionesParetoAux.size();
                     }
                 } //endfor i  
                 //aqui ver la manera que una vez que se encuentre en primer grupo del frente de pareto, se excluya
                 // los que forman parte del primer frente
-                //if (solucionDominada == false) {
-                    //solucionesParetoAux.remove(indiceSolucionNoDominada);
                     grupoPareto = grupoPareto + 1;
-                    for (int p = 0; p < solucionesNoDominadas.size(); p++) { //aqui recorro y comparo con el anterior
-                        int indice = solucionesNoDominadas.get(p);
-                        solucionesParetoAux.remove(indice);
-                    }
+
+                    Iterator<Solucion> it = solucionesParetoAux.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getIndiceRankeo() >= 0) {
+                            it.remove();
+                        }    
+                    } 
                     solucionesNoDominadas = new ArrayList<>(); 
                     //
                 //} 
@@ -1174,6 +1408,7 @@ public class PoblacionInicial {
                     
                     
                     solucionesParetoAux.get(solucionesParetoAux.size()-1).setPareto(grupoPareto);
+                    solucionesParetoAux.get(solucionesParetoAux.size()-1).setIndiceRankeo(grupoPareto);
                     poblacionActual.add(solucionesParetoAux.get(solucionesParetoAux.size()-1)); 
 
                     solucionesNoDominadas.add(solucionesParetoAux.size()-1); // -1 porque el tamaño no es igual al índice
