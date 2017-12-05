@@ -38,7 +38,7 @@ public class ILP2 {
         
         int cantEnlaces = cargarGrafo(directedGraph);
         
-        Integer cantSolicitudes = 3;
+        Integer cantSolicitudes = 4;
         List<Integer> cantSolicitadas = new ArrayList<>();
         cantSolicitadas.add(50);
         cantSolicitadas.add(35);

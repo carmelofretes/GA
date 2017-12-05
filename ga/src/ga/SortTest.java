@@ -24,6 +24,11 @@ public class SortTest {
                            new Employee(5, "Alice Abernathy", 3500d)
                           );
  
+        System.out.println("Listado Original...\n");
+        //EmployeeUtil.sortByName(employees);
+        for(Employee employee : employees)
+            System.out.println(employee);
+        
         System.out.println("Ordenando por nombre...\n");
         EmployeeUtil.sortByName(employees);
         for(Employee employee : employees)

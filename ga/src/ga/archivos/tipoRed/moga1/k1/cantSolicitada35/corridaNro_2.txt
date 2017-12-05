@@ -1,62 +1,38 @@
 
 Solucion numero: 1
-Rutas Seleccionadas: 1-3
 Cantidad de bloqueados: 0
-Fitness: 2.322972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 35.0
+Fitness: 2.0545221445221444
+Costo: 108500.0
+Distancia: 2000.0
+Espectro Mayor: 223.0
 Conjunto Pareto (R): 0
 
 
 Solucion numero: 2
-Rutas Seleccionadas: 1-3
 Cantidad de bloqueados: 0
-Fitness: 2.902972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 93.0
-Conjunto Pareto (R): 4
+Fitness: 2.1211888111888113
+Costo: 108500.0
+Distancia: 2000.0
+Espectro Mayor: 243.0
+Conjunto Pareto (R): 1
 
 
 Solucion numero: 3
-Rutas Seleccionadas: 1-3
 Cantidad de bloqueados: 0
-Fitness: 2.922972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 95.0
-Conjunto Pareto (R): 5
-
-
-Solucion numero: 4
-Rutas Seleccionadas: 1-3
-Cantidad de bloqueados: 0
-Fitness: 2.892972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 92.0
-Conjunto Pareto (R): 3
-
-
-Solucion numero: 5
-Rutas Seleccionadas: 1-3
-Cantidad de bloqueados: 0
-Fitness: 2.512972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 54.0
+Fitness: 2.1878554778554777
+Costo: 108500.0
+Distancia: 2000.0
+Espectro Mayor: 263.0
 Conjunto Pareto (R): 2
 
 
-Solucion numero: 6
-Rutas Seleccionadas: 1-3
+Solucion numero: 4
 Cantidad de bloqueados: 0
-Fitness: 2.402972972972973
-Costo: 18000.0
-Distancia: 500.0
-Espectro Mayor: 43.0
-Conjunto Pareto (R): 1
+Fitness: 2.264522144522145
+Costo: 108500.0
+Distancia: 2000.0
+Espectro Mayor: 286.0
+Conjunto Pareto (R): 3
 
 
 Tiempo total de ejecucion: 0 minutos.
