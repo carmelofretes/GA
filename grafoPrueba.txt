@@ -1,3 +1,14 @@
+1. VERIFICACION DE CONSISTENCIA DE SOLUCIONES
+2. LEER PAPER MOP - PARETO (ysapyLibro.pdf, pag. 19, cuadro)
+3. Proponer esquema experimental (como hacer hacer las pruebas, caul es la topologia, cual es la carga)
+4. Buscar todos los esquemas de asignación de espectro (Firts Fit, aleatorio, Best Fitnes, etc.)
+
+--
+Secuencia de solicitudes - 30% costo - 70% aleatroio
+Ruteo - cruce y mutación
+asignación de espectro - RF, FF, MU, LU
+--
+
 0983 990011 green house
 DISTANCIA DE CROWDING. DEFINICION
 Para obtener una estimación de la densidad de soluciones que rodean una solución particular en la población, calculamos la distancia 

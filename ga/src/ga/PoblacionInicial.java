@@ -48,7 +48,9 @@ public class PoblacionInicial {
             cantDemandas.add(35);
             cantDemandas.add(100);
             //cantDemandas.add(200);
-            int k = 2;   //Esta es la cantidad de caminos que tiene la demanda.
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            int k = 2;   //ATENCIOIN!!!  ESTO CAMBIAR DE ACUERDO A LAS DEMANDAS.
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
             int cantCantidadDeDemandas = 3; // estos son los escenarios
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
             String archivoDeMaximos;
@@ -101,7 +103,9 @@ public class PoblacionInicial {
 
         List<DemandaInfo> demandasMayores = new ArrayList<>();
         demandasMayores.addAll(definirOrdenDemandas(demandaInfoList));
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //AQUI SE GENRAN LAS SOLUCIONES  DE LA POBLACIÓN INICIAL, SE LE ASGINAN LAS RANURAS CORRESPONDIENTES
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         for (int i = 0; i < cantSolucionesIniciales; i++) {
             poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList));
         }
@@ -140,8 +144,15 @@ public class PoblacionInicial {
     }
 
     public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo) {
+        /////////////////////////////////////////////////////////////////////
+        //AQUI SE GENERAN LAS RANURAS PARA TODOS LOS ENLACES DE LA TOPOLOGIA
+        /////////////////////////////////////////////////////////////////////
         List<Enlace> enlacesIniciales = generarListaInicialRanuras (cantRanuras, topologia);
-        Solucion solucion = new Solucion(enlacesIniciales); // inicializar con una lista de enlaces en la cual todas sus ranuras estan libres
+        //////////////////////////////////////////////////////////////////////////////////
+        // AQUI SE GENERA LA SOLUCION Y SE DEBE 
+        //inicializar con una lista de enlaces en la cual todas sus ranuras estan libres
+        //////////////////////////////////////////////////////////////////////////////////
+        Solucion solucion = new Solucion(enlacesIniciales); 
         int j;
         boolean bloqueado;
 
@@ -250,45 +261,11 @@ public class PoblacionInicial {
         int nodoPrimero = demandaInfo.getRuta().get(0);
         int nodoSegundo = demandaInfo.getRuta().get(1);
 
-        // recorrer todos los enlaces, y guardar en una lista de listas las ranuras que correspondan a los enlaces de mi ruta.
-        // en la lista lo que voy a guardar es si mi ranura R == 1, elimino la posicion que contenga
-        // si es R == 0, agrego a mi map un
-//        for (int i = 0; i < solucion.getEnlaces().size(); i++) {
-//            if (solucion.getEnlaces().get(i).getInicio() == nodoPrimero && solucion.getEnlaces().get(i).getFin() == nodoSegundo){
-//                ranuras = solucion.getEnlaces().get(i).getRanuras();
-//                break;
-//            }
-//        }
-
-        // ESTO aplica para GA 1
-        /*
-        // Una vez que tenga la lista, del primer enlace busco su primera ranura libre, verifico que las X siguientes esten libres.
-        // Si es asi, agrego esa primera ranura a una una lista de posibles soluciones. Aplico esto para todas las siguientes ranuras libres.
-        // Para el siguiente enlace, obtengo de la lista de posibles soluciones la primera ranura, verifico si esa ranura existe en mi lista de ranuras,
-
-        obtenerRanurasLibres(ranuras, posicionesLibres);
-        cantRanurasLibres = posicionesLibres.size();
-
-        for (int i = 0; i < cantRanurasLibres; i++) {
-            r = (int)(Math.random() * posicionesLibres.size());
-            aplica = aplicaRanuras(posicionesLibres.get(r), rutaNro, solucion.getEnlaces(), demandasInfo);
-
-            if (aplica){
-                agregarRanurasASolucion(solucion, rutaNro, posicionesLibres.get(r), demandasInfo);
-                return true;
-            }
-            posicionesLibres.remove(r);
-            cantRanurasLibres--;
-        }
-
-        return false;
-        */
-
         List<Integer> ranurasDisponibles = new ArrayList<>();
         ranurasDisponibles.addAll(obtenerRanurasDisponiblesParaRuta(solucion, demandaInfo));
-        // elegir randomicamente una posicion e ranurasDisponibles
-        // asignar esa ranura a la solucion para esta demanda
-
+        
+// elegir randomicamente una posicion de ranurasDisponibles
+// asignar esa ranura a la solucion para esta demanda
         if (ranurasDisponibles.isEmpty())
             return false;
         else {
@@ -303,6 +280,12 @@ public class PoblacionInicial {
             } else {
                 return false;
             }
+            /////////////////////////////////////////////////////////////////////////
+            //ATENCION!!!!!!!!!!!
+            /////////////////////////////////////////////////////////////////////////
+            //AQUI PONER LAS DEMAS ASIGNACIONES DE RANURAS
+            /////////////////////////////////////////////////////////////////////////
+            
             return true;
         }
     }
@@ -311,6 +294,8 @@ public class PoblacionInicial {
         int origen;
         int destino;
         List<Enlace> enlaces = new ArrayList<>();
+
+//AQUI LO QUE HACEMOS ES ENCONTRAR LOS ENLACES PARA ESE PEDIDO, DESPUES VEMOS LA DISPONIBILIDAD DE LAS RANURAS
 
         for (int i = 0; i < solucion.getEnlaces().size(); i++) {
             for (int j = 0; j < (demandaInfo.getRuta().size()-1); j++) {
@@ -375,11 +360,13 @@ public class PoblacionInicial {
         }
 
         // marca en la solucion cuales son las ranuras que van a ser ocupadas por esta demanda
-        for (int i = 0; i < demandaInfo.getRuta().size() - 1; i++) {
+            for (int i = 0; i < demandaInfo.getRuta().size() - 1; i++) {
             nodoInicio = demandaInfo.getRuta().get(i);
             nodoFin = demandaInfo.getRuta().get(i + 1);
             ubicacion = ubicarEnlace(nodoInicio, nodoFin, solucion.getEnlaces());
-
+            /////////////////////////////////////////////////////////////////////////////
+            //AQUI LE ASIGNA LAS RANURAS DE ACUERDO AL PEDIDO Y AL NIVEL DE MODULACION
+            /////////////////////////////////////////////////////////////////////////////
             for (j = primeraRanura; j < (ranurasSolicitadas + primeraRanura); j++) {
                 solucion.getEnlaces().get(ubicacion).getRanuras().set(j, true);
             }
@@ -508,7 +495,7 @@ public class PoblacionInicial {
             //EN ESTE FOR LO QUE HAGO ES GENERAR EL CONJUNTO Q HASTA QUE SEA DE TAMAÑO IGUAL AL DE LA POBLACION ACTUAL
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //for (j = 0; j < poblacionInicial.size()/4; j++) {  //PORQUE DIVIDE ENTRE 4 - ESTE ES EL ANTERIOR
-            for (j = 0; j < poblacionActual.size(); j++) {  //PORQUE DIVIDE ENTRE 4
+            for (j = 0; j < poblacionActual.size(); j++) { 
                 
                 hijo1 = new Solucion();
                 hijo2 = new Solucion();
@@ -551,26 +538,7 @@ public class PoblacionInicial {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASTA AQUI EL CRUCE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                //NO USO
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                // mantener poblacion actual para comparar con los hijos al final
-                // pero eliminar los reproductores ya elegidos para no repetir
-                aux.add(poblacionActual.get(reproductor1));
-                aux.add(poblacionActual.get(reproductor2));
 
-                if (reproductor1 < reproductor2){
-                    poblacionActual.remove(reproductor2);
-                    poblacionActual.remove(reproductor1);
-                } else {
-                    poblacionActual.remove(reproductor1);
-                    poblacionActual.remove(reproductor2);
-                }
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                //HASTA ACA NO USO
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //AQUI SE REALIZA LA MUTACIÓN
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -590,20 +558,15 @@ public class PoblacionInicial {
                 candidato1 = -1;
                 candidato2 = -1;
                 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //AQUI SE CONTROLA QUE SI LA POBLACION NUEVA LLEGO AL NUMERO DE POBLACIÓN ACTUAL ENTONCES YA NO HACE FALTA
-                //SEGUIR SELECCIONANDO, CRUZANDO Y MUTANDO
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//AQUI SE CONTROLA QUE SI LA POBLACION NUEVA LLEGO AL NUMERO DE POBLACIÓN ACTUAL ENTONCES YA NO HACE FALTA
+//SEGUIR SELECCIONANDO, CRUZANDO Y MUTANDO
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if (poblacionNueva.size() == poblacionActual.size()) {
                     j = poblacionActual.size();  //AQUI ASIGNAMOS EL TAMAÑO DE LA POBALCIÓN ACTUAL PARA QUE PUEDA SALIR DEL FOR
                 } 
 
             }
-            // de la poblacion vieja elegir solo las 2 primeras soluciones, las mejores y copiar a nueva poblacion
-            // para el resto de mi poblacion nueva, cruzar el resto de las soluciones de la poblacion vieja
-            // aqui se envían, la poblacionActual, los dos individuos mejores de la poblacionActual que se eligieron
-            // para el cruce, mutación y por último la poblacionNueva (resultado del cruce, mutación)
-            // poblacionActual.addAll(aux);
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //AQUI SE HALLA EL CONJUNTO PARETO DEL CONJUNTO Q
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1416,8 +1379,6 @@ public class PoblacionInicial {
                         solucionesParetoAux.remove(p);
                     }
                     solucionesNoDominadas = new ArrayList<>(); 
-
-                    //solucionesParetoAux.remove(indiceSolucionNoDominada);
                 //}
             } 
         }

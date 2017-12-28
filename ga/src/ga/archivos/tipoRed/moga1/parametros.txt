@@ -1,5 +1,5 @@
-300 // cantidad de longitudes de onda por fibra // ranuras						ORIG: 100000
-4 // cantidad de cromosomas // cantidad de soluciones para poblacion inicial	ORIG: 100
+10 // cantidad de longitudes de onda por fibra // ranuras						ORIG: 100000
+5 // cantidad de cromosomas // cantidad de soluciones para poblacion inicial	ORIG: 100
 0.1 // probabilidad de mutacion													ORIG: 0.1
 1 // criterio de parada // minutos por corrida independiente					ORIG: 4
 2 // cantidad de corridas independientes										ORIG: 30

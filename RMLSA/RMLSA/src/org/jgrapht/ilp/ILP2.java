@@ -37,8 +37,9 @@ public class ILP2 {
         SimpleDirectedGraph<String, DefaultWeightedEdge> directedGraph = new SimpleDirectedGraph(DefaultWeightedEdge.class);
         
         int cantEnlaces = cargarGrafo(directedGraph);
-        
-        Integer cantSolicitudes = 4;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Integer cantSolicitudes = 4;  //ATENCION AQUI CAMBIAR CUANDO LA CANTIDAD DE SOLUCIONES DE ACUERDO AL PEDIDO
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         List<Integer> cantSolicitadas = new ArrayList<>();
         cantSolicitadas.add(50);
         cantSolicitadas.add(35);
