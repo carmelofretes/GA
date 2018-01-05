@@ -17,7 +17,7 @@ public class PoblacionInicial {
     private static Long saltoMayor;
     private static Long espectroMayor;
     private static int nivelDeModulacion = 1;
-    private static String algoritmo = "moga1";
+    private static String algoritmo = "moga2";
     private static String topologia = "tipoRed";
     private static List<String> tiposDeCarga = new ArrayList<>();
 
