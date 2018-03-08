@@ -17,7 +17,7 @@ public class PoblacionInicial {
     private static Long saltoMayor;
     private static Long espectroMayor;
     private static int nivelDeModulacion = 1;
-    private static String algoritmo = "moga2";
+    private static String algoritmo = "lastFit";
     private static String topologia = "tipoRed";
     private static List<String> tiposDeCarga = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class PoblacionInicial {
             cantDemandas.add(100);
             //cantDemandas.add(200);
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-            int k = 2;   //ATENCIOIN!!!  ESTO CAMBIAR DE ACUERDO A LAS DEMANDAS.
+            int k = 2;   //ATENCION!!!  ESTO CAMBIAR DE ACUERDO A LOS CAMINOS.
             //////////////////////////////////////////////////////////////////////////////////////////////////////
             int cantCantidadDeDemandas = 3; // estos son los escenarios
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
@@ -120,7 +120,8 @@ public class PoblacionInicial {
         List<DemandaInfo> aux;
         List<DemandaInfo> infoCopy = new ArrayList<DemandaInfo>();
 
-        // traer la lista de demandasInfo con las filas que tienen la mayor X de cada demanda
+        //traer la lista de demandasInfo con las filas que tienen la mayor X de cada demanda
+        //ESTO SE APLICA CUANDO LA DEMANDA TENGA  MAS DE UN CAMINO
         aux = obtenerDemandasMayores(demandasInfo);
 
         // ordenar aux de mayor a menor
@@ -145,7 +146,7 @@ public class PoblacionInicial {
 
     public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo) {
         /////////////////////////////////////////////////////////////////////
-        //AQUI SE GENERAN LAS RANURAS PARA TODOS LOS ENLACES DE LA TOPOLOGIA
+        //AQUI SE GENERAN LOS ENLACES Y LAS RANURAS PARA TODOS LOS NODOS DE LA TOPOLOGIA
         /////////////////////////////////////////////////////////////////////
         List<Enlace> enlacesIniciales = generarListaInicialRanuras (cantRanuras, topologia);
         //////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +157,7 @@ public class PoblacionInicial {
         int j;
         boolean bloqueado;
 
-        // selecciono demanda por demanda en el orden ya establecido del 30% y 70%
+        // selecciono demanda por demanda en el orden ya establecido del 30% y 70% (MAYORES)
         // de cada demanda, traigo la ruta mas corta de demandasInfo e intento asignarle la cantidad de ranuras que quiere
         // si no puede con esa ruta, intenta con la siguiente ruta mas corta, etc
         // y si no puede asignar las ranuras con ninguna de sus rutas, suma una demanda bloqueada a solucion
@@ -254,6 +255,8 @@ public class PoblacionInicial {
 
         boolean aplica = false;
         List<Boolean> ranuras = new ArrayList<>();
+        
+        
         List<Integer> posicionesLibres = new ArrayList<>();
         int r, cantRanurasLibres;
 
@@ -262,30 +265,73 @@ public class PoblacionInicial {
         int nodoSegundo = demandaInfo.getRuta().get(1);
 
         List<Integer> ranurasDisponibles = new ArrayList<>();
-        ranurasDisponibles.addAll(obtenerRanurasDisponiblesParaRuta(solucion, demandaInfo));
         
+        //AQUI CREAMOS LAS PARTICIONES PARA LA ASGINACIÓN FIRST LAST FIT
+        //ESTAS PARTICIONES SON IMPAR PARA ASIGNAR Y EN EL CASO DE NO PODER ASIGNAR EN IMPAR HACERLO EN EL PAR
+        List<Integer> ranurasDisponiblesImpar = new ArrayList<>();
+        List<Integer> ranurasDisponiblesPar = new ArrayList<>();
+
+        //AQUI VEMOS LA DISPONIBILIDAD DE LAS RANURAS EN TODOS LOS ENLACES DE MANERA A CONTROLAR LA CONTINUIDAD
+        //Y LA CONTIGUIDAD
+        ranurasDisponibles.addAll(obtenerRanurasDisponiblesParaRuta(solucion, demandaInfo));
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //AQUI GENERO DOS PARTICIONES DE MANERA A DETERMINAR CUALES SON IMPARES Y PARES
+        //PARA IMPLEMENTAR LA POLITICA FIRST-LAST FIT
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        for (int rd = 0; rd < ranurasDisponibles.size(); rd++) {
+           //Integer ranuraDisp = ranurasDisponibles.get(rd);
+            if (esImpar(ranurasDisponibles.get(rd))) {
+                //ES IMPAR
+                ranurasDisponiblesImpar.add(rd);
+            } else {
+                //ES PAR
+                ranurasDisponiblesPar.add(rd);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////// 
+        //HASTA AQUI
+        ///////////////////////////////////////////////////////////////////////////////////////////
+           
 // elegir randomicamente una posicion de ranurasDisponibles
 // asignar esa ranura a la solucion para esta demanda
         if (ranurasDisponibles.isEmpty())
             return false;
         else {
-            if ("moga1".equals(algoritmo)) {
-                // elegir enlaces aleatoriamente
+            if ("randomfit".equals(algoritmo)) {
+                // elegir enlaces RANDOM FIT
                 int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
                 agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranuraElegida));
 
-            } else if ("moga2".equals(algoritmo)) {
-                // elegir ranuras con first fit
+            } else if ("firstFit".equals(algoritmo)) {
+                // elegir ranuras con FIRST FIT
                 agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
+                
+            } else if ("lastFit".equals(algoritmo)) {
+                //asignación de ranura LAST FIT
+                agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));
+
+            } else if ("firstLastFit".equals(algoritmo)) {
+                //asignación de ranura FIRST LAST FIT
+                if (!ranurasDisponiblesImpar.isEmpty()) {
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponiblesImpar.get(0));    
+                } else {
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponiblesPar.get(ranurasDisponiblesPar.size()-1));
+                }
+                
+            } else if ("leastUsed".equals(algoritmo)) {
+                //asignación de ranura LEAST USED  
+                agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0)); 
+                
+            } else if ("mostUsed".equals(algoritmo)) {
+                //asignación de ranura MOST USED
+                agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));                        
+                
+            } else if ("exactFit".equals(algoritmo)) {
+                //asignación de ranura EXACT FIT
+                        
             } else {
                 return false;
-            }
-            /////////////////////////////////////////////////////////////////////////
-            //ATENCION!!!!!!!!!!!
-            /////////////////////////////////////////////////////////////////////////
-            //AQUI PONER LAS DEMAS ASIGNACIONES DE RANURAS
-            /////////////////////////////////////////////////////////////////////////
-            
+            }            
             return true;
         }
     }
@@ -294,11 +340,12 @@ public class PoblacionInicial {
         int origen;
         int destino;
         List<Enlace> enlaces = new ArrayList<>();
+        int auxiliarRanura;
+        int axiliarUsado;
 
-//AQUI LO QUE HACEMOS ES ENCONTRAR LOS ENLACES PARA ESE PEDIDO, DESPUES VEMOS LA DISPONIBILIDAD DE LAS RANURAS
-
+        //AQUI LO QUE HACEMOS ES ENCONTRAR LOS ENLACES PARA EL PEDIDO, DESPUES VEMOS LA DISPONIBILIDAD DE LAS RANURAS
         for (int i = 0; i < solucion.getEnlaces().size(); i++) {
-            for (int j = 0; j < (demandaInfo.getRuta().size()-1); j++) {
+            for (int j = 0; j < (demandaInfo.getRuta().size()-1); j++) {   //-1 PORQUE SON 2 ENLACES
                 origen = demandaInfo.getRuta().get(j);
                 destino = demandaInfo.getRuta().get(j + 1);
 
@@ -310,17 +357,25 @@ public class PoblacionInicial {
         }
 
         List<Integer> indiceDeRanurasLibres = new ArrayList<>();
+        List<Integer> indiceRanurasLibresMasUsadas = new ArrayList<>();
 
         // obtener ranuras libres del primer enlace
         for (int i = 0; i < enlaces.get(0).getRanuras().size(); i++) {
             if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() + nivelDeModulacion)) {
                 indiceDeRanurasLibres.add(i);
+                
+                //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES              
             }
         }
-
+          
+        //OBTENER RANURAS DE LOS ENLACES RESTANTES
+        //AQUI SE CONTROLA QUE LAS RANURAS LIBRES QUE ANTERIORMENTE SE SELECCIONARON ESTEN LIBRES EN LAS DEMAS RUTAS
+        //DE MANERA A CONTROLAR LA CONTINUIDAD Y CONTIGUIDAD EN LOS ENLACES
+        //SI NO TIENEN CONTINUIDAD Y CONTIGUIDAD SE REMUEVE DE LA LISTA
         for (int i = 1; i < enlaces.size(); i++) {
             List<Integer> copiaIndiceDeRanurasLibres = new ArrayList<>();
             copiaIndiceDeRanurasLibres.addAll(indiceDeRanurasLibres);
+            
             for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
                 if (!ranuraEsSolucion(enlaces.get(i).getRanuras(), indiceDeRanurasLibres.get(j), demandaInfo.getTraf() + nivelDeModulacion)) {
                     copiaIndiceDeRanurasLibres.remove(indiceDeRanurasLibres.get(j));
@@ -329,13 +384,35 @@ public class PoblacionInicial {
             indiceDeRanurasLibres = new ArrayList<>();
             indiceDeRanurasLibres.addAll(copiaIndiceDeRanurasLibres);
         }
+        
+        indiceRanurasLibresMasUsadas.addAll(indiceDeRanurasLibres);
+        //AQUI CREAMOS EL ARRAY CON LAS RANURAS MAS Y MENOS USADAS PARA LA SGINACIÓN EXACT FIT
+        for (int i = 0; i < indiceRanurasLibresMasUsadas.size(); i++) {
+            for (int j = i + 1; j < indiceRanurasLibresMasUsadas.size(); j++) {
+                if (enlaces.get(i).getRanurasUsadas().get(i) > enlaces.get(j).getRanurasUsadas().get(j)){
+                    auxiliarRanura = indiceRanurasLibresMasUsadas.get(i);
+                    indiceRanurasLibresMasUsadas.set(i, indiceRanurasLibresMasUsadas.get(j));
+                    indiceRanurasLibresMasUsadas.set(j, auxiliarRanura);
+                }
+            }
+        }                    
+        
+        if ("leastUsed".equals(algoritmo) || "mostUsed".equals(algoritmo)) {
+            indiceDeRanurasLibres = new ArrayList<>();
+            indiceDeRanurasLibres.addAll(indiceRanurasLibresMasUsadas);  
+            return indiceDeRanurasLibres;
+        } else {
+            return indiceDeRanurasLibres;
+        }           
 
-        return indiceDeRanurasLibres;
+        //return indiceDeRanurasLibres;
     }
 
+    //AQUI CREO QUE SE CALCULA SI LA RANURA ACTUAL TIENE DISPONIBLE LA BANDA GUARDA
     public static boolean ranuraEsSolucion(List<Boolean> ranuras, int ranura, int cantSolicitada) {
-        if (!ranuras.get(ranura) && ranuras.size() > (ranura + cantSolicitada)) {
-            for (int i = (ranura + 1); i < (ranura + cantSolicitada); i++) {
+        //AQUI CONTROLA QUE EL TAMAÑO DE LA RANURA NO SUPERE LA CANTIDAD DE RANURAS TOTALES
+        if (!ranuras.get(ranura) && ranuras.size() > (ranura + cantSolicitada)) { 
+            for (int i = (ranura + 1); i < (ranura + cantSolicitada); i++) { //+1 PARA VEER DISPONIBILIDAD DE LA BANDA GUARDA
                 if (ranuras.get(i)) {
                     return false;
                 }
@@ -360,7 +437,7 @@ public class PoblacionInicial {
         }
 
         // marca en la solucion cuales son las ranuras que van a ser ocupadas por esta demanda
-            for (int i = 0; i < demandaInfo.getRuta().size() - 1; i++) {
+        for (int i = 0; i < demandaInfo.getRuta().size() - 1; i++) {
             nodoInicio = demandaInfo.getRuta().get(i);
             nodoFin = demandaInfo.getRuta().get(i + 1);
             ubicacion = ubicarEnlace(nodoInicio, nodoFin, solucion.getEnlaces());
@@ -369,11 +446,14 @@ public class PoblacionInicial {
             /////////////////////////////////////////////////////////////////////////////
             for (j = primeraRanura; j < (ranurasSolicitadas + primeraRanura); j++) {
                 solucion.getEnlaces().get(ubicacion).getRanuras().set(j, true);
+                //AQUI SE ACTUALIZA UN CONTADOR DE LAS RANURAS USADAS
+                solucion.getEnlaces().get(ubicacion).getRanurasUsadas().set(j, solucion.getEnlaces().get(ubicacion).getRanurasUsadas().get(j)+1);
             }
         }
 
         // crea el objeto que cubre esta demanda y agrega a solucion
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
+            //SI YA EXISTE EL RUTEO NO HACE FALTA AGREGAR A LA LISTA DE RUTEOS DE SOLCUION
             if (solucion.getRuteos().get(i).getOriden() == demandaInfo.getOrigen() &&
                     solucion.getRuteos().get(i).getDestino() == demandaInfo.getDestino()) {
                 existe = true;
@@ -381,7 +461,7 @@ public class PoblacionInicial {
                 break;
             }
         }
-
+        //SI EXITSTE SE ACTUALIZA LAS RANURAS USADAS
         if (existe){
             solucion.getRuteos().get(posicion).setRanurasUsadas(ranurasUsadas);
         } else {
@@ -1382,6 +1462,13 @@ public class PoblacionInicial {
                 //}
             } 
         }
+    }
+    
+    public static boolean esImpar(Integer iNumero) {
+        if (iNumero%2 != 0)
+            return true;
+        else
+            return false;
     }
 }
 

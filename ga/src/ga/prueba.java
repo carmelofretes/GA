@@ -18,9 +18,13 @@ import java.util.Random;
 public class prueba {
     
     public static void main(String [] args) throws IOException {
-       System.out.println("Aqui creamos la lista:");
+        System.out.println("Aqui creamos la lista:");
         System.out.println("List<String> ejemploLista = new ArrayList<>();");     
         List<Integer> ejemploLista = new ArrayList<>();
+        List<Integer> ejemploUsados = new ArrayList<>();
+        List<Integer> ejemploMasUsados = new ArrayList<>();
+        int aux;
+        int aux2;
             ejemploLista.add(4);
             ejemploLista.add(7);
             ejemploLista.add(2);
@@ -28,22 +32,56 @@ public class prueba {
             ejemploLista.add(3);
             ejemploLista.add(5);
             ejemploLista.add(6);
+            ejemploUsados.add(10);
+            ejemploUsados.add(15);
+            ejemploUsados.add(20);
+            ejemploUsados.add(14);
+            ejemploUsados.add(9);
+            ejemploUsados.add(12);
+            ejemploUsados.add(8);            
         System.out.println("El tamaño de la lista creada es de:" + ejemploLista.size());
         System.out.println(ejemploLista);
-        Collections.sort(ejemploLista);
-        for (int i = 0; i<=ejemploLista.size() - 1; i++) {
-            System.out.println(ejemploLista.get(i));
+        System.out.println(ejemploUsados);
+        //Collections.sort(ejemploLista);
+
+        for (int i = 0; i < ejemploLista.size(); i++) {
+            for (int j = i + 1; j < ejemploLista.size(); j++) {
+                if (ejemploUsados.get(i) > ejemploUsados.get(j)){
+                    aux = ejemploLista.get(i);
+                    aux2 = ejemploUsados.get(i); 
+                    ejemploLista.set(i, ejemploLista.get(j));
+                    ejemploLista.set(j, aux);
+                    ////////////////////////////////////////////
+                    ejemploUsados.set(i, ejemploUsados.get(j));
+                    ejemploUsados.set(j, aux2);
+                }
+            }
+        }     
+        
+        System.out.println(ejemploLista);
+
+/*        for (int i = 0; i<=ejemploLista.size() - 1; i++) {
+            //System.out.println(ejemploLista.get(i));
+            if (esImpar(ejemploLista.get(i))) {
+                System.out.println(ejemploLista.get(i) + " es IMPAR");
+            } else   
+                    System.out.println(ejemploLista.get(i) + " es PAR");                
         }
+ */
+    }
+       
 
 /*        Random rnd = new Random();
         int numeroRandom = rnd.nextInt(5);
         int numero = numeroRandom + 1;
         System.out.println("Número aleatorio: " + numeroRandom + " + 1 = " + numero);
         System.out.println("double\t" + Double.MIN_VALUE + "\t" + Double.MAX_VALUE);*/
-        
-        
-    
-            
-    }
+ 
+    public static boolean esImpar(Integer iNumero) {
+        if (iNumero%2 != 0)
+            return true;
+        else
+            return false;
+    }    
     
 }

@@ -10,17 +10,20 @@ public class Enlace {
 
     int inicio, fin;
     List<Boolean> ranuras;
+    List<Integer> ranurasUsadas;
 
     public Enlace (){
         inicio = -1;
         fin = -1;
         ranuras = new ArrayList<Boolean>();
+        ranurasUsadas = new ArrayList<Integer>();
     }
 
-    public Enlace(int p, int s, List<Boolean> ranuras) {
+    public Enlace(int p, int s, List<Boolean> ranuras, List<Integer> ranurasUsadas) {
         this.inicio = p;
         this.fin = s;
         this.ranuras = ranuras;
+        this.ranurasUsadas = ranurasUsadas;
     }
 
     public int getInicio() {
@@ -46,4 +49,17 @@ public class Enlace {
     public void setRanuras(List<Boolean> ranuras) {
         this.ranuras = ranuras;
     }
+
+    public void setRanurasUsadas(List<Integer> ranurasUsadas) {
+        this.ranurasUsadas = ranurasUsadas;
+    }
+
+    public List<Integer> getRanurasUsadas() {
+        return ranurasUsadas;
+    }
+
+    
+    
+    
+    
 }
