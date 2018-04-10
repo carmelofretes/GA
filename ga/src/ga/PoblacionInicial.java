@@ -17,7 +17,7 @@ public class PoblacionInicial {
     private static Long saltoMayor;
     private static Long espectroMayor;
     private static int nivelDeModulacion = 1;
-    private static String algoritmo = "lastFit";
+    private static String algoritmo = "mostUsed";
     private static String topologia = "tipoRed";
     private static List<String> tiposDeCarga = new ArrayList<>();
 
@@ -103,11 +103,18 @@ public class PoblacionInicial {
 
         List<DemandaInfo> demandasMayores = new ArrayList<>();
         demandasMayores.addAll(definirOrdenDemandas(demandaInfoList));
+        List<Enlace> enlacesUsados = new ArrayList<>();
+        
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //AQUI SE GENRAN LAS SOLUCIONES  DE LA POBLACIÓN INICIAL, SE LE ASGINAN LAS RANURAS CORRESPONDIENTES
+        //AQUI SE GENERAN LAS SOLUCIONES  DE LA POBLACIÓN INICIAL, SE LE ASGINAN LAS RANURAS CORRESPONDIENTES
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         for (int i = 0; i < cantSolucionesIniciales; i++) {
-            poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList));
+            if (!poblacionInicial.isEmpty()) {
+                enlacesUsados.addAll(poblacionInicial.get(i-1).getEnlaces()); 
+            }
+            poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList, enlacesUsados));            
+
         }
 
         return poblacionInicial;
@@ -144,11 +151,18 @@ public class PoblacionInicial {
         return mayores;
     }
 
-    public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo) {
+    public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo, List<Enlace> enlacesUsados) {
+        List<Enlace> auxEnlacesUsados = enlacesUsados;
         /////////////////////////////////////////////////////////////////////
         //AQUI SE GENERAN LOS ENLACES Y LAS RANURAS PARA TODOS LOS NODOS DE LA TOPOLOGIA
-        /////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////    
         List<Enlace> enlacesIniciales = generarListaInicialRanuras (cantRanuras, topologia);
+
+        for (int eu = 0; eu < auxEnlacesUsados.size(); eu++) {
+            if (auxEnlacesUsados.get(eu).getInicio() == enlacesIniciales.get(eu).getInicio()) {
+                enlacesIniciales.get(eu).setRanurasUsadas(auxEnlacesUsados.get(eu).getRanurasUsadas());
+            }
+        }
         //////////////////////////////////////////////////////////////////////////////////
         // AQUI SE GENERA LA SOLUCION Y SE DEBE 
         //inicializar con una lista de enlaces en la cual todas sus ranuras estan libres
@@ -324,8 +338,12 @@ public class PoblacionInicial {
                 
             } else if ("mostUsed".equals(algoritmo)) {
                 //asignación de ranura MOST USED
-                agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));                        
-                
+                if (solucion.getRuteos().isEmpty()) {
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
+                }
+                    //int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));
+            
             } else if ("exactFit".equals(algoritmo)) {
                 //asignación de ranura EXACT FIT
                         
@@ -341,7 +359,7 @@ public class PoblacionInicial {
         int destino;
         List<Enlace> enlaces = new ArrayList<>();
         int auxiliarRanura;
-        int axiliarUsado;
+        int auxiliarUsado;
 
         //AQUI LO QUE HACEMOS ES ENCONTRAR LOS ENLACES PARA EL PEDIDO, DESPUES VEMOS LA DISPONIBILIDAD DE LAS RANURAS
         for (int i = 0; i < solucion.getEnlaces().size(); i++) {
@@ -364,10 +382,10 @@ public class PoblacionInicial {
             if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() + nivelDeModulacion)) {
                 indiceDeRanurasLibres.add(i);
                 
-                //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES              
+                //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES                  
             }
-        }
-          
+        }  
+        
         //OBTENER RANURAS DE LOS ENLACES RESTANTES
         //AQUI SE CONTROLA QUE LAS RANURAS LIBRES QUE ANTERIORMENTE SE SELECCIONARON ESTEN LIBRES EN LAS DEMAS RUTAS
         //DE MANERA A CONTROLAR LA CONTINUIDAD Y CONTIGUIDAD EN LOS ENLACES
@@ -384,28 +402,31 @@ public class PoblacionInicial {
             indiceDeRanurasLibres = new ArrayList<>();
             indiceDeRanurasLibres.addAll(copiaIndiceDeRanurasLibres);
         }
-        
-        indiceRanurasLibresMasUsadas.addAll(indiceDeRanurasLibres);
-        //AQUI CREAMOS EL ARRAY CON LAS RANURAS MAS Y MENOS USADAS PARA LA SGINACIÓN EXACT FIT
-        for (int i = 0; i < indiceRanurasLibresMasUsadas.size(); i++) {
-            for (int j = i + 1; j < indiceRanurasLibresMasUsadas.size(); j++) {
-                if (enlaces.get(i).getRanurasUsadas().get(i) > enlaces.get(j).getRanurasUsadas().get(j)){
-                    auxiliarRanura = indiceRanurasLibresMasUsadas.get(i);
-                    indiceRanurasLibresMasUsadas.set(i, indiceRanurasLibresMasUsadas.get(j));
-                    indiceRanurasLibresMasUsadas.set(j, auxiliarRanura);
-                }
-            }
-        }                    
-        
+
+// ESTE PEDAZO DE CODIGO USA PARA CALCULAR LA RANURA MAS USADA  
+//AQUI REVISAR PORQUE NO ORDENA DE MENOR A MAYOR LAS RANURAS USADAS
         if ("leastUsed".equals(algoritmo) || "mostUsed".equals(algoritmo)) {
+            indiceRanurasLibresMasUsadas.addAll(indiceDeRanurasLibres);
+            //AQUI CREAMOS EL ARRAY CON LAS RANURAS MAS Y MENOS USADAS PARA LA ASGINACIÓN LEAST Y MOST USED
+            for (int i = 0; i < enlaces.size(); i++) {
+                for (int ranUs = 0; ranUs < indiceRanurasLibresMasUsadas.size(); ranUs++) {
+                    for (int ranUs2 = ranUs + 1; ranUs2 < indiceRanurasLibresMasUsadas.size(); ranUs2++) {
+                        if (enlaces.get(i).getRanurasUsadas().get(ranUs) > enlaces.get(i).getRanurasUsadas().get(ranUs2)){
+                            auxiliarRanura = indiceRanurasLibresMasUsadas.get(ranUs);
+                            indiceRanurasLibresMasUsadas.set(ranUs, indiceRanurasLibresMasUsadas.get(ranUs2));
+                            indiceRanurasLibresMasUsadas.set(ranUs2, auxiliarRanura);
+                        }
+                    }
+                }              
+            }
             indiceDeRanurasLibres = new ArrayList<>();
             indiceDeRanurasLibres.addAll(indiceRanurasLibresMasUsadas);  
             return indiceDeRanurasLibres;
         } else {
             return indiceDeRanurasLibres;
-        }           
-
-        //return indiceDeRanurasLibres;
+        } 
+//HASTA AQUI
+//        return indiceDeRanurasLibres;
     }
 
     //AQUI CREO QUE SE CALCULA SI LA RANURA ACTUAL TIENE DISPONIBLE LA BANDA GUARDA
@@ -448,12 +469,13 @@ public class PoblacionInicial {
                 solucion.getEnlaces().get(ubicacion).getRanuras().set(j, true);
                 //AQUI SE ACTUALIZA UN CONTADOR DE LAS RANURAS USADAS
                 solucion.getEnlaces().get(ubicacion).getRanurasUsadas().set(j, solucion.getEnlaces().get(ubicacion).getRanurasUsadas().get(j)+1);
+                
             }
         }
 
         // crea el objeto que cubre esta demanda y agrega a solucion
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
-            //SI YA EXISTE EL RUTEO NO HACE FALTA AGREGAR A LA LISTA DE RUTEOS DE SOLCUION
+            //SI YA EXISTE EL RUTEO NO HACE FALTA AGREGAR A LA LISTA DE RUTEOS DE SOLUCION
             if (solucion.getRuteos().get(i).getOriden() == demandaInfo.getOrigen() &&
                     solucion.getRuteos().get(i).getDestino() == demandaInfo.getDestino()) {
                 existe = true;
@@ -461,7 +483,7 @@ public class PoblacionInicial {
                 break;
             }
         }
-        //SI EXITSTE SE ACTUALIZA LAS RANURAS USADAS
+        //SI EXISTE SE ACTUALIZA LAS RANURAS USADAS
         if (existe){
             solucion.getRuteos().get(posicion).setRanurasUsadas(ranurasUsadas);
         } else {
@@ -1121,20 +1143,29 @@ public class PoblacionInicial {
         Enlace enlace;
         List<Enlace> enlaces = new ArrayList<>();
         List<Boolean> ranuras;
+        List<Integer> ranurasUsadas;
 
         for (i = 0; i < topologia.get(0).size(); i++ ) {
             for (j = 0; j < topologia.get(0).size(); j++ ) {
                 if (topologia.get(i).get(j)){
                     enlace = new Enlace();
-                    ranuras = new ArrayList<>();
+                    ranuras = new ArrayList<>(); //LISTADO DE RANURAS PARA LA ASIGNACIÓN DE ESPECTRO
+                    ranurasUsadas = new ArrayList<>(); //LISTADO DE LA CANTIDAD USADA POR CADA RANURA
                     for (k = 0; k < cantRanuras; k++) {
-                        ranuras.add(false);
+                        ranuras.add(false); 
+                        ranurasUsadas.add(0); //ESTO GENERA E INICIALIZA EL CONTADOR DE USO DE LAS RANURAS PARA
+                                              //CALCULAR EL MAS USADO Y MENOS USADO     
                     }
 
                     enlace.setInicio(i);
                     enlace.setFin(j);
                     enlace.setRanuras(ranuras);
-
+                    if ("mostUsed".equals(algoritmo)) {
+                        enlace.setRanurasUsadas(ranurasUsadas);                    
+                    }
+                    else { 
+                        enlace.setRanurasUsadas(ranurasUsadas);
+                    }
                     enlaces.add(enlace);
                 }
             }
