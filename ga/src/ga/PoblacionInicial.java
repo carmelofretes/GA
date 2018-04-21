@@ -347,12 +347,7 @@ public class PoblacionInicial {
                 }
             } else if ("exactFit".equals(algoritmo)) {
                 //asignación de ranura EXACT FIT
-                if (ranurasDisponiblesImpar.isEmpty()) {
-                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
-                } else {
-                    //int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
-                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponiblesExactas.get(0));    
-                }                        
+                agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
             } else {
                 return false;
             }            
@@ -382,14 +377,14 @@ public class PoblacionInicial {
 
         List<Integer> indiceDeRanurasLibres = new ArrayList<>();
         List<Integer> indiceRanurasLibresMasUsadas = new ArrayList<>();
-        List<Integer> indiceRanurasLibresExactas = new ArrayList<>();
+//        List<Integer> indiceRanurasLibresExactas = new ArrayList<>();
 
         // obtener ranuras libres del primer enlace
         for (int i = 0; i < enlaces.get(0).getRanuras().size(); i++) {
             if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() + nivelDeModulacion)) {
                 indiceDeRanurasLibres.add(i);
                 //O AQUI PUEDO PONER PARA CONTROLAR LA EXACTITUD DE LA RANURA PARA LA POLITICA EXACT FIT
-                if ("exactFit".equals(algoritmo)) {
+                /*if ("exactFit".equals(algoritmo)) {
                     if (i == 0){
                         if (enlaces.get(0).getRanuras().get(i + demandaInfo.getTraf() + nivelDeModulacion)) {
                             //ENTONCES ES EXACTO
@@ -401,7 +396,7 @@ public class PoblacionInicial {
                             indiceRanurasLibresExactas.add(i);                    
                         }
                     }
-                }
+                }*/
                 //HASTA AQUI LAS POLITICAS DE ASIGNACIÓN EXACT FIT
                 
                 //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES                  
@@ -414,10 +409,10 @@ public class PoblacionInicial {
         //SI NO TIENEN CONTINUIDAD Y CONTIGUIDAD SE REMUEVE DE LA LISTA
         for (int i = 1; i < enlaces.size(); i++) {
             List<Integer> copiaIndiceDeRanurasLibres = new ArrayList<>();
-            List<Integer> copiaIndiceRanurasLibresExactas = new ArrayList<>();
+//            List<Integer> copiaIndiceRanurasLibresExactas = new ArrayList<>();
             
             copiaIndiceDeRanurasLibres.addAll(indiceDeRanurasLibres);
-            copiaIndiceRanurasLibresExactas.addAll(indiceRanurasLibresExactas);
+//            copiaIndiceRanurasLibresExactas.addAll(indiceRanurasLibresExactas);
             
             for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
                 if (!ranuraEsSolucion(enlaces.get(i).getRanuras(), indiceDeRanurasLibres.get(j), demandaInfo.getTraf() + nivelDeModulacion)) {
@@ -426,15 +421,10 @@ public class PoblacionInicial {
                 }
             }
             indiceDeRanurasLibres = new ArrayList<>();
-            indiceRanurasLibresExactas = new ArrayList<>();
+//            indiceRanurasLibresExactas = new ArrayList<>();
             
             indiceDeRanurasLibres.addAll(copiaIndiceDeRanurasLibres);
             
-            if ("exactFit".equals(algoritmo)) {
-                for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
-                    indiceRanurasLibresExactas.addAll(copiaIndiceRanurasLibresExactas);
-                }
-            }
         }
 
 // ESTE PEDAZO DE CODIGO USA PARA CALCULAR LA RANURA MAS USADA  
@@ -456,17 +446,34 @@ public class PoblacionInicial {
             indiceDeRanurasLibres = new ArrayList<>();
             indiceDeRanurasLibres.addAll(indiceRanurasLibresMasUsadas);  
             return indiceDeRanurasLibres;
+///////////////////////////////////////////////////////////////
+// ESTE PEDAZO DE CODIGO USA PARA CALCULAR LA RANURA EXACTA             
+///////////////////////////////////////////////////////////////
         } else if ("exactFit".equals(algoritmo)) {
-              if (indiceRanurasLibresExactas.isEmpty()) {
-                    return indiceDeRanurasLibres ;
-                } else {
-                    indiceDeRanurasLibres = new ArrayList<>();
-                    indiceDeRanurasLibres.addAll(indiceRanurasLibresExactas);
-                    return indiceDeRanurasLibres;    
+            List<Integer> indiceRanurasLibresExactas = new ArrayList<>();
+            
+            if (indiceDeRanurasLibres.get(indiceDeRanurasLibres.size()) == indiceDeRanurasLibres.size()) {
+                return indiceDeRanurasLibres;
+            } else  
+                
+                for (int rl = 0; rl < indiceDeRanurasLibres.size(); rl++) {
+                    //ME FALTA CONTROLAR QUE CUANDO LA PRIMERA RANURA SEA CERO NO HAGA RESTO DE - 1
+                    //AUNQUE POSIBLEMENTE NUNCA OCURRA ESTO DEBIDO A LA ASGINACION FIRST FIT QUE SE HACE
+                    //EN LA PRIMERA VEZ
+                    int ranAnt = enlaces.get(0).getRanuras().indexOf(rl-1) ;
+                    int ranPos = enlaces.get(0).getRanuras().indexOf(rl + demandaInfo.getTraf() + nivelDeModulacion);
+                
+                    if (enlaces.get(0).getRanuras().get(ranAnt) && enlaces.get(0).getRanuras().get(ranPos)) {
+                        //ENTONCES ES EXACTO
+                        indiceRanurasLibresExactas.add(rl);                    
+                    }
                 }            
-        } else {
+            indiceDeRanurasLibres = new ArrayList<>();
+            indiceDeRanurasLibres.addAll(indiceRanurasLibresExactas);
             return indiceDeRanurasLibres;
         } 
+        return indiceDeRanurasLibres;
+        
 //HASTA AQUI
 //        return indiceDeRanurasLibres;
     }
