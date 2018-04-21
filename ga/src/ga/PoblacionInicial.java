@@ -305,7 +305,8 @@ public class PoblacionInicial {
         /////////////////////////////////////////////////////////////////////////////////////////// 
         //HASTA AQUI
         ///////////////////////////////////////////////////////////////////////////////////////////
-           
+        
+        
 // elegir randomicamente una posicion de ranurasDisponibles
 // asignar esa ranura a la solucion para esta demanda
         if (ranurasDisponibles.isEmpty())
@@ -340,13 +341,18 @@ public class PoblacionInicial {
                 //asignación de ranura MOST USED
                 if (solucion.getRuteos().isEmpty()) {
                     agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
-                }
+                } else {
                     //int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
-                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));
-            
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranurasDisponibles.size()-1));    
+                }
             } else if ("exactFit".equals(algoritmo)) {
                 //asignación de ranura EXACT FIT
-                        
+                if (ranurasDisponiblesImpar.isEmpty()) {
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
+                } else {
+                    //int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
+                    agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponiblesExactas.get(0));    
+                }                        
             } else {
                 return false;
             }            
@@ -376,11 +382,27 @@ public class PoblacionInicial {
 
         List<Integer> indiceDeRanurasLibres = new ArrayList<>();
         List<Integer> indiceRanurasLibresMasUsadas = new ArrayList<>();
+        List<Integer> indiceRanurasLibresExactas = new ArrayList<>();
 
         // obtener ranuras libres del primer enlace
         for (int i = 0; i < enlaces.get(0).getRanuras().size(); i++) {
             if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() + nivelDeModulacion)) {
                 indiceDeRanurasLibres.add(i);
+                //O AQUI PUEDO PONER PARA CONTROLAR LA EXACTITUD DE LA RANURA PARA LA POLITICA EXACT FIT
+                if ("exactFit".equals(algoritmo)) {
+                    if (i == 0){
+                        if (enlaces.get(0).getRanuras().get(i + demandaInfo.getTraf() + nivelDeModulacion)) {
+                            //ENTONCES ES EXACTO
+                            indiceRanurasLibresExactas.add(i);
+                        }
+                    } else {
+                        if (enlaces.get(0).getRanuras().get(i-1) && enlaces.get(0).getRanuras().get(i + demandaInfo.getTraf() + nivelDeModulacion)) {
+                            //ENTONCES ES EXACTO
+                            indiceRanurasLibresExactas.add(i);                    
+                        }
+                    }
+                }
+                //HASTA AQUI LAS POLITICAS DE ASIGNACIÓN EXACT FIT
                 
                 //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES                  
             }
@@ -392,15 +414,27 @@ public class PoblacionInicial {
         //SI NO TIENEN CONTINUIDAD Y CONTIGUIDAD SE REMUEVE DE LA LISTA
         for (int i = 1; i < enlaces.size(); i++) {
             List<Integer> copiaIndiceDeRanurasLibres = new ArrayList<>();
+            List<Integer> copiaIndiceRanurasLibresExactas = new ArrayList<>();
+            
             copiaIndiceDeRanurasLibres.addAll(indiceDeRanurasLibres);
+            copiaIndiceRanurasLibresExactas.addAll(indiceRanurasLibresExactas);
             
             for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
                 if (!ranuraEsSolucion(enlaces.get(i).getRanuras(), indiceDeRanurasLibres.get(j), demandaInfo.getTraf() + nivelDeModulacion)) {
                     copiaIndiceDeRanurasLibres.remove(indiceDeRanurasLibres.get(j));
+                    //copiaIndiceRanurasLibresExactas.remove(indiceRanurasLibresExactas.get(j)); //EN EL CASO DE EXACT FIT
                 }
             }
             indiceDeRanurasLibres = new ArrayList<>();
+            indiceRanurasLibresExactas = new ArrayList<>();
+            
             indiceDeRanurasLibres.addAll(copiaIndiceDeRanurasLibres);
+            
+            if ("exactFit".equals(algoritmo)) {
+                for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
+                    indiceRanurasLibresExactas.addAll(copiaIndiceRanurasLibresExactas);
+                }
+            }
         }
 
 // ESTE PEDAZO DE CODIGO USA PARA CALCULAR LA RANURA MAS USADA  
@@ -422,6 +456,14 @@ public class PoblacionInicial {
             indiceDeRanurasLibres = new ArrayList<>();
             indiceDeRanurasLibres.addAll(indiceRanurasLibresMasUsadas);  
             return indiceDeRanurasLibres;
+        } else if ("exactFit".equals(algoritmo)) {
+              if (indiceRanurasLibresExactas.isEmpty()) {
+                    return indiceDeRanurasLibres ;
+                } else {
+                    indiceDeRanurasLibres = new ArrayList<>();
+                    indiceDeRanurasLibres.addAll(indiceRanurasLibresExactas);
+                    return indiceDeRanurasLibres;    
+                }            
         } else {
             return indiceDeRanurasLibres;
         } 
@@ -432,12 +474,13 @@ public class PoblacionInicial {
     //AQUI CREO QUE SE CALCULA SI LA RANURA ACTUAL TIENE DISPONIBLE LA BANDA GUARDA
     public static boolean ranuraEsSolucion(List<Boolean> ranuras, int ranura, int cantSolicitada) {
         //AQUI CONTROLA QUE EL TAMAÑO DE LA RANURA NO SUPERE LA CANTIDAD DE RANURAS TOTALES
-        if (!ranuras.get(ranura) && ranuras.size() > (ranura + cantSolicitada)) { 
+        if (!ranuras.get(ranura) && ranuras.size() >= (ranura + cantSolicitada)) { //tiene que ser mayor o igual
             for (int i = (ranura + 1); i < (ranura + cantSolicitada); i++) { //+1 PARA VEER DISPONIBILIDAD DE LA BANDA GUARDA
-                if (ranuras.get(i)) {
+                if (ranuras.get(i)) {                        
                     return false;
                 }
             }
+            //AQUI TENGO QUE VER SI LA RANURA SELECCINADA ES UNA RANURA EXACTA PARA LA POLITICA EXACT FIT
             return true;
         }
         return false;
