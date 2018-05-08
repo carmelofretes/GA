@@ -17,7 +17,7 @@ public class PoblacionInicial {
     private static Long saltoMayor;
     private static Long espectroMayor;
     private static int nivelDeModulacion = 1;
-    private static String algoritmo = "mostUsed";
+    private static String algoritmo = "exactFit";
     private static String topologia = "tipoRed";
     private static List<String> tiposDeCarga = new ArrayList<>();
 
@@ -102,7 +102,11 @@ public class PoblacionInicial {
         List<Solucion> poblacionInicial = new ArrayList<>();
 
         List<DemandaInfo> demandasMayores = new ArrayList<>();
+        /////////////////////////////////////////////////////////////////////
+        //AQUI SE GENERA LA MATRIZ DE CARGA Y SE DEVIDE EN 70%(ALEATORIO) Y 30%(LOS MAYORES)
+        /////////////////////////////////////////////////////////////////////
         demandasMayores.addAll(definirOrdenDemandas(demandaInfoList));
+        /////////////////////////////////////////////////////////////////////
         List<Enlace> enlacesUsados = new ArrayList<>();
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -452,18 +456,27 @@ public class PoblacionInicial {
         } else if ("exactFit".equals(algoritmo)) {
             List<Integer> indiceRanurasLibresExactas = new ArrayList<>();
             
-            if (indiceDeRanurasLibres.get(indiceDeRanurasLibres.size()) == indiceDeRanurasLibres.size()) {
-                return indiceDeRanurasLibres;
-            } else  
+//            if (indiceDeRanurasLibres.get(indiceDeRanurasLibres.size()) == indiceDeRanurasLibres.size()) {
+//                return indiceDeRanurasLibres;
+//            } else  
                 
-                for (int rl = 0; rl < indiceDeRanurasLibres.size(); rl++) {
+                for (int rl = 0; rl < indiceDeRanurasLibres.size()-1; rl++) {
                     //ME FALTA CONTROLAR QUE CUANDO LA PRIMERA RANURA SEA CERO NO HAGA RESTO DE - 1
                     //AUNQUE POSIBLEMENTE NUNCA OCURRA ESTO DEBIDO A LA ASGINACION FIRST FIT QUE SE HACE
                     //EN LA PRIMERA VEZ
-                    int ranAnt = enlaces.get(0).getRanuras().indexOf(rl-1) ;
-                    int ranPos = enlaces.get(0).getRanuras().indexOf(rl + demandaInfo.getTraf() + nivelDeModulacion);
-                
-                    if (enlaces.get(0).getRanuras().get(ranAnt) && enlaces.get(0).getRanuras().get(ranPos)) {
+                    //
+                    boolean ranAnt;
+                    boolean ranPos;
+                            
+                    if (rl == 0) {
+                        ranAnt = false ;
+                    } else { 
+                        ranAnt = enlaces.get(0).getRanuras().get(rl-1) ;
+                    }
+                    
+                    ranPos = enlaces.get(0).getRanuras().get(rl + demandaInfo.getTraf() + nivelDeModulacion);
+ 
+                    if (!ranAnt && !ranPos) {
                         //ENTONCES ES EXACTO
                         indiceRanurasLibresExactas.add(rl);                    
                     }
