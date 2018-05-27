@@ -20,7 +20,7 @@ public class PoblacionInicial {
     private static String algoritmo = "exactFit";
     private static String topologia = "tipoRed";
     private static List<String> tiposDeCarga = new ArrayList<>();
-
+//
     public static void main(String [] args) throws IOException {
         tiposDeCarga.add("Uniforme");
         tiposDeCarga.add("Aleatoria");
