@@ -5,7 +5,11 @@
  */
 package ga;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +22,23 @@ import java.util.Random;
 public class prueba {
     
     public static void main(String [] args) throws IOException {
-        System.out.println("Aqui creamos la lista:");
+        
+        File f = new File("G:/Genetico/prueba/prueba.txt");
+        FileWriter fw = new FileWriter(f);
+
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter wr = new PrintWriter(bw);
+
+        wr.write("PRIMERO");
+        wr.write("\tSEGUNDO");
+        wr.write("\tTERCERO");
+        wr.write("\tCUARTO");
+        wr.write("\tQUINTO");
+        wr.write("\tSEXTO");
+
+        wr.close();
+        bw.close();        
+/*        System.out.println("Aqui creamos la lista:");
         System.out.println("List<String> ejemploLista = new ArrayList<>();");     
         List<Integer> ejemploLista = new ArrayList<>();
         List<Integer> ejemploUsados = new ArrayList<>();
@@ -58,7 +78,7 @@ public class prueba {
             }
         }     
         
-        System.out.println(ejemploLista);
+        System.out.println(ejemploLista);*/
 
 /*        for (int i = 0; i<=ejemploLista.size() - 1; i++) {
             //System.out.println(ejemploLista.get(i));

@@ -17,8 +17,8 @@ public class PoblacionInicial {
     private static Long saltoMayor;
     private static Long espectroMayor;
     private static int nivelDeModulacion = 1;
-    private static String algoritmo = "exactFit";
-    private static String topologia = "tipoRed";
+    private static String algoritmo = "randomFit";
+    private static String topologia = "arpanet";
     private static List<String> tiposDeCarga = new ArrayList<>();
 //
     public static void main(String [] args) throws IOException {
@@ -45,20 +45,20 @@ public class PoblacionInicial {
 
             List<Integer> cantDemandas = new ArrayList<>();
             cantDemandas.add(50); //escenarios de demandas
-            cantDemandas.add(35);
             cantDemandas.add(100);
-            //cantDemandas.add(200);
+            cantDemandas.add(150);
+            cantDemandas.add(200);
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-            int k = 2;   //ATENCION!!!  ESTO CAMBIAR DE ACUERDO A LOS CAMINOS.
+            int k = 5;   //ATENCION!!!  ESTO CAMBIAR DE ACUERDO A LOS CAMINOS.
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-            int cantCantidadDeDemandas = 3; // estos son los escenarios
+            int cantCantidadDeDemandas = 4; // estos son los escenarios
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
             String archivoDeMaximos;
             String pathActual;
             long TInicio, TFin; //Variables para determinar el tiempo de ejecución
 
-            for (int a = 0; a < k; a++) {
-                for (int d = 0; d < cantCantidadDeDemandas; d++) {
+            for (int a = 1; a < k; a++) {     //ATENCION!! PONER NORMAL a=0
+                for (int d = 3; d < cantCantidadDeDemandas; d++) {  //ATENCION!! PONER NORMAL d=0
                     pathActual = pathInicial + "k" + (a + 1) + "\\cantSolicitada" + cantDemandas.get(d) + "\\";
                     archivoDeMaximos = pathActual + "maximos.txt";
                     demandaInfoList.addAll(llenarDemandInfo(pathActual + "ga.txt"));
@@ -85,9 +85,9 @@ public class PoblacionInicial {
                             long minRunningMemory = (1024 * 1024);
 
                             Runtime runtime = Runtime.getRuntime();
-
+                            System.gc();
                             if (runtime.freeMemory() < minRunningMemory)
-                                System.gc();
+                            System.gc();
                         }
                     }
                     demandaInfoList = new ArrayList<>();
@@ -105,25 +105,38 @@ public class PoblacionInicial {
         /////////////////////////////////////////////////////////////////////
         //AQUI SE GENERA LA MATRIZ DE CARGA Y SE DEVIDE EN 70%(ALEATORIO) Y 30%(LOS MAYORES)
         /////////////////////////////////////////////////////////////////////
-        demandasMayores.addAll(definirOrdenDemandas(demandaInfoList));
+        //demandasMayores.addAll(definirOrdenDemandas(demandaInfoList));
         /////////////////////////////////////////////////////////////////////
-        List<Enlace> enlacesUsados = new ArrayList<>();
+
+        /////////////////////////////////////////////////////////////////////
+        //AQUI SE GENERA LA MATRIZ DE CARGA Y SE ATIENDE TAL CUAL COMO LLEGA (EL PAPPER DEL CORECO)
+        /////////////////////////////////////////////////////////////////////
+        demandasMayores.addAll(definirOrdenDemandasSecuencial(demandaInfoList));
+        /////////////////////////////////////////////////////////////////////
+        
+//ATNCION HABILITAR ESTE PARA MOST LEAST USED        
+//        List<Enlace> enlacesUsados = new ArrayList<>();
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //AQUI SE GENERAN LAS SOLUCIONES  DE LA POBLACIÓN INICIAL, SE LE ASGINAN LAS RANURAS CORRESPONDIENTES
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         
         for (int i = 0; i < cantSolucionesIniciales; i++) {
-            if (!poblacionInicial.isEmpty()) {
+            //AQUI SACAR EL COMENTARIO PARA USAR MOST LEAST USED
+            /*if (!poblacionInicial.isEmpty()) {
                 enlacesUsados.addAll(poblacionInicial.get(i-1).getEnlaces()); 
-            }
-            poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList, enlacesUsados));            
-
+            }*/
+            //ESTE ES EL ANTERIOR PARA  MOST AND LEAST USED
+            //poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList, enlacesUsados));            
+            poblacionInicial.add(generarSolucion(totalRanuras, topologia, demandasMayores, demandaInfoList));            
+            
         }
 
         return poblacionInicial;
     }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//MODULO 30/70 - ESTE ES EL PAPPER DE YSAPY DONDE SEPARAN LOS EN 30/70, SE USA DE ACUERDO AL LLAMADO QUE VIENE DEL GA
+///////////////////////////////////////////////////////////////////////////////////////////////////////    
     public static List<DemandaInfo> definirOrdenDemandas (List<DemandaInfo> demandasInfo) {
         int i, r;
 
@@ -136,6 +149,7 @@ public class PoblacionInicial {
         aux = obtenerDemandasMayores(demandasInfo);
 
         // ordenar aux de mayor a menor
+
         ordenar(aux);
         infoCopy.addAll(aux);
 
@@ -154,19 +168,61 @@ public class PoblacionInicial {
 
         return mayores;
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASTA ACA MODULO 30/70
+///////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//MODULO SECUENCIAL - ESTE ES EL PAPPER DEL CHINO CON QUIEN COMPETIMOS, SE USA DE ACUERDO AL LLAMADO QUE VIENE DEL GA
+///////////////////////////////////////////////////////////////////////////////////////////////////////    
+    public static List<DemandaInfo> definirOrdenDemandasSecuencial (List<DemandaInfo> demandasInfo) {
+        int i, r;
 
-    public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo, List<Enlace> enlacesUsados) {
-        List<Enlace> auxEnlacesUsados = enlacesUsados;
+        List<DemandaInfo> mayores = new ArrayList<DemandaInfo>();
+        List<DemandaInfo> aux;
+        //List<DemandaInfo> infoCopy = new ArrayList<DemandaInfo>();
+
+        //traer la lista de demandasInfo con las filas que tienen la mayor X de cada demanda
+        //ESTO SE APLICA CUANDO LA DEMANDA TENGA  MAS DE UN CAMINO
+        aux = obtenerDemandasSecuencial(demandasInfo);
+        mayores.addAll(aux);
+        // ordenar aux de mayor a menor
+
+/*        ordenar(aux);
+        infoCopy.addAll(aux);
+
+        // copio el 30% de los mayores a mayores
+        for (i = 0; i < floor(aux.size() * 0.3); i++){
+            mayores.add(aux.get(i));
+            infoCopy.remove(aux.get(i));
+        }
+
+        // copio el 70% restante en orden aleatorio
+        for (i = 0; i < aux.size() - floor(aux.size() * 0.3); i++){
+            r = (int)(Math.random()*infoCopy.size());
+            mayores.add(infoCopy.get(r));
+            infoCopy.remove(r);
+        }*/
+
+        return mayores;
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASTA ACA MODULO SECUENCIAL
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //ESTE ES EL ANTERIOR PARA MOST AND LEAST USED
+    //public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo, List<Enlace> enlacesUsados) {
+    public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo) {
+        //SACAR ESTE COMENTARIO PARA MOST AND LEAST USED
+        //List<Enlace> auxEnlacesUsados = enlacesUsados;
         /////////////////////////////////////////////////////////////////////
         //AQUI SE GENERAN LOS ENLACES Y LAS RANURAS PARA TODOS LOS NODOS DE LA TOPOLOGIA
         /////////////////////////////////////////////////////////////////////    
         List<Enlace> enlacesIniciales = generarListaInicialRanuras (cantRanuras, topologia);
 
-        for (int eu = 0; eu < auxEnlacesUsados.size(); eu++) {
+        /*for (int eu = 0; eu < auxEnlacesUsados.size(); eu++) {
             if (auxEnlacesUsados.get(eu).getInicio() == enlacesIniciales.get(eu).getInicio()) {
                 enlacesIniciales.get(eu).setRanurasUsadas(auxEnlacesUsados.get(eu).getRanurasUsadas());
             }
-        }
+        }*/
         //////////////////////////////////////////////////////////////////////////////////
         // AQUI SE GENERA LA SOLUCION Y SE DEBE 
         //inicializar con una lista de enlaces en la cual todas sus ranuras estan libres
@@ -295,8 +351,9 @@ public class PoblacionInicial {
         ///////////////////////////////////////////////////////////////////////////////////////////
         //AQUI GENERO DOS PARTICIONES DE MANERA A DETERMINAR CUALES SON IMPARES Y PARES
         //PARA IMPLEMENTAR LA POLITICA FIRST-LAST FIT
+        //ATENCION!!! DESHABILITAR PARA FIRST-LAST FIT
         ///////////////////////////////////////////////////////////////////////////////////////////
-        for (int rd = 0; rd < ranurasDisponibles.size(); rd++) {
+/*        for (int rd = 0; rd < ranurasDisponibles.size(); rd++) {
            //Integer ranuraDisp = ranurasDisponibles.get(rd);
             if (esImpar(ranurasDisponibles.get(rd))) {
                 //ES IMPAR
@@ -305,7 +362,7 @@ public class PoblacionInicial {
                 //ES PAR
                 ranurasDisponiblesPar.add(rd);
             }
-        }
+        }*/
         /////////////////////////////////////////////////////////////////////////////////////////// 
         //HASTA AQUI
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -316,7 +373,7 @@ public class PoblacionInicial {
         if (ranurasDisponibles.isEmpty())
             return false;
         else {
-            if ("randomfit".equals(algoritmo)) {
+            if ("randomFit".equals(algoritmo)) {
                 // elegir enlaces RANDOM FIT
                 int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
                 agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranuraElegida));
@@ -403,7 +460,7 @@ public class PoblacionInicial {
                 }*/
                 //HASTA AQUI LAS POLITICAS DE ASIGNACIÓN EXACT FIT
                 
-                //AQUI CREAR EL ARRAY CON SLOTS IMPARES Y PARES                  
+                //AQUI PUEDO CREAR EL ARRAY CON SLOTS IMPARES Y PARES                  
             }
         }  
         
@@ -514,11 +571,11 @@ public class PoblacionInicial {
 
         Ruteo ruteo = new Ruteo();
         List<Integer> ranurasUsadas = new ArrayList<>();
-
-        // crea una lista de la posicion de las ranuras que usa cada enlace
+//ATENDER!!!!!!!!!!!! sacar para most used o least used
+/*        // crea una lista de la posicion de las ranuras que usa cada enlace
         for (int i = primeraRanura; i < ranurasSolicitadas + primeraRanura; i++) {
             ranurasUsadas.add(i);
-        }
+        }*/
 
         // marca en la solucion cuales son las ranuras que van a ser ocupadas por esta demanda
         for (int i = 0; i < demandaInfo.getRuta().size() - 1; i++) {
@@ -530,8 +587,9 @@ public class PoblacionInicial {
             /////////////////////////////////////////////////////////////////////////////
             for (j = primeraRanura; j < (ranurasSolicitadas + primeraRanura); j++) {
                 solucion.getEnlaces().get(ubicacion).getRanuras().set(j, true);
-                //AQUI SE ACTUALIZA UN CONTADOR DE LAS RANURAS USADAS
-                solucion.getEnlaces().get(ubicacion).getRanurasUsadas().set(j, solucion.getEnlaces().get(ubicacion).getRanurasUsadas().get(j)+1);
+                //AQUI SE ACTUALIZA UN CONTADOR DE LAS RANURAS USADAS 
+//ATENCION!!!   //descomentar para cuando se usa most o least used
+                //solucion.getEnlaces().get(ubicacion).getRanurasUsadas().set(j, solucion.getEnlaces().get(ubicacion).getRanurasUsadas().get(j)+1);
                 
             }
         }
@@ -763,7 +821,10 @@ public class PoblacionInicial {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //HASTA AQUI
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.gc();
+
         return poblacionActual;
+        
 
     }
 
@@ -785,12 +846,12 @@ public class PoblacionInicial {
         Random rnd = new Random();
 
 //AQUI TENGO PROBLEMAS PARA HALLAR EL PUNTO DE CRUCE
-//      int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()- 3) + 0;
-//      int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 2) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1);
+      int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()- 3) + 0;
+      int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 2) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1);
         
         //DESDE AQUI ES DE CARMELO //////////////////////////////////////////////////////////
-        int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()-2); // -2 depende de la cantidad de rutas que haya
-        int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 1) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1) ;
+        //int puntoDeCruce1 = rnd.nextInt(reproductor1.getRuteos().size()-2); // -2 depende de la cantidad de rutas que haya
+        //int puntoDeCruce2 = rnd.nextInt((reproductor1.getRuteos().size() - 1) - (puntoDeCruce1 + 1) + 1) + (puntoDeCruce1 + 1) ;
         // HASTA AQUI /////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////////////////////////////////////////
@@ -894,7 +955,6 @@ public class PoblacionInicial {
         solucion.setCosto(getCostoDeLaSolucion(solucion, demandasInfo));
 
         solucion.setFitness(solucion.getCosto()/costoMayor + solucion.getSaltos()/saltoMayor + solucion.getEspectro()/espectroMayor);
-
     }
 
     public static void recalcularRanuras (Solucion solucion, List<DemandaInfo> demandasInfo) {
@@ -1206,29 +1266,30 @@ public class PoblacionInicial {
         Enlace enlace;
         List<Enlace> enlaces = new ArrayList<>();
         List<Boolean> ranuras;
-        List<Integer> ranurasUsadas;
+        //List<Integer> ranurasUsadas;
 
         for (i = 0; i < topologia.get(0).size(); i++ ) {
             for (j = 0; j < topologia.get(0).size(); j++ ) {
                 if (topologia.get(i).get(j)){
                     enlace = new Enlace();
                     ranuras = new ArrayList<>(); //LISTADO DE RANURAS PARA LA ASIGNACIÓN DE ESPECTRO
-                    ranurasUsadas = new ArrayList<>(); //LISTADO DE LA CANTIDAD USADA POR CADA RANURA
+                    //ranurasUsadas = new ArrayList<>(); //LISTADO DE LA CANTIDAD USADA POR CADA RANURA
                     for (k = 0; k < cantRanuras; k++) {
                         ranuras.add(false); 
-                        ranurasUsadas.add(0); //ESTO GENERA E INICIALIZA EL CONTADOR DE USO DE LAS RANURAS PARA
+                        //ranurasUsadas.add(0); //ESTO GENERA E INICIALIZA EL CONTADOR DE USO DE LAS RANURAS PARA
                                               //CALCULAR EL MAS USADO Y MENOS USADO     
                     }
 
                     enlace.setInicio(i);
                     enlace.setFin(j);
                     enlace.setRanuras(ranuras);
-                    if ("mostUsed".equals(algoritmo)) {
+//ATENCION SACAR CUANDO SEA MOST O LEAST USED                    
+/*                    if ("mostUsed".equals(algoritmo)) {
                         enlace.setRanurasUsadas(ranurasUsadas);                    
                     }
                     else { 
                         enlace.setRanurasUsadas(ranurasUsadas);
-                    }
+                    }*/
                     enlaces.add(enlace);
                 }
             }
@@ -1236,7 +1297,9 @@ public class PoblacionInicial {
 
         return enlaces;
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////    
+//METODO MAYORES - ESTE METODO DEFINE LOS MAYORES COSTOS DE LA RUTA, PARA LUEGO ORDENARLOS
+////////////////////////////////////////////////////////////////////////////////////////////////////
     public static List<DemandaInfo> obtenerDemandasMayores(List<DemandaInfo> demandasInfo) {
         List<DemandaInfo> aux = new ArrayList<>();
         DemandaInfo demandaInfo;
@@ -1257,6 +1320,33 @@ public class PoblacionInicial {
 
         return aux;
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////    
+//HASTA ACA - METODO MAYORES
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////    
+//METODO SECUENCIAL - ESTE METODO DEFINE LAS SOLICITUDES TAL CUAL COMO VIENEN
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static List<DemandaInfo> obtenerDemandasSecuencial(List<DemandaInfo> demandasInfo) {
+        List<DemandaInfo> aux = new ArrayList<>();
+        DemandaInfo demandaInfo;
+        int i = 0;
+
+        while (i < demandasInfo.size()) {
+            demandaInfo = demandasInfo.get(i);
+            while (i < demandasInfo.size() &&
+                    demandaInfo.getOrigen() == demandasInfo.get(i).getOrigen() &&
+                    demandaInfo.getDestino() == demandasInfo.get(i).getDestino() ) {
+                    demandaInfo = demandasInfo.get(i);
+                    i++;
+            }
+            aux.add(demandaInfo);
+        }
+
+        return aux;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////    
+//HASTA ACA - METODO SECUENCIAL 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //    public static void guardarEnArchivo(List<Solucion> conjuntoSoluciones, int corridaNumero, List<DemandaInfo> demandasInfo, String archivo, Long tiempoInicial) throws IOException {
 //
@@ -1416,10 +1506,18 @@ public class PoblacionInicial {
         int corridaNro = corridaNumero + 1;
         File f = new File(path + "corridaNro_" + corridaNro + ".txt");
         FileWriter fw = new FileWriter(f);
+        
+        //ESTA ES MI SALIDA PARA EL HYPERVOLUMEN
+        File f1 = new File(path + "hypervolumen_corridaNro_" + corridaNro + "_3objetivoos.txt");            
+        FileWriter fw1 = new FileWriter(f1);
 
         try{
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
+            
+            //ESTA ES MI SALIDA PARA EL HYPERVOLUMEN
+            BufferedWriter bw1 = new BufferedWriter(fw1);
+            PrintWriter wr1 = new PrintWriter(bw1);
 
             //Collections.sort(conjuntoSoluciones);
             for (i = 0; i < conjuntoSoluciones.size(); i++) {
@@ -1437,6 +1535,11 @@ public class PoblacionInicial {
                 wr.write("\nEspectro Mayor: " + conjuntoSoluciones.get(i).getEspectro());
                 wr.write("\nConjunto Pareto (R): " + conjuntoSoluciones.get(i).getPareto());
                 
+                //ESTA ES MI SALIDA PARA EL HYPERVOLUMEN
+                wr1.write("" + conjuntoSoluciones.get(i).getCosto());
+                wr1.write("\t" + conjuntoSoluciones.get(i).getSaltos());
+                wr1.write("\t" + conjuntoSoluciones.get(i).getEspectro());
+                wr1.write("\t" + conjuntoSoluciones.get(i).getPareto() + "\n");                
 
                 wr.write("\n\n");
             }
@@ -1444,6 +1547,10 @@ public class PoblacionInicial {
             wr.write("\nTiempo total de ejecucion: " + tiempoDeEjecucion + " minutos.");
             wr.close();
             bw.close();
+            //mio
+            wr1.close();
+            bw1.close();
+            
         } catch (IOException e){
 
         }
@@ -1564,5 +1671,10 @@ public class PoblacionInicial {
         else
             return false;
     }
+    
+    public static void pasarGarbageCollector(){ 
+        Runtime garbage = Runtime.getRuntime();
+        garbage.gc();
+    }    
 }
 
