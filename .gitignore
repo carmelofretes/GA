@@ -5,3 +5,6 @@ ga/build/classes/ga/archivos/tipoRed/moga1/k1/cantSolicitada35/corridaNro_1.txt
 *.txt
 *.txt
 *.txt
+/ga/dist/
+/jMetal/nbproject/private/
+/jMetal/build/
