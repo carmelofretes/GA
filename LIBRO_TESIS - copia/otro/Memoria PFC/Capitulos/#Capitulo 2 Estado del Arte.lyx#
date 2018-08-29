@@ -1,0 +1,958 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass ociamthesis-lyx
+\options a4paper,titlepage
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_numerical
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Estado del Arte
+\end_layout
+
+\begin_layout Standard
+En el Capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Introducción"
+
+\end_inset
+
+, se ha destacado la importancia que tiene la seguridad en nuestra sociedad,
+ y Bla, Bla, Bla
+\end_layout
+
+\begin_layout Section
+TeleEye iView
+\end_layout
+
+\begin_layout Standard
+The TeleEye Group ha desarrollado un sistema de vídeo vigilancia para móviles
+ iOS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "iOS"
+description "Sistema operativo móvil de Apple. Integrado en los dispositivos iPhone, iPod, iPad y Apple TV."
+
+\end_inset
+
+ y Android
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Android"
+description "Sistema operativo de Google para dispositivos móviles basado en Linux y en aplicaciones middleware."
+
+\end_inset
+
+ que permite el control y visualización remota de videocámaras instaladas
+ en hogares o en oficinas desde cualquier parte del mundo
+\begin_inset CommandInset citation
+LatexCommand citep
+key "TeleyeiView"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename D:/Mis Datos/Universidad/PFC Videovigilancia por Móvil/LyX/Memoria PFC/figures/teleEye.jpg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+TeleEye iView para Android.
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ImagenTeleEye"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Fig TeleEye"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Características
+\end_layout
+
+\begin_layout Standard
+TeleEye iView está desarrollado siguiendo Bla, Bla, Bla...
+ y puede realizar PTZ
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "PTZ"
+description "Acrónimo de \\textit{pan-tilt-zoom}, es decir, moviento horizontal y vertical de la cámara y la posibilidad de acercar la imagen."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Ventajas
+\end_layout
+
+\begin_layout Itemize
+El cliente está disponible para un amplio número de dispositivos diseñados
+ tanto para Android como para iOS.
+\end_layout
+
+\begin_layout Itemize
+Transmisión de vídeo sobre Wi-Fi, HSDPA
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HSDPA"
+description "\\textit{High Speed Downlink Packet Access}, también denominada 3.5G, 3G+ o turbo 3G, es la optimización de la tecnología espectral UMTS/WCDMA."
+
+\end_inset
+
+, 3G
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "3G"
+description "Abreviación de \\textit{tercera generación} de transmisión de voz y datos a través de telefonía móvil mediante UMTS."
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "UMTS"
+description "\\textit{Universal Mobile Telecommunications Systems} es una tecnología sucesora de la tecnologia GSM, usada por los dispositivos móviles de tercera generación."
+
+\end_inset
+
+, EDGE
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "EDGE"
+description "\\textit{Enhaced Data Rates for GSM Evolution} o Tasas de Datos Mejoradas para la evolución de GSM, es una tecnología de la telefonía móvil que actúa como puente entre las redes 2G y 3G."
+
+\end_inset
+
+ o GPRS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GPRS"
+description "\\textit{General Packet Radio Service} o Servicio General de Paquetes Vía Radio es una extensión de GSM para la transmisión de datos por paquetes."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Bla, Bla, Bla
+\end_layout
+
+\begin_layout Subsection
+Desventajas
+\end_layout
+
+\begin_layout Itemize
+Es necesario un 
+\emph on
+hardware
+\emph default
+ específico que actúe como servidor, que será el encargado del control de
+ las cámaras y del envío en 
+\emph on
+streaming
+\emph default
+ del vídeo llamado 
+\series bold
+TeleEye Mobile Monitoring Solution (M-303)
+\series default
+, por lo tanto, no es gratuito.
+\end_layout
+
+\begin_layout Itemize
+En el cliente sólo es posible visualizar una de las cámaras Bla, Bla, Bla
+\end_layout
+
+\begin_layout Section
+Otro Ejemplo
+\end_layout
+
+\begin_layout Standard
+Bla, Bla, Bla
+\end_layout
+
+\begin_layout Subsection
+Características
+\end_layout
+
+\begin_layout Standard
+Bla, Bla, Bla
+\end_layout
+
+\begin_layout Subsection
+Ventajas
+\end_layout
+
+\begin_layout Itemize
+La grabación del vídeo se realiza a 30 
+\emph on
+frames
+\emph default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Frame"
+description "\\textit{Fotograma}, es una imagen particular dentro de una sucesión de imágenes que componen una animación."
+
+\end_inset
+
+ por segundo en tiempo real, con una resolución de 720 x 480 píxeles
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Píxel"
+description "Acrónimo en inglés de \\textit{Picture Element}, es la menor unidad homogénea en color que forma parte de una imagen digital."
+
+\end_inset
+
+ y se puede ajustar para que grabe a 352 x 240 píxeles con 240 
+\emph on
+frames
+\emph default
+ por segundo .
+\end_layout
+
+\begin_layout Itemize
+Permite la detección del movimiento en la imagen, siendo posible la configuració
+n del sistema para que sólo almacene el vídeo cuando se detecte movimiento,
+ de lo contrario, deja de grabar automáticamente.
+ Esto permite un ahorro importante de disco duro y de tiempo al visualizar
+ el vídeo almacenado.
+ 
+\end_layout
+
+\begin_layout Itemize
+Activa un sistema de alarma con el envío de un e-mail cuando se detecta
+ el movimiento.
+\end_layout
+
+\begin_layout Itemize
+Dispone de un puerto USB al que se puede conectar un disco duro externo
+ para posibles 
+\emph on
+backups
+\emph default
+, tanto completos como de parte del vídeo.
+ Este puerto no se puede emplear para tener espacio de almacenamiento extra
+ disponible en el servidor.
+\end_layout
+
+\begin_layout Itemize
+Es posible visualizar de manera simultánea las imágenes captadas por las
+ cámaras en un monitor VGA (con una resolución de 800 x 600 píxeles o de
+ 1280 x 1024 píxeles) y en los dispositivos móviles .
+\end_layout
+
+\begin_layout Itemize
+Se puede ampliar la memoria interna del servidor hasta 2 Terabytes, lo que
+ equivale a 120 días de grabación de manera continuada.
+ 
+\end_layout
+
+\begin_layout Itemize
+Cuando se llena la memoria, sigue grabando empezando de nuevo por el principio
+ de la misma, sobrescribiendo los datos almacenados, por lo que nunca se
+ detiene.
+\end_layout
+
+\begin_layout Itemize
+A través de Internet, es posible ver de manera remota el vídeo grabado empleando
+ 
+\emph on
+smartphones
+\emph default
+ de Blackberry, Android, Symbian 3 y 5, iOS y Windows Mobile.
+ 
+\end_layout
+
+\begin_layout Itemize
+Los días y el horario de grabación son programables por medio de la interfaz
+ del servidor.
+\end_layout
+
+\begin_layout Itemize
+Dos usuarios pueden ver de manera simultánea y remota el vídeo, sin experimentar
+ pérdidas en la QoS (
+\emph on
+Quality of Service
+\emph default
+).
+\end_layout
+
+\begin_layout Itemize
+En la pantalla se pueden visualizar hasta cuatro cámaras.
+ 
+\end_layout
+
+\begin_layout Itemize
+La búsqueda en los vídeos almacenados se realiza por fecha y hora.
+\end_layout
+
+\begin_layout Subsection
+Desventajas
+\end_layout
+
+\begin_layout Itemize
+Es necesario un 
+\emph on
+hardware
+\emph default
+ adicional que es el encargado de realizar la función de grabación del vídeo
+ capturado por las cámaras y de ofrecerlo a los clientes.
+\end_layout
+
+\begin_layout Itemize
+Precio aproximado de 275€.
+\end_layout
+
+\begin_layout Itemize
+No es un sistema distribuido, ya que no es posible la interconexión de varios
+ servidores.
+\end_layout
+
+\begin_layout Section
+Live2Phone
+\end_layout
+
+\begin_layout Standard
+Los desarrolladores de Intellsys SRL han creado un software que permite
+ la implantación de un sistema de vídeo vigilancia remota aprovechando los
+ equipos de los que dispone el usuario.
+ No es necesario un 
+\emph on
+hardware
+\emph default
+ adicional que actúe como servidor, ya que el servidor es una aplicación
+ compatible con los sistemas operativos existentes en el mercado
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Live2phone"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename D:/Mis Datos/Universidad/PFC Videovigilancia por Móvil/LyX/Memoria PFC/figures/live2Phone.jpg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Live2Phone para Symbian.
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ImagenLive2Phone"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Fig Live2Phone"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Características
+\end_layout
+
+\begin_layout Standard
+Live2Phone es una aplicación de vídeo vigilancia con 
+\emph on
+streaming
+\emph default
+ de vídeo, diseñada siguiendo el modelo de cliente-servidor.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Live2Phone Server
+\series default
+ es el elemento central del sistema, que se encontrará instalado en el ordenador
+ personal del cliente y se encargará de captar y procesar las fuentes de
+ vídeo desde una cámara web USB u otra fuente 
+\emph on
+Direct Show
+\emph default
+, como por ejemplo una capturadora de vídeo o una tarjeta de televisión.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Live2Phone Client
+\series default
+ se encontrará instalado en un teléfono móvil que disponga de Symbian S60
+ 3rd Edition.
+ También hay una versión del cliente para ordenadores de sobremesa.
+\end_layout
+
+\begin_layout Subsection
+Ventajas
+\end_layout
+
+\begin_layout Itemize
+Detección de movimiento con sensibilidad adaptable y con tono de alarma.
+\end_layout
+
+\begin_layout Itemize
+Soporta el 
+\emph on
+streaming
+\emph default
+ de vídeo de varias cámaras de manera simultánea.
+\end_layout
+
+\begin_layout Itemize
+Las cámaras soportadas pueden ser de diferentes marcas y modelos.
+\end_layout
+
+\begin_layout Itemize
+El 
+\emph on
+streaming
+\emph default
+ de vídeo está diseñado para consumir poco ancho de banda, con un 
+\emph on
+frame
+\emph default
+ rate de 4-6 
+\emph on
+frames
+\emph default
+/segundo y a 8KB/segundo.
+\end_layout
+
+\begin_layout Itemize
+Se puede instalar en sistemas con con IP dinámica.
+\end_layout
+
+\begin_layout Itemize
+El sistema de vigilancia es a tiempo completo, es decir, puede estar funcionando
+ las 24 horas del día durante los 7 días de la semana.
+\end_layout
+
+\begin_layout Subsection
+Desventajas
+\end_layout
+
+\begin_layout Itemize
+Tanto el cliente como el servidor no son multiplataforma, ya que el cliente
+ sólo está disponible para dispositivos móviles con Symbian S60 3rd Edition
+ y el servidor sólo está disponible para sistemas con Windows XP, 2000 o
+ Vista.
+\end_layout
+
+\begin_layout Itemize
+No permite la recepción del sonido de la cámara.
+\end_layout
+
+\begin_layout Itemize
+Este sistema no tiene implementado funciones PTZ.
+\end_layout
+
+\begin_layout Section
+MobileCamViewer
+\end_layout
+
+\begin_layout Standard
+La compañía mobiDEOS ha desarrollado un sistema de vídeo vigilancia para
+ monitorizar las cámaras web, cámaras IP, cámaras analógicas CCTV, NVR (
+\emph on
+Network Vídeo Recorder
+\emph default
+)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "NVR"
+description "\\textit{Network Video Recorder} es un programa software que almacena el vídeo captado por cámaras IP en formato digital en algún soporte de almacenamiento."
+
+\end_inset
+
+ y DVR (
+\emph on
+Digital Video Recorder
+\emph default
+)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "DVR"
+description "\\textit{Digital Vídeo Recorder} es un programa software que almacena el vídeo grabado por cámaras analógicas en algún soporte de almacenamiento."
+
+\end_inset
+
+ basado en un servidor que se encuentra en la nube y en un cliente instalado
+ en el dispositivo móvil
+\begin_inset CommandInset citation
+LatexCommand citep
+key "MobileCamViewer"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename D:/Mis Datos/Universidad/PFC Videovigilancia por Móvil/LyX/Memoria PFC/figures/MobileCamViewer.PNG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Logotipo MobileCamViewer.
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ImagenMobileCamViewer"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Fig MobileCamViewer"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Características
+\end_layout
+
+\begin_layout Standard
+Este sistema basado en cliente-servidor, permite visualizar las imágenes
+ captadas por alguna cámara IP y mostrarlo en un dispositivo móvil con iPhone,
+ Blackberry, Android, Windows Mobile y J2ME.
+\end_layout
+
+\begin_layout Subsection
+Ventajas
+\end_layout
+
+\begin_layout Itemize
+Permite el acceso a múltiples usuarios y la visualización simultánea de
+ una misma cámara.
+\end_layout
+
+\begin_layout Itemize
+El cliente y el servidor están disponibles para múltiples sistemas operativos.
+\end_layout
+
+\begin_layout Itemize
+El vídeo no se almacena en el servidor, se destruye nada más ser emitido.
+\end_layout
+
+\begin_layout Itemize
+La información está encriptada con Triple DES 112
+\begin_inset CommandInset citation
+LatexCommand citep
+key "TripleDES"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+El servidor está diseñado para operar como un cliente interno, pero también
+ está diseñado para ser utilizado en un modelo ASP
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "ASP"
+description "\\textit{Application Service Provider}, es una empresa que ofrece servicios de computación a sus clientes a través de una red."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Desventajas
+\end_layout
+
+\begin_layout Itemize
+No está disponible para Android.
+\end_layout
+
+\begin_layout Itemize
+No es un sistema distribuido, ya que no permite la interconexión entre varios
+ servidores.
+\end_layout
+
+\begin_layout Itemize
+Para hacer uso del servidor, hay que pagar unas cuotas por el servicio.
+\end_layout
+
+\begin_layout Section
+Alnet PC-Based DVRs and Systems
+\end_layout
+
+\begin_layout Standard
+Platinum CCTV Surveillance Solutions (Ez-Toyz Inc.) ha desarrollado un sistema
+ de seguridad con una gran cantidad de servicios de vídeo vigilancia remota
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "alnetSystem"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename D:/Mis Datos/Universidad/PFC Videovigilancia por Móvil/LyX/Memoria PFC/figures/Alnet PC-Based DVRs and Systems.jpg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Alnet para iPhone.
+\begin_inset CommandInset citation
+LatexCommand citep
+key "imagenAlnet"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Fig  Alnet"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Características
+\end_layout
+
+\begin_layout Standard
+El sistema se basa en una arquitectura cliente-servidor.
+ Hay dos modelos posibles para el servidor: el servidor puede ser un sistema
+ DVR con H.264 integrado en un 
+\emph on
+hardware
+\emph default
+ que realiza las funciones de almacenamiento de vídeo, control de las cámaras
+ analógicas y 
+\emph on
+streaming
+\emph default
+ del vídeo hacia los dispositivos móviles; o un 
+\emph on
+software
+\emph default
+ que hará que un ordenador con conexión a la red actúe como servidor NVR
+ de vídeo vigilancia, gestionando tanto las cámaras IP conectadas a la red,
+ como las cámaras conectadas al equipo a través de una tarjeta DVR, realizando
+ las mismas funciones mencionadas con anterioridad.
+ 
+\begin_inset Newline newline
+\end_inset
+
+El cliente está desarrollado tanto para PC como para los dispositivos móviles.
+ Se pueden realizar tareas tanto de visualización, cómo de control de las
+ cámaras de manera remota.
+\end_layout
+
+\begin_layout Subsection
+Ventajas
+\end_layout
+
+\begin_layout Itemize
+Admite un gran número de modelos de cámaras disponibles en el mercado.
+\end_layout
+
+\begin_layout Itemize
+Permite el acceso simultáneo a múltiples usuarios y la visualización de
+ una misma cámara al mismo tiempo sin pérdidas en la QoS (
+\emph on
+Quality of Service
+\emph default
+)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "QoS"
+description "\\textit{Quality of Service}, la totalidad de las características de un servicio de telecomunicaciones que determinan su capacidad para satisfacer las necesidades explícitas e implícitas del usuario del servicio."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+El cliente está disponible para Symbian, Windows Mobile, Android y iOS.
+\end_layout
+
+\begin_layout Itemize
+El vídeo puede ser almacenado, ya sea en el 
+\emph on
+hardware
+\emph default
+ de gestión de DVR o en el PC que actúa como servidor NVR.
+\end_layout
+
+\begin_layout Itemize
+Desde el cliente es posible seleccionar la calidad de la imagen recibida.
+\end_layout
+
+\begin_layout Itemize
+Tiene implementada la funcionalidad de control PTZ remoto.
+\end_layout
+
+\begin_layout Itemize
+El vídeo almacenado en el servidor puede ser visualizado de manera remota
+ en los dispositivos móviles.
+\end_layout
+
+\begin_layout Subsection
+Desventajas
+\end_layout
+
+\begin_layout Itemize
+El servidor sólo está disponible para Windows.
+\end_layout
+
+\begin_layout Itemize
+No es un sistema distribuido, ya que no permite la interconexión entre varios
+ servidores.
+\end_layout
+
+\end_body
+\end_document

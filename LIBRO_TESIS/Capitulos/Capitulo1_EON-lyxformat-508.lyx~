@@ -1,0 +1,149 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+ELASTIC OPTICAL NETWORKS 
+\end_layout
+
+\begin_layout Standard
+A network consists of the collection of nodes interconnected by links.
+ These links require transmission equipment, while the nodes require switching
+ equipment.
+ The different developments and technological research have shown that optics
+ is one of the best for signal transmission, since it can simultaneously
+ amplify multiple wavelength signals in a ravaged fiber connection.
+ Therefore, an optical network is not necessarily totally optical: the transmiss
+ion is certainly optical, but the switching could be optical, electrical,
+ or hybrid [7].
+ The need to give the network a greater capacity to adapt to the needs of
+ transmission and increase the capacity and performance of the central sections
+ and as the demand for network traffic grows, the new paradigm that we call
+ elastic optical networks is born.
+ We can define the EON as an OTN (Optical Transport Network) where all the
+ equipment and the control plane can handle optical channels of variable
+ bandwidth and all the switching elements can support different granularities
+ in the spectrum of the channels that transmit information.
+ The traditional optical network based on WDM divides the spectrum into
+ separate channels.
+ The separation between adjacent channels is between 50 GHz and 100 GHz
+ which is specified by the ITU.
+ The separation between channels is very large and if each channel contains
+ a low bandwidth used and there is no traffic in that free gap, much of
+ the spectrum is wasted.
+ In order to fully exploit a network, apart from making bandwidth more flexible,
+ it is necessary to have a network architecture that allows the transmission
+ of different signal formats for transmission.
+ EONs introduce fixed granularity into the bandwidth of the channels transported
+ through the fiber.
+ The ITU-T G.694.1, establishes a series of fixed spectral grids, which divide
+ the optical spectrum between 1530-1565 nm, from the C band, ranging from
+ 12.5 GHz.
+ (Giga Herz) to 100 GHz, where most used are those of 50 GHz and 100 GHz
+ [11].
+ The important change in the EON architecture is the replacement of the
+ fixed grid (Fixed-grid) by a new flexible grid (Flexi-grid.) The ITU-T is
+ focused on the revision of a G.694.1 standard [11], for a division of the
+ flexible optical spectrum called flexi-grid, for which the optical spectrum
+ of the C band (1530-1565 nm) was defined, which is divided into FS (Frequency
+ Slots) of fixed sizes of 6.25, 12.5, 25 and 50 GHz [12] and in addition a
+ central frequency (CF, Central Frequency) is assigned to each elastic optical
+ path (EOP - Elastic Optical Path) that must coincide with the beginning
+ or the end of these slots existing differences in a fixed grid scheme and
+ a flexible grid scheme In the case of the fixed grid scheme, we can observe
+ the inefficient use of spectrum due to the fixed division that has the
+ 50 GHz spectrum between each CF's, and if we observe the scheme of flexible
+ grids can be noticed the free spectrum obtained thanks to the fine granularity
+ that it offers and that allows to assign in a flexible way only the required
+ bandwidth.
+ Figure 1: a) Fixed grid spectrum assignment scheme, b) Flexible grid spectrum
+ assignment scheme
+\end_layout
+
+\begin_layout Standard
+The problem of RSA in Elastic Optical Networks is similar to the problem
+ of Routing and Wavelength Assignment (RSA) in networks based on WDM.
+ The difference between them (RSA and RWA) is the ability to flexibly assign
+ the frequency spectrum.
+ The RSA is classified into two types: Online/Dynamic and Offline/ Static
+ traffic.
+ In the case of the offline RSA problem, the list of all transmission requests
+ is already entered as input, in order to proceed with the analysis and
+ resolution with this input data.
+ For the RSA online problem, the analysis and resolution is done as the
+ requests arrive dynamically.
+ In the first problem are can be applied optimization strategies; while
+ in second one are usually developed heuristics.
+ 
+\end_layout
+
+\end_body
+\end_document

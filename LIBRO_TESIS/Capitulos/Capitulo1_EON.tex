@@ -1,0 +1,237 @@
+
+\chapter{THEORETICAL FRAMEWORK}
+
+\section{ELASTIC OPTICAL NETWORKS}
+
+A network consists of the collection of nodes interconnected by links.
+These links require transmission equipment, while the nodes require
+switching equipment. The different developments and technological
+research have shown that optics is one of the best for signal transmission,
+since it can simultaneously amplify multiple wavelength signals in
+a ravaged fiber connection. Therefore, an optical network is not necessarily
+totally optical: the transmission is certainly optical, but the switching
+could be optical, electrical, or hybrid \cite{Mukherjee2006}. 
+
+The need to give the network a greater capacity to adapt to the needs
+of transmission and increase the capacity and performance of the central
+sections and as the demand for network traffic grows, the new paradigm
+that we call elastic optical networks is born. We can define the EON
+as an OTN (Optical Transport Network) where all the equipment and
+the control plane can handle optical channels of variable bandwidth
+and all the switching elements can support different granularities
+in the spectrum of the channels that transmit information. The traditional
+optical network based on WDM divides the spectrum into separate channels.
+The separation between adjacent channels is between 50 GHz and 100
+GHz which is specified by the ITU. The separation between channels
+is very large and if each channel contains a low bandwidth used and
+there is no traffic in that free gap, much of the spectrum is wasted.
+In order to fully exploit a network, apart from making bandwidth more
+flexible, it is necessary to have a network architecture that allows
+the transmission of different signal formats for transmission. 
+
+EONs introduce fixed granularity into the bandwidth of the channels
+transported through the fiber. The ITU-T G.694.1, establishes a series
+of fixed spectral grids, which divide the optical spectrum between
+1530-1565 nm, from the C band, ranging from 12.5 GHz. (Giga Herz)
+to 100 GHz, where most used are those of 50 GHz and 100 GHz \cite{itu-t-694-1}.
+The important change in the EON architecture is the replacement of
+the fixed grid (Fixed-grid) by a new flexible grid (Flexi-grid.) The
+ITU-T is focused on the revision of a G.694.1 standard \cite{itu-t-694-1},
+for a division of the flexible optical spectrum called flexi-grid,
+for which the optical spectrum of the C band (1530-1565 nm) was defined,
+which is divided into FS (Frequency Slots) of fixed sizes of 6.25,
+12.5, 25 and 50 GHz \cite{itut-flexigrid} and in addition a central
+frequency (CF, Central Frequency) is assigned to each elastic optical
+path (EOP - Elastic Optical Path) that must coincide with the beginning
+or the end of these slots existing differences in a fixed grid scheme
+and a flexible grid scheme In the case of the fixed grid scheme, we
+can observe the inefficient use of spectrum due to the fixed division
+that has the 50 GHz spectrum between each CF's, and if we observe
+the scheme of flexible grids can be noticed the free spectrum obtained
+thanks to the fine granularity that it offers and that allows to assign
+in a flexible way only the required bandwidth. Figure \ref{fixed_grid_flex_grid_figure}:
+a) Fixed grid spectrum assignment scheme, b) Flexible grid spectrum
+assignment scheme
+
+The problem of RSA in Elastic Optical Networks is similar to the problem
+of Routing and Wavelength Assignment (RSA) in networks based on WDM.
+The difference between them (RSA and RWA) is the ability to flexibly
+assign the frequency spectrum. The RSA is classified into two types:
+Online/Dynamic and Offline/ Static traffic. In the case of the offline
+RSA problem, the list of all transmission requests is already entered
+as input, in order to proceed with the analysis and resolution with
+this input data. For the RSA online problem, the analysis and resolution
+is done as the requests arrive dynamically. In the first problem are
+can be applied optimization strategies; while in second one are usually
+developed heuristics. 
+
+\begin{figure}
+\includegraphics[scale=0.4]{G:/Genetico/LIBRO_TESIS/04.ListaFiguras/01\lyxdot rejillaFija_Flexible}
+
+\caption{a) Fixed grid spectrum scheme, b) Flexible grid spectrum assigment
+scheme}
+\label{fixed_grid_flex_grid_figure}
+\end{figure}
+
+
+\section{ROUTING SPECTRUM ALLOCATION (RSA)}
+
+The RSA problem can be attacked as routing resolution and allocation
+of spectrum iterative together \cite{Christodoulopoulos2011}. In
+this approach the problem RSA, the greatest difficulty arises, is
+the large number of conditions that poses the problem. This introduces
+greater computational complexity when calculating the optimal path
+for each request, in turn optimizing the allocation of spectrum, which
+ultimately translates into very large computing times.
+
+The RSA problem in elastic optical networks is equivalent to the problem
+RWA networks based on optical WDM networks. The difference between
+these two technologies is the ability of the elastic networks to an
+assignment of flexible spectrum to meet the data rate requested, where
+a set of contiguous grooves of the spectrum is assigned to a connection,
+while in WDM networks is flexible assigns a channel to the application
+size. The assigned spectrum slots must always be together to satisfy
+the constraint of contiguity of the spectrum. The following restrictions
+are taken into account when calculating the routing and spectrum allocation.
+
+\textbullet{} Restriction continuity of spectrum. That means the same
+spectral allocation of resources on each link along a canal route. 
+
+Restriction and elastic WDM networks. 
+
+\textbullet{} Spectrum contiguity (or adjacency). Constraint ensures
+that the subcarriers are adjacent to each other on a channel. 
+
+Restriction on elastic networks. 
+
+\textbullet{} Spectral Conflict. It is defined as spectrum allocation
+for non-overlapping of different channels on the same fiber. 
+
+Restriction on WMD and elastic networks. 
+
+Basically RSA algorithms are concerned to allocate a contiguous fraction
+of spectrum for each connection request subject to the above restrictions.
+We see example in Figure \ref{rsa_problem_figure} given by \cite{Chatterjee2015},
+as the constraints are met for a solution in elastic nets. A connection
+request from node 1 to node 4 that requires 2 adjoining slots to transmit
+data, we see the first figure in the 1-2-4 nodes, use the link 1 and
+link 4 slots are available for the requirement in the link 1, but
+in the link 4 there is only one slot available, then this does not
+meet the condition of contiguity. The following figure shows the 1-2-3-4
+node, use the link 1, link 2 and link 3, to establish a route, and
+we see that in the three link's meet contiguity condition since the
+slots are they found together in three links. 
+
+\begin{figure}
+\begin{centering}
+\includegraphics{G:/Genetico/LIBRO_TESIS/04.ListaFiguras/04\lyxdot rsa}
+\par\end{centering}
+\caption{Restrictions continuity and contiguity}
+\label{rsa_problem_figure}
+\end{figure}
+
+
+\section{RELATED WORK }
+
+As the RSA is considered a NP-Complete problem \cite{IEEE:rsa-np-completo},
+it has been treated with several techniques, exact and heuristic,
+both for dynamic traffic and for static traffic. Among the exact techniques
+are the ILP, while among the heuristics are optimizations with Colony
+of Bees (BCO, Bee Colony Optimization) \cite{rsa:bco}, Genetic Algorithms
+(GA, Genetic Algorithm) \cite{rsa:enfoque4,rsa:kshortestpath,daoGA-RSA},
+among others \cite{aco-based}\cite{tabu-search}. 
+
+Different ILP models for small instances and different heuristics
+for more real scenarios have been used successfully to solve the RSA
+problem. As an example we can mention in \cite{christodoulopoulos}
+an ILP model was proposed to minimize the use of the spectrum to serve
+a traffic matrix in an EON. The authors propose a method that divides
+the problem into two sub-problems, the first is the routing and the
+second is the spectrum assignment and solves them sequentially, using
+a route-based approach. They also propose a heuristic algorithm that
+serves the connections one by one sequentially. Then in \cite{Christodoulopoulos2011},
+the authors extend their previous results including consideration
+of modulation level. With this new consideration, a new problem was
+defined routing, modulation level and spectrum assignment (RMLSA),
+being outside the scope of this work. Other problems such as \textit{Fragmentation
+Aware and Dynamic Traffic} are also not considered. Another ILP formulation
+and the proof that the RSA problem is a NP-complete problem can be
+found in \cite{IEEE:rsa-np-completo}. 
+
+In \cite{Zhang2012rsa:restricciones2}, the differences between an
+ILP for RWA and for RSA are exposed, as well as an algorithm complexity
+analysis. In the same work two RSA algorithms are exposed. These have
+a better performance than the ILP in larger networks. With these two
+heuristic algorithms, the computational time was reduced, which is
+considered an improvement compared with the ILP, with which it differentiates
+in computation hours. 
+
+The work proposed in \cite{moga-rsa-dao}, presents the multi-objective
+RSA problem and its associated algorithm model. Each request has many
+possible routes, and in each routing it has several spectrum assignment
+options. The problem is to minimize the spectrum width to support
+all requests and minimize the overall cost of the spectrum in the
+link. 
+
+The objective function for the work proposed in \cite{moga-rsa-dao}
+is as following: there are two objectives associated with each solution.
+The first objective $f_{1}$, is the width of the spectrum that indicates
+the maximum indexed slice used in the network. The second objective
+$f_{2}$ is the total cost of the spectrum link. Given a set of requests,
+the route and channel are calculated for each one. After attending
+each demand sequentially and without any sort of ordering, the spectrum
+availabilities vector of each link is updated. 
+
+In this work it is developed a pure multi-objective approach to calculate
+a Pareto front. This approach is an extension of the work presented
+in \cite{engopt} which has an approach based on weighted sum. In
+our work, as in \cite{moga-rsa-dao} it has many possible routes,
+and in each routing it has several spectrum assignment options. The
+problem is to minimize the spectrum used and the overall cost of the
+link spectrum at the same time. The same objective function is taken
+from \cite{moga-rsa-dao} and the requests are handled as follows:
+applications are ordered from highest to lowest, defined by the highest
+possible cost of said request, the first 30\% of said list is attended
+in the first place, while the remaining 70\% is treated in a random
+manner, unlike \cite{moga-rsa-dao} it is a random ordering. More
+details are given in section 7. 
+
+\section{PARETO FRONT CONCEPTS }
+
+In this section we define the concept of dominance and Pareto front
+for multi-objective problem solutions. It is said that the solutions
+of a problem with multiple objectives are optimal because no other
+solution is superior to them when all the objectives and restrictions
+are taken into account at the same time. It can be said that no objective
+can be improved without degrading the other objectives. 
+
+The set of optimal solutions is known as Pareto Optimal solutions,
+in which they have multiple objectives to meet and present conflicts
+when performing the simultaneous optimization of them. From this concept,
+it is established as a requirement to affirm that one situation is
+better than the other, which it does not diminish in anyone, but improve
+at one; that is to say that one situation will be better than another,
+only if in the new one it is possible to compensate the losses of
+all the injured parties. In Figure \ref{pareto_figure}, you can see
+the optimal Pareto sets for different scenarios with two objectives
+and for the same solution space. In any case, Pareto's optimum is
+always composed of solutions located at the edge of the feasible region
+of the solution space.
+
+Pareto Dominance in a context of minimization says (Min-Min Figure
+\ref{pareto_figure}): that a solution $x^{1}$ dominates another
+solution $x^{2}$if the following conditions are met: 1) the solution
+$x^{1}$is not worse than $x^{2}$ in all the objectives. 2) The solution
+$x^{1}$ is strictly better than $x^{2}$in at least one objective.
+In Multi-objective Optimization is seeking to calculate the set of
+non-dominate solutions on the edge of the feasible region. 
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.5]{G:/Genetico/LIBRO_TESIS/04.ListaFiguras/02\lyxdot ParetoFront}
+\par\end{centering}
+\caption{Optimal Pareto Fronts for the same solution space in four situations
+of optimization with two objectives.}
+\label{pareto_figure}
+\end{figure}
+

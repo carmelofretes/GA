@@ -1,0 +1,1706 @@
+#LyX file created by tex2lyx 2.2
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin G:/Genetico/LIBRO_FINAL_Y_FORMATO_PAPPERS_LANIC/CACIC/Latex/LaTeX2e/
+\textclass llncs
+\begin_preamble
+
+%%%%%%%%%%%%%%%%%%%%%%% file typeinst.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is the LaTeX source for the instructions to authors using
+% the LaTeX document class 'llncs.cls' for contributions to
+% the Lecture Notes in Computer Sciences series.
+% http://www.springer.com/lncs       Springer Heidelberg 2006/05/04
+%
+% It may be used as a template for your own input - copy it
+% to a new file with a new name and use it as the basis
+% for your article.
+%
+% NB: the document class 'llncs' has its own and detailed documentation, see
+% ftp://ftp.springer.de/data/pubftp/pub/tex/latex/llncs/latex2e/llncsdoc.pdf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+\usepackage{url}
+\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
+\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
+\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+
+\end_preamble
+\options runningheads
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+mainmatter
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% start of an individual contribution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% first the title is needed
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Lecture Notes in Computer Science:
+\begin_inset Newline newline
+\end_inset
+
+Authors' Instructions for the Preparation
+\begin_inset Newline newline
+\end_inset
+
+of Camera-Ready Contributions
+\begin_inset Newline newline
+\end_inset
+
+to LNCS/LNAI/LNBI Proceedings
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% a short form should be given in case it is too long for the running head
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Running LaTeX Title
+Lecture Notes in Computer Science: Authors' Instructions
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% the name(s) of the author(s) follow(s) next
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% NB: Chinese authors should write their first names(s) in front of
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% their surnames. This ensures that the names appear correctly in
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% the running heads and the author index.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Alfred Hofmann
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+Please note that the LNCS Editorial assumes that all authors have used the western naming convention, with given names preceding surnames. This determines the structure of the names in the running heads and the author index.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Ursula Barth
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Ingrid Haas
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Frank Holzwarth
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Anna Kramer
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Leonie Kunz
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Christine Reiß
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Nicole Sator
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Erika Siebert-Cole
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Peter Straßer
+\end_layout
+
+\begin_layout Author Running
+Lecture Notes in Computer Science: Authors' Instructions
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% (feature abused for this document to repeat the title also on left hand pages)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% the affiliations are given next; don't give your e-mail address
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% unless you accept that it will be published
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+Springer-Verlag, Computer Science Editorial,
+\begin_inset Newline newline
+\end_inset
+
+ Tiergartenstr. 17, 69121 Heidelberg, Germany
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+mailsa
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+mailsb
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+mailsc
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://www.springer.com/lncs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% NB: a more complex sample for affiliations and the mapping to the
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% corresponding authors can be found in the file "llncs.dem"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% (search for the string "
+\backslash
+mainmatter" where a contribution starts).
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% "llncs.dem" accompanies the document class "llncs.cls".
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout TOC Title
+Lecture Notes in Computer Science
+\end_layout
+
+\begin_layout TOC Author
+Authors' Instructions
+\end_layout
+
+\begin_layout Abstract
+The abstract should summarize the contents of the paper and should contain at least 70 and at most 150 words. It should be written using the 
+\emph on
+abstract
+\emph default
+ environment. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+keywords{
+\end_layout
+
+\end_inset
+
+We would like to encourage you to list your keywords within the abstract section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+You are strongly encouraged to use \SpecialChar LaTeX2e
+ for the preparation of your camera-ready manuscript together with the corresponding Springer class file 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+llncs.cls+
+\end_layout
+
+\end_inset
+
+. Only if you use \SpecialChar LaTeX2e
+ can hyperlinks be generated in the online version of your manuscript.
+\end_layout
+
+\begin_layout Standard
+The \SpecialChar LaTeX
+ source of this instruction file for \SpecialChar LaTeX
+ users may be used as a template. This is located in the 
+\begin_inset Quotes eld
+\end_inset
+
+authors
+\begin_inset Quotes erd
+\end_inset
+
+ subdirectory in 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/instruct/
+\end_layout
+
+\end_inset
+
+ and entitled 
+\family typewriter
+typeinst.tex
+\family default
+. There is a separate package for Word users. Kindly send the final and checked source and PDF files of your paper to the Contact Volume Editor. This is usually one of the organizers of the conference. You should make sure that the \SpecialChar LaTeX
+ and the PDF files are identical and correct and that only one version of your paper is sent. It is not possible to update files at a later stage. Please note that we do not need the printed paper.
+\end_layout
+
+\begin_layout Standard
+We would like to draw your attention to the fact that it is not possible to modify a paper in any way, once it has been published. This applies to both the printed book and the online version of the publication. Every detail, including the order of the names of the authors, should be checked before the paper is sent to the Volume Editors.
+\end_layout
+
+\begin_layout Subsection
+Checking the PDF File
+\end_layout
+
+\begin_layout Standard
+Kindly assure that the Contact Volume Editor is given the name and email address of the contact author for your paper. The Contact Volume Editor uses these details to compile a list for our production department at SPS in India. Once the files have been worked upon, SPS sends a copy of the final pdf of each paper to its contact author. The contact author is asked to check through the final pdf to make sure that no errors have crept in during the transfer or preparation of the files. This should not be seen as an opportunity to update or copyedit the papers, which is not possible due to time constraints. Only errors introduced during the preparation of the files will be corrected.
+\end_layout
+
+\begin_layout Standard
+This round of checking takes place about two weeks after the files have been sent to the Editorial by the Contact Volume Editor, i.e., roughly seven weeks before the start of the conference for conference proceedings, or seven weeks before the volume leaves the printer's, for post-proceedings. If SPS does not receive a reply from a particular contact author, within the timeframe given, then it is presumed that the author has found no errors in the paper. The tight publication schedule of LNCS does not allow SPS to send reminders or search for alternative email addresses on the Internet.
+\end_layout
+
+\begin_layout Standard
+In some cases, it is the Contact Volume Editor that checks all the final pdfs. In such cases, the authors are not involved in the checking phase.
+\end_layout
+
+\begin_layout Subsection
+Additional Information Required by the Volume Editor
+\end_layout
+
+\begin_layout Standard
+If you have more than one surname, please make sure that the Volume Editor knows how you are to be listed in the author index.
+\end_layout
+
+\begin_layout Subsection
+Copyright Forms
+\end_layout
+
+\begin_layout Standard
+The copyright form may be downloaded from the 
+\begin_inset Quotes eld
+\end_inset
+
+For Authors" (Information for LNCS Authors) section of the LNCS Website: 
+\family typewriter
+www.springer.com/lncs
+\family default
+. Please send your signed copyright form to the Contact Volume Editor, either as a scanned pdf or by fax or by courier. One author may sign on behalf of all of the other authors of a particular paper. Digital signatures are acceptable.
+\end_layout
+
+\begin_layout Section
+Paper Preparation
+\end_layout
+
+\begin_layout Standard
+Springer provides you with a complete integrated \SpecialChar LaTeX
+ document class (
+\family typewriter
+llncs.cls
+\family default
+) for multi-author books such as those in the LNCS series. Papers not complying with the LNCS style will be reformatted. This can lead to an increase in the overall number of pages. We would therefore urge you not to squash your paper.
+\end_layout
+
+\begin_layout Standard
+Please always cancel any superfluous definitions that are not actually used in your text. If you do not, these may conflict with the definitions of the macro package, causing changes in the structure of the text and leading to numerous mistakes in the proofs.
+\end_layout
+
+\begin_layout Standard
+If you wonder what \SpecialChar LaTeX
+ is and where it can be obtained, see the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+LaTeX project site
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://www.latex-project.org
+\end_layout
+
+\end_inset
+
+) and especially the webpage 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+How to get it
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://www.latex-project.org/ftp.html
+\end_layout
+
+\end_inset
+
+) respectively.
+\end_layout
+
+\begin_layout Standard
+When you use \SpecialChar LaTeX
+
+\begin_inset space \space{}
+
+\end_inset
+
+together with our document class file, 
+\family typewriter
+llncs.cls
+\family default
+, your text is typeset automatically in Computer Modern Roman (CM) fonts. Please do 
+\emph on
+not
+\emph default
+ change the preset fonts. If you have to use fonts other than the preset fonts, kindly submit these with your files.
+\end_layout
+
+\begin_layout Standard
+Please use the commands 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+label+
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+ref+
+\end_layout
+
+\end_inset
+
+ for cross-references and the commands 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+bibitem+
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+cite+
+\end_layout
+
+\end_inset
+
+ for references to the bibliography, to enable us to create hyperlinks at these places.
+\end_layout
+
+\begin_layout Standard
+For preparing your figures electronically and integrating them into your source file we recommend using the standard \SpecialChar LaTeX
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+graphics+
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+graphicx+
+\end_layout
+
+\end_inset
+
+ package. These provide the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+includegraphics+
+\end_layout
+
+\end_inset
+
+ command. In general, please refrain from using the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+special+
+\end_layout
+
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout Standard
+Remember to submit any further style files and fonts you have used together with your source files.
+\end_layout
+
+\begin_layout Subsubsection
+Headings.
+\end_layout
+
+\begin_layout Standard
+Headings should be capitalized (i.e., nouns, verbs, and all other words except articles, prepositions, and conjunctions should be set with an initial capital) and should, with the exception of the title, be aligned to the left. Words joined by a hyphen are subject to a special rule. If the first word can stand alone, the second word should be capitalized.
+\end_layout
+
+\begin_layout Standard
+Here are some examples of headings: 
+\begin_inset Quotes eld
+\end_inset
+
+Criteria to Disprove Context-Freeness of Collage Language", 
+\begin_inset Quotes eld
+\end_inset
+
+On Correcting the Intrusion of Tracing Non-deterministic Programs by Software", 
+\begin_inset Quotes eld
+\end_inset
+
+A User-Friendly and Extendable Data Distribution System", 
+\begin_inset Quotes eld
+\end_inset
+
+Multi-flip Networks: Parallelizing GenSAT", 
+\begin_inset Quotes eld
+\end_inset
+
+Self-determinations of Man".
+\end_layout
+
+\begin_layout Subsubsection
+Lemmas, Propositions, and Theorems.
+\end_layout
+
+\begin_layout Standard
+The numbers accorded to lemmas, propositions, and theorems, etc. should appear in consecutive order, starting with Lemma 1, and not, for example, with Lemma 11.
+\end_layout
+
+\begin_layout Subsection
+Figures
+\end_layout
+
+\begin_layout Standard
+For \SpecialChar LaTeX
+
+\begin_inset space \space{}
+
+\end_inset
+
+users, we recommend using the 
+\emph on
+graphics
+\emph default
+ or 
+\emph on
+graphicx
+\emph default
+ package and the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+includegraphics+
+\end_layout
+
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout Standard
+Please check that the lines in line drawings are not interrupted and are of a constant width. Grids and details within the figures must be clearly legible and may not be written one on top of the other. Line drawings should have a resolution of at least 800 dpi (preferably 1200 dpi). The lettering in figures should have a height of 2
+\begin_inset space ~
+
+\end_inset
+
+mm (10-point type). Figures should be numbered and should have a caption which should always be positioned 
+\emph on
+under
+\emph default
+ the figures, in contrast to the caption belonging to a table, which should always appear 
+\emph on
+above
+\emph default
+ the table; this is simply achieved as matter of sequence in your source.
+\end_layout
+
+\begin_layout Standard
+Please center the figures or your tabular material by using the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+
+\backslash
+centering+
+\end_layout
+
+\end_inset
+
+ declaration. Short captions are centered by default between the margins and typeset in 9-point type (Fig.
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:example"
+
+\end_inset
+
+ shows an example). The distance between text and figure is preset to be about 8
+\begin_inset space ~
+
+\end_inset
+
+mm, the distance between figure and caption about 6
+\begin_inset space ~
+
+\end_inset
+
+mm.
+\end_layout
+
+\begin_layout Standard
+To ensure that the reproduction of your illustrations is of a reasonable quality, we advise against the use of shading. The contrast should be as pronounced as possible.
+\end_layout
+
+\begin_layout Standard
+If screenshots are necessary, please make sure that you are happy with the print quality before you send the files. 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename eijkel2.eps
+	height 6.2cm
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+One kernel at 
+\begin_inset Formula $x_s$
+\end_inset
+
+ (
+\emph on
+dotted kernel
+\emph default
+) or two kernels at 
+\begin_inset Formula $x_i$
+\end_inset
+
+ and 
+\begin_inset Formula $x_j$
+\end_inset
+
+ (
+\shape italic
+left and right
+\shape default
+) lead to the same summed estimate at 
+\begin_inset Formula $x_s$
+\end_inset
+
+. This shows a figure consisting of different types of lines. Elements of the figure described in the caption should be set in italics, in parentheses, as shown in this sample caption.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:example"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Please define figures (and tables) as floating objects. Please avoid using optional location parameters like 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb+[h]+
+\end_layout
+
+\end_inset
+
+" for 
+\begin_inset Quotes eld
+\end_inset
+
+here".
+\end_layout
+
+\begin_layout Paragraph
+Remark 1.
+\end_layout
+
+\begin_layout Standard
+In the printed volumes, illustrations are generally black and white (halftones), and only in exceptional cases, and if the author is prepared to cover the extra cost for color reproduction, are colored pictures accepted. Colored pictures are welcome in the electronic version free of charge. If you send colored figures that are to be printed in black and white, please make sure that they really are legible in black and white. Some colors as well as the contrast of converted colors show up very poorly when printed in black and white.
+\end_layout
+
+\begin_layout Subsection
+Formulas
+\end_layout
+
+\begin_layout Standard
+Displayed equations or formulas are centered and set on a separate line (with an extra line or halfline space above and below). Displayed expressions should be numbered for reference. The numbers should be consecutive within each section or within the contribution, with numbers enclosed in parentheses and set on the right margin – which is the default if you use the 
+\emph on
+equation
+\emph default
+ environment, e.g., 
+\begin_inset Formula \begin{equation}
+  \psi (u) = \int_{o}^{T} \left[\frac{1}{2}
+  \left(\Lambda_{o}^{-1} u,u\right) + N^{\ast} (-u)\right] dt \;  .
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equations should be punctuated in the same way as ordinary text but with a small space before the end punctuation mark.
+\end_layout
+
+\begin_layout Subsection
+Footnotes
+\end_layout
+
+\begin_layout Standard
+The superscript numeral used to refer to a footnote appears in the text either directly after the word to be discussed or – in relation to a phrase or a sentence – following the punctuation sign (comma, semicolon, or period). Footnotes should appear at the bottom of the normal text area, with a line of about 2
+\begin_inset space ~
+
+\end_inset
+
+cm set immediately above them.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+The footnote numeral is set flush left and the text follows with the usual word spacing.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Program Code
+\end_layout
+
+\begin_layout Standard
+Program listings or program commands in the text are normally set in typewriter font, e.g., CMTT10 or Courier.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\shape italic
+Example of a Computer Program
+\family default
+\series default
+\shape default
+ 
+\end_layout
+
+\begin_layout Verbatim
+program Inflation (Output)
+\end_layout
+
+\begin_layout Verbatim
+  {Assuming annual inflation rates of 7%, 8%, and 10%,...
+\end_layout
+
+\begin_layout Verbatim
+   years};
+\end_layout
+
+\begin_layout Verbatim
+   const
+\end_layout
+
+\begin_layout Verbatim
+     MaxYears = 10;
+\end_layout
+
+\begin_layout Verbatim
+   var
+\end_layout
+
+\begin_layout Verbatim
+     Year: 0..MaxYears;
+\end_layout
+
+\begin_layout Verbatim
+     Factor1, Factor2, Factor3: Real;
+\end_layout
+
+\begin_layout Verbatim
+   begin
+\end_layout
+
+\begin_layout Verbatim
+     Year := 0;
+\end_layout
+
+\begin_layout Verbatim
+     Factor1 := 1.0; Factor2 := 1.0; Factor3 := 1.0;
+\end_layout
+
+\begin_layout Verbatim
+     WriteLn('Year  7% 8% 10%'); WriteLn;
+\end_layout
+
+\begin_layout Verbatim
+     repeat
+\end_layout
+
+\begin_layout Verbatim
+       Year := Year + 1;
+\end_layout
+
+\begin_layout Verbatim
+       Factor1 := Factor1 * 1.07;
+\end_layout
+
+\begin_layout Verbatim
+       Factor2 := Factor2 * 1.08;
+\end_layout
+
+\begin_layout Verbatim
+       Factor3 := Factor3 * 1.10;
+\end_layout
+
+\begin_layout Verbatim
+       WriteLn(Year:5,Factor1:7:3,Factor2:7:3,Factor3:7:3)
+\end_layout
+
+\begin_layout Verbatim
+     until Year = MaxYears
+\end_layout
+
+\begin_layout Verbatim
+end.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size small
+(Example from Jensen K., Wirth N. (1991) Pascal user manual and report. Springer, New York)
+\size default
+
+\end_layout
+
+\begin_layout Subsection
+Citations
+\end_layout
+
+\begin_layout Standard
+For citations in the text please use square brackets and consecutive numbers: 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "jour"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "lncschap"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "proceeding1"
+
+\end_inset
+
+ – provided automatically by \SpecialChar LaTeX
+'s 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb|
+\backslash
+cite|
+\end_layout
+
+\end_inset
+
+ …
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+verb|
+\backslash
+bibitem|
+\end_layout
+
+\end_inset
+
+ mechanism.
+\end_layout
+
+\begin_layout Subsection
+Page Numbering and Running Heads
+\end_layout
+
+\begin_layout Standard
+There is no need to include page numbers. If your paper title is too long to serve as a running head, it will be shortened. Your suggestion as to how to shorten it would be most welcome.
+\end_layout
+
+\begin_layout Section
+LNCS Online
+\end_layout
+
+\begin_layout Standard
+The online version of the volume will be available in LNCS Online. Members of institutes subscribing to the Lecture Notes in Computer Science series have access to all the pdfs of all the online publications. Non-subscribers can only read as far as the abstracts. If they try to go beyond this point, they are automatically asked, whether they would like to order the pdf, and are given instructions as to how to do so.
+\end_layout
+
+\begin_layout Standard
+Please note that, if your email address is given in your paper, it will also be included in the meta data of the online version.
+\end_layout
+
+\begin_layout Section
+BibTeX Entries
+\end_layout
+
+\begin_layout Standard
+The correct BibTeX entries for the Lecture Notes in Computer Science volumes can be found at the following Website shortly after the publication of the book: 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://www.informatik.uni-trier.de/~ley/db/journals/lncs.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Acknowledgments.
+\end_layout
+
+\begin_layout Standard
+The heading should be treated as a subsubsection heading and should not be assigned a number.
+\end_layout
+
+\begin_layout Section
+The References Section
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "references"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to permit cross referencing within LNCS-Online, and eventually between different publishers and their online databases, LNCS will, from now on, be standardizing the format of the references. This new feature will increase the visibility of publications and facilitate academic research considerably. Please base your references on the examples below. References that don't adhere to this style will be reformatted by Springer. You should therefore check your references thoroughly when you receive the final pdf of your paper. The reference section must be complete. You may not omit references. Instructions as to where to find a fuller version of the references are not permissible.
+\end_layout
+
+\begin_layout Standard
+We only accept references written using the latin alphabet. If the title of the book you are referring to is in Russian or Chinese, then please write (in Russian) or (in Chinese) at the end of the transcript or translation of the title.
+\end_layout
+
+\begin_layout Standard
+The following section shows a sample reference list with entries for journal articles 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "jour"
+
+\end_inset
+
+, an LNCS chapter 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "lncschap"
+
+\end_inset
+
+, a book 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "book"
+
+\end_inset
+
+, proceedings without editors 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "proceeding1"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "proceeding2"
+
+\end_inset
+
+, as well as a URL 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "url"
+
+\end_inset
+
+. Please note that proceedings published in LNCS are not cited with their full titles, but with their acronyms!
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "jour"
+
+\end_inset
+
+ Smith, T.F., Waterman, M.S.: Identification of Common Molecular Subsequences. J. Mol. Biol. 147, 195–197 (1981)
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "lncschap"
+
+\end_inset
+
+ May, P., Ehrlich, H.C., Steinke, T.: ZIB Structure Prediction Pipeline: Composing a Complex Biological Workflow through Web Services. In: Nagel, W.E., Walter, W.V., Lehner, W. (eds.) Euro-Par 2006. LNCS, vol. 4128, pp. 1148–1158. Springer, Heidelberg (2006)
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "book"
+
+\end_inset
+
+ Foster, I., Kesselman, C.: The Grid: Blueprint for a New Computing Infrastructure. Morgan Kaufmann, San Francisco (1999)
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "proceeding1"
+
+\end_inset
+
+ Czajkowski, K., Fitzgerald, S., Foster, I., Kesselman, C.: Grid Information Services for Distributed Resource Sharing. In: 10th IEEE International Symposium on High Performance Distributed Computing, pp. 181–184. IEEE Press, New York (2001)
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "proceeding2"
+
+\end_inset
+
+ Foster, I., Kesselman, C., Nick, J., Tuecke, S.: The Physiology of the Grid: an Open Grid Services Architecture for Distributed Systems Integration. Technical report, Global Grid Forum (2002)
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "url"
+
+\end_inset
+
+ National Center for Biotechnology Information, 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://www.ncbi.nlm.nih.gov
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Appendix: Springer-Author Discount
+\end_layout
+
+\begin_layout Standard
+LNCS authors are entitled to a 33.3% discount off all Springer publications. Before placing an order, the author should send an email, giving full details of his or her Springer publication, to 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+orders-HD-individuals@springer.com
+\end_layout
+
+\end_inset
+
+ to obtain a so-called token. This token is a number, which must be entered when placing an order via the Internet, in order to obtain the discount.
+\end_layout
+
+\begin_layout Section
+Checklist of Items to be Sent to Volume Editors
+\end_layout
+
+\begin_layout Standard
+Here is a checklist of everything the volume editor requires from you:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+settowidth{
+\backslash
+leftmargin}{{
+\backslash
+Large$
+\backslash
+square$}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+advance
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+leftmargin
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+labelsep
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+itemsep
+\end_layout
+
+\end_inset
+
+8pt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+relax
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\renewcommand{\labelitemi}{{\lower1.5pt\hbox{\Large$\square$}}}
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The final \SpecialChar LaTeX
+ source files 
+\end_layout
+
+\begin_layout Itemize
+A final PDF file 
+\end_layout
+
+\begin_layout Itemize
+A copyright form, signed by one author on behalf of all of the authors of the paper. 
+\end_layout
+
+\begin_layout Itemize
+A readme giving the name and email address of the corresponding author. 
+\end_layout
+
+\end_body
+\end_document

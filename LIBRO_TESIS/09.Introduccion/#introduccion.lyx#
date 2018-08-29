@@ -1,0 +1,276 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+INTRODUCTION
+\end_layout
+
+\begin_layout Section
+MOTIVATION 
+\end_layout
+
+\begin_layout Standard
+The emergence of the interest in elastic optical networks (EON) comes from
+ the constant increase in network traffic and the need to increase the capacity
+ and performance of the sections in the transmission networks.
+ At present, the transport technology used in optical networks is wavelength
+ multiplexing (WDM).
+ This technology is capable of transporting multiple channels in the same
+ fiber, based on carriers of different wavelengths.
+ The implication of this technology is that channels that have a reduced
+ demand to the maximum supported by the granularity imposed, underutilized
+ resources; given this and because network traffic will be highly heterogeneous,
+ the flexibility in the provision of optical network resources is a challenge.
+ A major change in the architecture of EON is the replacement of the fixed
+ grid with a new flexible grid.
+ The ITU-T is working on the revision of a new G.694.1 standard 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "huang2012"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The calculating of an elastic optical routing has two parts: (a) optical
+ routing operations (R), where calculations of the route between the originating
+ node and the destination are made through a network topology, and, (b)
+ selection of spectral resources on optical fibers (spectrum assignment,
+ SA).
+ 
+\end_layout
+
+\begin_layout Standard
+In WDM networks, the algorithms for routing planning and wavelength assignment
+ seek a physical route through the network and assign a wavelength for the
+ transport of that channel.
+ The selection of that wavelength is conditioned to be the same during the
+ route of the physical route, so that in this way it is not necessary to
+ use wavelength converters in any jump.
+ This condition is called a continuity condition (continuity constraint).
+ In EON, apart from this condition, there is a new condition that is that
+ of contiguity in the spectrum (contiguity constraint).
+ This last condition means that the frequencies slots that occupy the channel
+ must be together in the spectrum.
+ For that, the routing and spectrum assignment (RSA) problem is more challenge
+ than routing in WDM networks and is the more important problem in EON managemen
+t.
+ 
+\end_layout
+
+\begin_layout Standard
+For the resolution of the numerous problems that have multiple objectives,
+ a good meta-heuristic for this type of problems are the evolutionary algorithms
+ (EA - Evolutionary Algorithm).
+ Traditional EA are customized to adapt to multi-objective problems, through
+ the use of specialized fitness functions and the introduction of methods
+ to promote the diversity of the solution.
+ There are general approaches to the optimization of multiple objectives.
+ One is to combine the individual objective functions in a single compound
+ function or move all, except one of them for the set of constraints.
+ The next approach is to determine a whole set of optimal Pareto solutions
+ or a representative subset.
+ An optimal set of Pareto is a set of solutions that are not dominated with
+ respect to the others 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "moga-rsa-dao"
+literal "true"
+
+\end_inset
+
+.
+ This last approach is more convenient for making decision over a set of
+ trade-off best solution instead of two first approaches.
+ 
+\end_layout
+
+\begin_layout Standard
+In this work, the main contribution is an approach based on a Multi-objective
+ Evolutionary Algorithms (MOEA) for the RSA problem, in which it is determined
+ that the proposed approach improves in terms of quality from the Pareto
+ front to the work presented in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "moga-rsa-dao"
+literal "true"
+
+\end_inset
+
+.
+ The MOEA optimizes: (a) the spectrum used, and (b) the total cost, subject
+ to the constraints of continuity, contiguity, and spectrum conflict imposed
+ by the EON layer.
+ 
+\end_layout
+
+\begin_layout Standard
+Our work is organized in the following way; in section 2 is explained EON
+ technologies concepts.
+ In section 3, the Multi-objective Pareto Front and Dominance concepts are
+ explained.
+ In section 4, the main related works are discussed.
+ In the next part (section 5), the RSA problem is posed, in section 6, the
+ contribution based on MOEA is presented, while in section 7, the experimental
+ environment are performed.
+ Finally in section 8, conclusions and future works are given.
+ 
+\end_layout
+
+\begin_layout Section
+OBJETIVE 
+\end_layout
+
+\begin_layout Subsection
+GENERAL OBJECTIVE
+\end_layout
+
+\begin_layout Itemize
+Design and implement an exact model and a meta-heuristic, based on Multi-Objecti
+ve optimization of weighted sum and find the pareto set of the best solutions
+ to solve the RSA problem given a list of offline demands point-to-point.
+\end_layout
+
+\begin_layout Subsection
+SPECIFIC OBJECTIVES
+\end_layout
+
+\begin_layout Itemize
+Design and implement an exact model that obtains the optimal result in networks
+ of low complexity.
+ 
+\end_layout
+
+\begin_layout Itemize
+Design and implement a meta-heuristic that obtains promising results in
+ more complex networks in an acceptable computational time.
+ 
+\end_layout
+
+\begin_layout Itemize
+Compare the proposed meta-heuristic with an exact model published in the
+ literature.
+\end_layout
+
+\begin_layout Itemize
+Implement an Evolutionary Algorithm model to obtain optimal pareto fronts
+ for the RSA problem.
+\end_layout
+
+\begin_layout Itemize
+Analysis of the Evolutionary Algorithm proposed with a model published in
+ the literature.
+\end_layout
+
+\begin_layout Section
+WORK ORGANIZATION
+\end_layout
+
+\begin_layout Standard
+The present work has been organized as follows: The first part or Chapter
+ 2 is structured as follows: definitions of an Elastic Optical Network and
+ the RSA problem are presented, we present the related works and the pareto
+ front concept.
+ 
+\end_layout
+
+\begin_layout Standard
+Chapter 3 presents the problem statement, where we present the mono objective
+ formulation of an exact model (ILP); a mono-objective metaheuristica (MOGA)
+ based on the weighted sum and a pure multi-objective metaheuristica where
+ we find the pareto set of the best solutions.
+ 
+\end_layout
+
+\begin_layout Standard
+In chapter 4 we present the experimental evidence and the results obtained,
+ conclusions and future work.
+ 
+\end_layout
+
+\begin_layout Standard
+Finally, we present the appendices and the bibliographical references.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,98 @@
+%% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,english]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{array}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}[chapter]
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+\begin{document}
+\begin{titlepage} 
+	\begin{center}
+  
+		\includegraphics[scale=1]{./04.ListaFiguras/logo.png} %
+		\vfill
+		\vfill
+		\hrulefill
+		\vfill
+		\vfill
+		
+			{\huge \bfseries A Study of Multi-objective Evolutionary Algorithms applied to 
+					Routing and Spectrum Assignment in EON networks}\\[0.4cm] % Thesis title
+		\vfill
+		\hrulefill
+		\vfill
+		\vfill
+
+		\large \textit{MAESTRIA EN CIENCIAS DE LA COMPUTACION}\\[0.3cm] 
+		\large \textit{TRABAJO FINAL DE MAESTRIA}\\[0.3cm]    
+
+		\vfill 
+		\begin{minipage}{0.4\textwidth} 
+			\begin{center} \large 
+				\emph{Autor:}\\ {Carmelo Luis Fretes Colman} 
+			\end{center} 
+		\end{minipage}
+
+		\vfill
+
+		\begin{minipage}{0.4\textwidth} 
+			\begin{center} \large 
+				\emph{Tutor:} \\ {D.Sc. Diego P. Pinto-Roa} \\ 
+			\end{center} 
+		\end{minipage}\\[3cm]  
+
+		\textsc{\LARGE San Lorenzo - Paraguay}\\[1.5cm] 
+		\textsc{\LARGE 2018}\\[1.5cm]   
+		
+		\vfill 
+	\end{center} 
+\end{titlepage}
+
+\include{02.Agradecimientos/Dedicatoria}
+
+\include{02.Agradecimientos/Agradecimiento}
+
+\tableofcontents{}
+
+\include{03.Abstract/abstract}
+
+\include{09.Introduccion/introduccion}
+
+\include{Capitulos/Capitulo1_EON}
+
+\include{Capitulos/Capitulo4_ProblemStatement}
+
+\include{Capitulos/Capitulo6_ExperimentalTest}
+
+\include{Capitulos/Capitulo7_Conlcusion}
+
+\bibliographystyle{plain}
+\bibliography{bibliografia_TESIS_FINAL}
+
+\end{document}

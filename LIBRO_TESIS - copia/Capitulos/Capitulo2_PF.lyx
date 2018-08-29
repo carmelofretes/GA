@@ -1,0 +1,182 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+PARETO FRONT CONCEPTS 
+\end_layout
+
+\begin_layout Standard
+In this section we define the concept of dominance and Pareto front for
+ multi-objective problem solutions.
+ It is said that the solutions of a problem with multiple objectives are
+ optimal because no other solution is superior to them when all the objectives
+ and restrictions are taken into account at the same time.
+ It can be said that no objective can be improved without degrading the
+ other objectives.
+ 
+\end_layout
+
+\begin_layout Standard
+The set of optimal solutions is known as Pareto Optimal solutions, in which
+ they have multiple objectives to meet and present conflicts when performing
+ the simultaneous optimization of them.
+ From this concept, it is established as a requirement to affirm that one
+ situation is better than the other, which it does not diminish in anyone,
+ but improve at one; that is to say that one situation will be better than
+ another, only if in the new one it is possible to compensate the losses
+ of all the injured parties.
+ In Figure 2, you can see the optimal Pareto sets for different scenarios
+ with two objectives and for the same solution space.
+ In any case, Pareto's optimum is always composed of solutions located at
+ the edge of the feasible region of the solution space.
+\end_layout
+
+\begin_layout Standard
+Pareto Dominance in a context of minimization says (Min-Min Figure 2): that
+ a solution 
+\begin_inset Formula $x^{1}$
+\end_inset
+
+ dominates another solution 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+if the following conditions are met: 1) the solution 
+\begin_inset Formula $x^{1}$
+\end_inset
+
+is not worse than 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+ in all the objectives.
+ 2) The solution 
+\begin_inset Formula $x^{1}$
+\end_inset
+
+ is strictly better than 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+in at least one objective.
+ In Multi-objective Optimization is seeking to calculate the set of non-dominate
+ solutions on the edge of the feasible region.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename G:/Genetico/LIBRO_TESIS/04.ListaFiguras/02.ParetoFront.jpg
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Optimal Pareto Fronts for the same solution space in four situations of
+ optimization with two objectives.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,2981 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass ociamthesis-lyx
+\options a4paper,titlepage
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_numerical
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Implementación
+\end_layout
+
+\begin_layout Standard
+El presente capítulo tiene por objetivo detallar las soluciones adoptadas
+ a la hora de acometer la implementación del sistema planteado en el capítulo
+ anterior.
+ Los puntos principales a tratar son dos: la implementación del servidor
+ y del cliente, detallando aquellos aspectos fundamentales.
+\end_layout
+
+\begin_layout Section
+Servidor
+\end_layout
+
+\begin_layout Standard
+Se procederá a la descripción de las funcionalidades principales del servidor,
+ especificando la forma en que están implementadas.
+ Concretamente, el servidor HTTP en la subsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Servidor HTTP"
+
+\end_inset
+
+, la protección de los datos transmitidos en la subsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Protección de los datos transmitidos"
+
+\end_inset
+
+, las actualizaciones automáticas en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Actualizaciones automáticas"
+
+\end_inset
+
+, el servidor como cliente en la subsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:El servidor como cliente"
+
+\end_inset
+
+, cómo añadir cámaras en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Añadir camaras"
+
+\end_inset
+
+, la forma en que gestiona los archivos internos en la subsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Gestión de archivos"
+
+\end_inset
+
+, las URL de las cámaras en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:URL de las cámaras"
+
+\end_inset
+
+, cómo ver la información de las cámaras en la subsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Ver informacion de camaras"
+
+\end_inset
+
+, configuración del servidor en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Configuración del servidor"
+
+\end_inset
+
+ y la reproducción del 
+\emph on
+streaming
+\emph default
+ de vídeo en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Reproducción del streaming"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Servidor HTTP
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Servidor HTTP"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tal y como se ha descrito en la fase de diseño, el servidor debe soportar
+ Bla,bla,bla.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+public HttpServidor(int puerto){
+\end_layout
+
+\begin_layout Plain Layout
+
+	this.puerto = puerto;
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		server = HttpServer.create(new InetSocketAddress(this.puerto), 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (BindException be){
+\end_layout
+
+\begin_layout Plain Layout
+
+		JOptionPane.showMessageDialog(null, "El puerto: "+puerto+" está ocupado
+ por otra aplicación.
+\backslash
+r
+\backslash
+n Cambie su valor en el archivo de configuración 
+\backslash
+"config.txt
+\backslash
+" en la siguiente linea: 
+\backslash
+r
+\backslash
+n  #Puerto (Esta linea es un comentario opcional) 
+\backslash
+n puerto=Valor_Del_Puerto
+\backslash
+n", "Error al abrir el puerto "+puerto, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+		} catch (IOException e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		e.printStackTrace();
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		InetAddress address = InetAddress.getLocalHost();
+\end_layout
+
+\begin_layout Plain Layout
+
+		...	
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (UnknownHostException e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		e.printStackTrace();
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+    server.start();
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Constructor 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{HttpServidor}
+\end_layout
+
+\end_inset
+
+ y declaración de los contextos.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg Constructor HttpServidor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+static class ListaCamarasHandler implements HttpHandler { 
+\end_layout
+
+\begin_layout Plain Layout
+
+	public void handle(HttpExchange t) throws IOException {
+\end_layout
+
+\begin_layout Plain Layout
+
+		InputStream is;
+\end_layout
+
+\begin_layout Plain Layout
+
+		OutputStream os;
+\end_layout
+
+\begin_layout Plain Layout
+
+		String response = "";
+\end_layout
+
+\begin_layout Plain Layout
+
+		String camaras[] = new String[100];
+\end_layout
+
+\begin_layout Plain Layout
+
+		is=t.getRequestBody();
+\end_layout
+
+\begin_layout Plain Layout
+
+		...
+\end_layout
+
+\begin_layout Plain Layout
+
+		int i=0;
+\end_layout
+
+\begin_layout Plain Layout
+
+		if(camaras[i]!=null){
+\end_layout
+
+\begin_layout Plain Layout
+
+			response = camaras[i];
+\end_layout
+
+\begin_layout Plain Layout
+
+			i++;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}else{
+\end_layout
+
+\begin_layout Plain Layout
+
+			response = "null";
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+		while(camaras[i]!=null){
+\end_layout
+
+\begin_layout Plain Layout
+
+			response = response + ";" + camaras[i];
+\end_layout
+
+\begin_layout Plain Layout
+
+			i++;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+		...
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Contexto 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{/listaCamaras}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg Contexto ListaCamaras"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para servir la lista de servidores a los clientes que la soliciten, se realizará
+ siguiendo el formato siguiente: 
+\begin_inset CommandInset label
+LatexCommand label
+name "Formato de las respuestas"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{listing}[style=consola, numbers=none]
+\end_layout
+
+\begin_layout Plain Layout
+
+200 OK
+\end_layout
+
+\begin_layout Plain Layout
+
+nombre_servidor1,IP:puerto;nombre_servidor2,IP:puerto;nombre_servidor3,IP:puerto
+; ...
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{listing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si se trata de la lista de cámaras, será de forma similar:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{listing}[style=consola, numbers=none]
+\end_layout
+
+\begin_layout Plain Layout
+
+200 OK
+\end_layout
+
+\begin_layout Plain Layout
+
+nombre_camara1,IP:puerto;nombre_camara2,IP:puerto;nombre_camara3,IP:puerto;
+ ...
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{listing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si la petición solicita información sobre una cámara, se enviará una cadena
+ de texto formada por los pares: parámetro y valor, separados cada uno por
+ un punto y una coma.
+\begin_inset Newline newline
+\end_inset
+
+En el siguiente cuadro se muestra un ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{listing}[style=consola, numbers=none]
+\end_layout
+
+\begin_layout Plain Layout
+
+200 OK
+\end_layout
+
+\begin_layout Plain Layout
+
+hostname=camaraVVD;description=WVC210Wireless PTZ Video Camera;defname=camaraVVD
+;resolution=320;type=mpeg4;mpeg4_resolution=320;mjpeg_resolution=160;mic_in=off;
+speaker_out=off;wlled=off;irled=off;resolutions=640*480,320*240,160*120;mac=68:e
+f:bd:fc:92:50;company_name=Cisco;model_number=WVC210;wireless=on 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{listing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El significado de cada parámetro es el siguiente:
+\begin_inset CommandInset label
+LatexCommand label
+name "Significado de los parametros"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+hostname Nombre del 
+\emph on
+host
+\emph default
+.
+\end_layout
+
+\begin_layout Description
+description Descripción.
+\end_layout
+
+\begin_layout Description
+defname Nombre de la cámara definido por el usuario.
+\end_layout
+
+\begin_layout Description
+Y
+\begin_inset space ~
+\end_inset
+
+muchos
+\begin_inset space ~
+\end_inset
+
+mas Bla,bla,bla.
+\end_layout
+
+\begin_layout Subsubsection
+Tarea 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{otroEjemplo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una vez que han sido actualizadas las listas de servidores y de cámaras,
+ se procede a la actualización de los archivos de información de cada cámara.
+ El proceso de actualización de la información de las cámaras se muestra
+ en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Fig Actualizacion infoCamaras"
+
+\end_inset
+
+ y se explica a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename D:/Mis Datos/Universidad/PFC Videovigilancia por Móvil/LyX/Memoria PFC/figures/Diag actualizacion infoCamaras.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de flujo de la actualización automática de la información de las
+ cámaras.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Fig Actualizacion infoCamaras"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Se lee la primera cámara almacenada en el servidor en el archivo de 
+\series bold
+listaCamaras.txt
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Se conecta a la cámara solicitándole su información de configuración.
+\end_layout
+
+\begin_layout Enumerate
+Si la cámara se encuentra disponible, se dibuja en la interfaz gráfica de
+ la lista de cámaras una luz verde, y se actualiza el contenido del archivo
+ 
+\series bold
+IPcamara.txt
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+En caso de que la cámara no esté operativa, se dibuja un icono rojo y no
+ se altera el contenido del archivo 
+\series bold
+IPcamara.txt
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Se conecta a la siguiente cámara y se repite el proceso hasta llegar al
+ final del archivo 
+\series bold
+listaCamaras.txt
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+<?xml version="1.0" encoding="utf-8"?>
+\end_layout
+
+\begin_layout Plain Layout
+
+<LinearLayout
+\end_layout
+
+\begin_layout Plain Layout
+
+	xmlns:android="http://schemas.android.com/apk/res/android"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:id="@+id/filaLayout"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:layout_width="wrap_content"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:layout_height="wrap_content"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:orientation="horizontal"
+\end_layout
+
+\begin_layout Plain Layout
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+    <ImageView
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:id="@+id/icono"
+\end_layout
+
+\begin_layout Plain Layout
+
+		android:layout_width="32dp"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_height="32dp"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_marginLeft="4dp"
+\end_layout
+
+\begin_layout Plain Layout
+
+		android:layout_marginRight="10dp"
+\end_layout
+
+\begin_layout Plain Layout
+
+		android:layout_marginTop="4dp"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:scaleType="fitCenter"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:src="@drawable/cisco">
+\end_layout
+
+\begin_layout Plain Layout
+
+    </ImageView>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	<TextView
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:id="@+id/label"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_width="wrap_content"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_height="wrap_content"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:text="@+id/label"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:textScaleX="1.2"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:gravity="center_vertical"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_gravity="center_vertical">
+\end_layout
+
+\begin_layout Plain Layout
+
+    </TextView>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+</LinearLayout>
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\emph on
+Layout
+\emph default
+ de la fila de la lista: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{filalayout.xml}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg filalayout.xml"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Lista desplegable de los servidores
+\end_layout
+
+\begin_layout Standard
+Tras solicitar la lista de servidores al servidor de vídeo vigilancia, se
+ almacena la respuesta en el archivo 
+\series bold
+listaServidores.txt
+\series default
+.
+ Así al pasar de una 
+\emph on
+Activity
+\emph default
+ a otra, esa información no se pierde y podrá ser leída de nuevo.
+\begin_inset Newline newline
+\end_inset
+
+En la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Menu}
+\end_layout
+
+\end_inset
+
+ al pulsar el botón 
+\emph on
+setup
+\emph default
+ se abre una nueva 
+\emph on
+Activity
+\emph default
+ que posee en la parte superior una lista desplegable con los servidores.
+ Para crear una lista desplegable en 
+\emph on
+Android
+\emph default
+, la 
+\emph on
+Activity
+\emph default
+ que la contenga ha de tener en su 
+\emph on
+layout
+\emph default
+ un elemento del tipo 
+\emph on
+Spinner
+\emph default
+ y crear un objeto de la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ArrayAdapter}
+\end_layout
+
+\end_inset
+
+ que añada los elementos contenidos en 
+\series bold
+listaServidores.txt
+\series default
+ a la lista desplegable.
+ También habría que especificarle el 
+\emph on
+layout
+\emph default
+ deseado que tendrá cada fila, que en este caso se ha tomado el que viene
+ por defecto en Android, 
+\emph on
+R.layout.simple_spinner_item
+\emph default
+, y configurar el adaptador para que muestre los elementos como una lista
+ desplegable con el método 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{setDropDownViewResource}
+\end_layout
+
+\end_inset
+
+.
+ El Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg ListaCams"
+
+\end_inset
+
+ muestra un ejemplo de como mostrar la lista de servidores y del uso del
+ método mencionado, y el Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg setuplayout.xml"
+
+\end_inset
+
+ muestra el 
+\emph on
+layout
+\emph default
+ de la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Setup}
+\end_layout
+
+\end_inset
+
+ con el elemento 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Spinner}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spinner"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+public class Setup  extends Activity{
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ ...
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	Spinner cmbOpciones = (Spinner)findViewById(R.id.CmbOpciones);
+\end_layout
+
+\begin_layout Plain Layout
+
+	adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,
+ vector_servers);
+\end_layout
+
+\begin_layout Plain Layout
+
+	adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+\end_layout
+
+\begin_layout Plain Layout
+
+	cmbOpciones.setAdapter(adaptador);
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+ ...
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Uso de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ArrayAdapter}
+\end_layout
+
+\end_inset
+
+ y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{setDropDownViewResource(...)}
+\end_layout
+
+\end_inset
+
+ en la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Setup}
+\end_layout
+
+\end_inset
+
+ .
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg Lista servidores"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+<?xml version="1.0" encoding="utf-8"?>
+\end_layout
+
+\begin_layout Plain Layout
+
+<LinearLayout
+\end_layout
+
+\begin_layout Plain Layout
+
+	xmlns:android="http://schemas.android.com/apk/res/android"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:layout_width="fill_parent"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:layout_height="fill_parent"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:isScrollContainer="true"
+\end_layout
+
+\begin_layout Plain Layout
+
+    android:orientation="vertical" >
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	<Spinner
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:id="@+id/CmbOpciones"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_width="match_parent"
+\end_layout
+
+\begin_layout Plain Layout
+
+        android:layout_height="wrap_content"
+\end_layout
+
+\begin_layout Plain Layout
+
+	/>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+</LinearLayout>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\emph on
+Layout 
+\emph default
+de la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Setup}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg setuplayout.xml"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Información de una cámara 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:infoCamaras"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Existe una interfaz gráfica accesible por el usuario a través del botón
+ 
+\emph on
+info cámaras 
+\emph default
+de la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Menu}
+\end_layout
+
+\end_inset
+
+ para poder ver la información de una determinada cámara de una forma ordenada.
+ En primer lugar se muestra una lista de las cámaras, siguiendo el procedimiento
+ explicado en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Lista de las camaras"
+
+\end_inset
+
+, de la que el usuario puede elegir una de las cámaras mostradas pulsando
+ sobre ella.
+ Una vez que se ha seleccionado la cámara, se abrirá la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{InfoCams}
+\end_layout
+
+\end_inset
+
+, y usando un objeto de la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ClienteHttp}
+\end_layout
+
+\end_inset
+
+ (véase 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:ClienteHttp Android"
+
+\end_inset
+
+) se solicitará la información de la cámara elegida al servidor de vídeo
+ vigilancia (siguiendo el formato descrito en la página 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "http://<IPservidor:Puerto>/infoCamara"
+
+\end_inset
+
+) y con la información recibida se creará una ventana formada por un conjunto
+ de cuadros de texto y etiquetas descriptivas de cada parámetro.
+\end_layout
+
+\begin_layout Subsection
+Vista previa de cuatro cámaras a la vez 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Grid monitor"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Puede que el nombre de la cámara no sea lo suficientemente descriptivo como
+ para que el usuario sepa donde está situada la cámara o hacia dónde está
+ apuntando, por tanto, para hacer el proceso de selección de una cámara
+ más visual, se ha creado la 
+\emph on
+Activity
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{cuatroCams}
+\end_layout
+
+\end_inset
+
+, que divide la pantalla en cuatro regiones, y muestra en cada una de ellas
+ una instantánea recibida por las cuatro primeras cámaras de la lista.
+ Se pueden visualizar de cuatro en cuatro la totalidad de las cámaras o
+ volver al grupo de cuatro cámaras visto con anterioridad gracias a dos
+ botones situados a izquierda y derecha de la pantalla: 
+\emph on
+anteriores
+\emph default
+ y 
+\emph on
+siguientes
+\emph default
+.
+ El procedimiento es el siguiente:
+\end_layout
+
+\begin_layout Enumerate
+Se crea la interfaz gráfica con las cuatro regiones y los botones: 
+\emph on
+siguientes
+\emph default
+ y 
+\emph on
+anteriores
+\emph default
+, para pasar a las cuatro cámaras siguientes o para volver a las cuatro
+ anteriores respectivamente.
+\end_layout
+
+\begin_layout Enumerate
+Se solicita a la primera cámara de la lista una instantánea de la imagen
+ que está capturando en ese momento y se muestra en el cuadrante superior
+ izquierdo.
+\end_layout
+
+\begin_layout Enumerate
+Se muestra la instantánea de la segunda cámara en el cuadrante superior
+ derecha.
+\end_layout
+
+\begin_layout Enumerate
+La tercera cámara se muestra en el cuadrante inferior izquierdo.
+\end_layout
+
+\begin_layout Enumerate
+Por último se muestra la cuarta cámara en el cuadrante restante.
+\end_layout
+
+\begin_layout Standard
+Si el usuario pulsa el botón 
+\emph on
+siguiente
+\emph default
+, se repite el procedimiento, pero tomando el cuarteto de cámaras siguiente
+ de la lista.
+ En caso de que una cámara no esté disponible o de que no existan más cámaras,
+ se mostrará en el cuadrante correspondiente una imagen que indica al usuario
+ que la cámara no está operativa.
+ En caso de pulsar el botón 
+\emph on
+anterior
+\emph default
+, se mostrará el cuarteto de cámaras visto con anterioridad.
+\end_layout
+
+\begin_layout Standard
+La forma en que se solicita una instantánea a la cámara elegida es por medio
+ de un objeto de la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ClienteHttp}
+\end_layout
+
+\end_inset
+
+ (véase 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:ClienteHttp Android"
+
+\end_inset
+
+) que se conecta a la URL devuelta por el método 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{snapShot}
+\end_layout
+
+\end_inset
+
+ de la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{CiscoWVC210}
+\end_layout
+
+\end_inset
+
+ que tiene la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{listing}[style=consola, numbers=none]
+\end_layout
+
+\begin_layout Plain Layout
+
+ http://<IP_Camara>/img/snapshot.cgi?size=3&quality=1
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{listing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\emph on
+view
+\emph default
+ personalizado: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{AspectGrid}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A la hora de dividir la pantalla en cuatro regiones iguales no se puede
+ optar por una solución trivial, ya que
+\emph on
+ Android
+\emph default
+ no realiza de forma correcta el redimensionado de las regiones de forma
+ dinámica para adaptarse al cuadrante correspondiente y no solaparse entre
+ ellas.
+ Por tanto, hay que crear una nueva clase, que redefina la funcionalidad
+ de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ViewGroup}
+\end_layout
+
+\end_inset
+
+ y sobrescribir el método 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{onMeasure}
+\end_layout
+
+\end_inset
+
+ encargado de establecer el tamaño de cada 
+\emph on
+view
+\emph default
+.
+ Para ello se ha creado la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{AspectGrid}
+\end_layout
+
+\end_inset
+
+, que extiende la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ViewGroup}
+\end_layout
+
+\end_inset
+
+ y redefine los métodos de la misma.
+ El Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg AspectGrid"
+
+\end_inset
+
+ muestra la forma en que se sobrescribe el método por defecto 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{onMeasure}
+\end_layout
+
+\end_inset
+
+ con la orden 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{@Override}
+\end_layout
+
+\end_inset
+
+ para adaptar el tamaño de cada imagen recibida al cuadrante de la pantalla
+ en el que estarán situadas.
+ Al sobrescribir el método 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{onLayout}
+\end_layout
+
+\end_inset
+
+, dividimos la pantalla en cuatro cuadrantes iguales, situando cada una
+ de las imágenes en su zona correspondiente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement th
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+public class AspectGrid extends ViewGroup {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    private int mNumColumns = 1;    private int mHorizontalSpacing = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    private int mVerticalSpacing = 0;    private float mChildAspectRatio
+ = 1.0f;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	public AspectGrid(Context context, AttributeSet attrs, int defStyle) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		super(context, attrs, defStyle);
+\end_layout
+
+\begin_layout Plain Layout
+
+        try {
+\end_layout
+
+\begin_layout Plain Layout
+
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Aspect
+Grid);          setNumColumns(a.getInt(R.styleable.AspectGrid_numColumns, mNumColum
+ns));          setHorizontalSpacing(a.getDimensionPixelSize(R.styleable.AspectGrid_
+horizontalSpacing, mHorizontalSpacing));
+\end_layout
+
+\begin_layout Plain Layout
+
+            setVerticalSpacing(a.getDimensionPixelSize(R.styleable.AspectGrid_verti
+calSpacing, mVerticalSpacing));
+\end_layout
+
+\begin_layout Plain Layout
+
+            setChildAspectRatio(a.getFloat(R.styleable.AspectGrid_childAspectRatio,
+ mChildAspectRatio));
+\end_layout
+
+\begin_layout Plain Layout
+
+            a.recycle();
+\end_layout
+
+\begin_layout Plain Layout
+
+        } catch (RuntimeException ex) {
+\end_layout
+
+\begin_layout Plain Layout
+
+            throw ex;
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Override
+\end_layout
+
+\begin_layout Plain Layout
+
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+\end_layout
+
+\begin_layout Plain Layout
+
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+\end_layout
+
+\begin_layout Plain Layout
+
+        int measuredWidth = widthSize;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int measuredHeight = heightSize;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int width = Math.max(measuredWidth, getSuggestedMinimumWidth());
+\end_layout
+
+\begin_layout Plain Layout
+
+        int height = Math.max(measuredHeight, getSuggestedMinimumHeight());
+\end_layout
+
+\begin_layout Plain Layout
+
+        setMeasuredDimension(width, height);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Override
+\end_layout
+
+\begin_layout Plain Layout
+
+    protected void onLayout(boolean changed, int l, int t, int r, int b)
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int childCount = getChildCount();
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (childCount <= 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+            return;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int innerWidth = r - l - getPaddingLeft() - getPaddingRight();
+\end_layout
+
+\begin_layout Plain Layout
+
+        int innerHeight = b - t - getPaddingBottom() - getPaddingTop();
+\end_layout
+
+\begin_layout Plain Layout
+
+        int numRows = (childCount + mNumColumns - 1) / mNumColumns;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int leftEdge = getPaddingLeft();
+\end_layout
+
+\begin_layout Plain Layout
+
+        int topEdge = getPaddingTop();
+\end_layout
+
+\begin_layout Plain Layout
+
+        int horizontalStride = (innerWidth + mHorizontalSpacing) / mNumColumns;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int verticalStride = (innerHeight + mVerticalSpacing) / numRows;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int childWidth = horizontalStride - mHorizontalSpacing;
+\end_layout
+
+\begin_layout Plain Layout
+
+        int childHeight = verticalStride - mVerticalSpacing;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (childHeight * mChildAspectRatio > childWidth) {
+\end_layout
+
+\begin_layout Plain Layout
+
+            childHeight = (int)(childWidth / mChildAspectRatio);
+\end_layout
+
+\begin_layout Plain Layout
+
+            verticalStride = childHeight + mVerticalSpacing;
+\end_layout
+
+\begin_layout Plain Layout
+
+            topEdge = (innerHeight + mVerticalSpacing - numRows * verticalStride
+) / 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+         } else {             childWidth = (int)(childHeight * mChildAspectRatio
+);
+\end_layout
+
+\begin_layout Plain Layout
+
+            horizontalStride = childHeight + mHorizontalSpacing;
+\end_layout
+
+\begin_layout Plain Layout
+
+            leftEdge = (innerWidth + mHorizontalSpacing - mNumColumns *
+ horizontalStride) / 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+        for (int i = 0; i < childCount; ++i) {
+\end_layout
+
+\begin_layout Plain Layout
+
+            View child = getChildAt(i);
+\end_layout
+
+\begin_layout Plain Layout
+
+            int row = i / mNumColumns;
+\end_layout
+
+\begin_layout Plain Layout
+
+            int column = i % mNumColumns;
+\end_layout
+
+\begin_layout Plain Layout
+
+            int left = leftEdge + column * horizontalStride;
+\end_layout
+
+\begin_layout Plain Layout
+
+            int top = topEdge + row * verticalStride;
+\end_layout
+
+\begin_layout Plain Layout
+
+            child.layout(left,top,left + childWidth,top + childHeight);
+\end_layout
+
+\begin_layout Plain Layout
+
+        }    }}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Implementación de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{AspectGrid}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg AspectGrid"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Reproducción del 
+\emph on
+streaming
+\emph default
+ de las cámaras 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:reproductor"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La finalidad principal del cliente de 
+\emph on
+Android
+\emph default
+ es la de poder visualizar de manera ininterrumpida el 
+\emph on
+streaming
+\emph default
+ de vídeo procedente de la cámara de vídeo vigilancia elegida.
+ En lugar de utilizar un reproductor instalado en el dispositivo para su
+ reproducción, se ha optado por desarrollar uno que esté integrado dentro
+ de la propia aplicación como un 
+\emph on
+Activity
+\emph default
+ más.
+ Esta solución adoptada permite especializar el reproductor para flujo de
+ vídeos RTSP y también añade nuevas funcionalidades como la posibilidad
+ de controlar remotamente la cámara que se está reproduciendo.
+ Para la realización del reproductor se ha utilizado, dentro de la clase
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Reproductor}
+\end_layout
+
+\end_inset
+
+, la clase de 
+\emph on
+Android
+\emph default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{MediaPlayer}
+\end_layout
+
+\end_inset
+
+, que permite controlar y reproducir el 
+\emph on
+streaming
+\emph default
+ de vídeo deseado.
+ Para reproducir el 
+\emph on
+streaming
+\emph default
+ de vídeo RTSP sólo hay que pasar la URL al constructor del objeto 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{MediaPlayer}
+\end_layout
+
+\end_inset
+
+, en este caso llamado 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{mMediaPlayer}
+\end_layout
+
+\end_inset
+
+, que se obtiene gracias a la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{CiscoWVC210}
+\end_layout
+
+\end_inset
+
+.
+ Una vez que se ha creado, se establecen unos controladores de eventos para
+ este objeto, de tal forma que para cada acontecimiento diferente que se
+ pueda producir, se ejecuta una función distinta.
+ Los eventos a los que se prestará atención son:
+\end_layout
+
+\begin_layout Description
+setOnBufferingUpdateListener Avisa de cambios en el 
+\emph on
+buffer
+\emph default
+ del vídeo.
+\end_layout
+
+\begin_layout Description
+setOnCompletionListener Indica que el vídeo ha llegado a su fin o que no
+ se puede reproducir.
+\end_layout
+
+\begin_layout Description
+setOnPreparedListener Se activa cuando el vídeo está listo para su reproducción.
+\end_layout
+
+\begin_layout Description
+setOnVideoSizeChangedListener Avisa de cambios en el tamaño del vídeo.
+\end_layout
+
+\begin_layout Standard
+Una vez que se han especificado los eventos del vídeo que se tratarán, se
+ indica al reproductor que comience a preparar la reproducción del flujo
+ de vídeo con el método 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{prepareAsync()}
+\end_layout
+
+\end_inset
+
+, de tal forma que cuando se reciba el suficiente flujo de vídeo para su
+ reproducción se activará la función 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{onPrepare}
+\end_layout
+
+\end_inset
+
+.
+ Dentro de la función se indicará que se inicie su reproducción.
+ El Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg mediaPlayer"
+
+\end_inset
+
+ muestra todo este proceso.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+	MediaPlayer mMediaPlayer = new MediaPlayer();
+\end_layout
+
+\begin_layout Plain Layout
+
+	CiscoWVC210 cisc = new CiscoWVC210(url);
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setDataSource(cisc.rtspUrl());
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setDisplay(holder);
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.prepareAsync();
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setOnBufferingUpdateListener(this);
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setOnCompletionListener(this);
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setOnPreparedListener(this);
+\end_layout
+
+\begin_layout Plain Layout
+
+	mMediaPlayer.setOnVideoSizeChangedListener(this);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Preparación de un objeto 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{mediaPlayer}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg mediaPlayer"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+También hay que evitar que el cliente se desconecte de forma voluntaria
+ de su conexión WiFi para no interrumpir la reproducción del 
+\emph on
+streaming
+\emph default
+ de vídeo, 
+\emph on
+Android
+\emph default
+ posee la clase 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{WifiLock}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wifimanager"
+
+\end_inset
+
+ que permite activar o desactivar este bloqueo; en el Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg wifilock"
+
+\end_inset
+
+ se puede ver un ejemplo de su utilización.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+WifiLock wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createW
+ifiLock(WifiManager.WIFI_MODE_FULL,"MiWifiLock");
+\end_layout
+
+\begin_layout Plain Layout
+
+//ACTIVAMOS
+\end_layout
+
+\begin_layout Plain Layout
+
+wifiLock.acquire();
+\end_layout
+
+\begin_layout Plain Layout
+
+...
+\end_layout
+
+\begin_layout Plain Layout
+
+//DESACTIVAMOS
+\end_layout
+
+\begin_layout Plain Layout
+
+wifiLock.release();
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Bloqueo y desbloqueo de WiFi con 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{WifiLock}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg wifilock"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Control remoto de las cámaras
+\end_layout
+
+\begin_layout Standard
+Dentro de la interfaz de reproducción del 
+\emph on
+streaming
+\emph default
+ de las cámaras, existe un menú para mover de forma remota la cámara y apuntarla
+ hacia otra dirección; permite moverla en todas las direcciones del espacio
+ e incluso activar el modo 
+\emph on
+patrol
+\emph default
+ o patrulla, que reproduce una secuencia de movimientos definida en la configura
+ción de la cámara.
+ Para acceder a este menú basta con pulsar sobre la pantalla o pulsando
+ sobre el botón 
+\emph on
+menú
+\emph default
+ si el dispositivo dispone de él.
+ 
+\end_layout
+
+\begin_layout Standard
+Al activar el modo patrulla, el icono del menú aparece tachado, de tal forma,
+ que al pulsar sobre él lo desactivaremos, aunque tendremos que esperar
+ a que la cámara termine la secuencia completa de movimientos ya iniciada.
+\end_layout
+
+\begin_layout Standard
+Todas las órdenes son peticiones o 
+\emph on
+request
+\emph default
+ HTTP que se envían a la cámara directamente.
+\end_layout
+
+\begin_layout Subsection
+Permisos en Android
+\end_layout
+
+\begin_layout Standard
+En Android, las aplicaciones requieren de permisos para poder hacer uso
+ de elementos del dispositivo.
+ En esta aplicación será necesario el uso del Wi-Fi para la conexión a la
+ red y también el bloqueo del acelerómetro o sensor de movimiento cuando
+ se esté ejecutando la aplicación en primer plano, así al mover el dispositivo
+ de la posición vertical a horizontal o viceversa, la orientación de la
+ pantalla no cambiará, quedando fija en la posición apaisada.
+ La razón de bloquearlo es que al mover la pantalla, se vuelve a cargar
+ la 
+\emph on
+Activity
+\emph default
+ en ejecución y por tanto durante la reproducción del 
+\emph on
+streaming
+\emph default
+ de la cámara éste se detendrá y habría que volver a iniciarlo, produciendo
+ una situación no deseada, ya que lo que se busca es una reproducción ininterrum
+pida del mismo.
+\end_layout
+
+\begin_layout Standard
+La forma de añadir permisos en una aplicación en Android es modificando
+ el archivo 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{AndroidManifest.xml}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "androidManifest"
+
+\end_inset
+
+ con las etiquetas 
+\emph on
+uses-permission android:name
+\emph default
+.
+ Para permitir el uso del Wi-Fi el permiso será 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{INTERNET}
+\end_layout
+
+\end_inset
+
+ y para el bloqueo del sensor de movimiento es 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{WAKE LOCK}
+\end_layout
+
+\end_inset
+
+.
+ También se especifica la versión mínima del SDK para el que está diseñada
+ la aplicación: 10 (equivalente a la versión 2.3.3).
+ La forma de realizarlo se detalla en el Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Alg AndroidManifest.xml"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+\end_layout
+
+\begin_layout Plain Layout
+
+    package="com.vvd" android:versionCode="1" android:versionName="1.0" >
+\end_layout
+
+\begin_layout Plain Layout
+
+	<uses-sdk android:minSdkVersion="10" />
+\end_layout
+
+\begin_layout Plain Layout
+
+	<uses-permission android:name="android.permission.INTERNET"/>
+\end_layout
+
+\begin_layout Plain Layout
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{AndroidManifest.xml}
+\end_layout
+
+\end_inset
+
+ del cliente.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Alg AndroidManifest.xml"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
