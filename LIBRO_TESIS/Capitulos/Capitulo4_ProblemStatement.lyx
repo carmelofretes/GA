@@ -89,7 +89,7 @@ Given the physical topology, the matrix of demands and a list of pre-calculated
  routes (as K-shortest path), we need to satisfy all the demands of source-desti
 nation connection; i.e.
  to determine the route and spectrum assignment for each traffic demand
- with optimum spectrum utilization and he total cost.
+ with optimum spectrum utilization and the total cost, and distance.
  The spectrum utilization is given by the maximum index FS used on all fibers
  in the network while the total cost is depending on the distance traveled
  and the FS requested.
@@ -101,7 +101,7 @@ For the proposed model, the following assumptions are established: The spectral
  resource of each optical fiber is divided into FS; the capacity of the
  fiber in terms of FS is limited in all links; the connection demands are
  bidirectional, and a complete end-to-end optical path must be found for
- each demand; A set of K specific route is given for a connection in advance;
+ each demand; a set of K specific route is given for a connection in advance;
  the request is represented by three tuples 
 \begin_inset Formula $\left(s,\,d,\,\alpha_{sd}\right)$
 \end_inset
@@ -114,15 +114,25 @@ For the proposed model, the following assumptions are established: The spectral
 \begin_inset Formula $d$
 \end_inset
 
-, and the bandwidth / data rate demanded 
+, and the bandwidth or data rate demanded 
 \begin_inset Formula $\alpha$
 \end_inset
 
-considered in the quantity of FS requested.
+ considered in the quantity of FS requested.
 \end_layout
 
 \begin_layout Section
 Multi-objective Integer Linear Programming
+\end_layout
+
+\begin_layout Standard
+For the RSA problem we propose as an exact method an integer linear programming
+ considering three objetive function.
+ These objetive are normalized and added to build one objetive function.
+\end_layout
+
+\begin_layout Standard
+Therefore, this model is called Multiobjective ILP (MOILP)
 \end_layout
 
 \begin_layout Standard
@@ -298,7 +308,7 @@ Amount of FS for Band Guard
 \begin_inset Formula $F_{total}$
 \end_inset
 
-
+ 
 \end_layout
 
 \end_inset
@@ -330,7 +340,7 @@ Amount of FS available in each fiber
 \begin_inset Formula $P$
 \end_inset
 
-
+ 
 \end_layout
 
 \end_inset
@@ -850,7 +860,7 @@ Variables:
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\wedge_{sd}$
+\begin_inset Formula $\varLambda_{sd}$
 \end_inset
 
 
@@ -886,7 +896,7 @@ First FS assigned to the request
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\wedge_{sd,s'd'}$
+\begin_inset Formula $\varLambda_{sd,s'd'}$
 \end_inset
 
 
@@ -908,11 +918,11 @@ First FS assigned to the request
 
 \begin_layout Plain Layout
 Indicator that is equal to 0 if 
-\begin_inset Formula $\wedge_{s'd'}$
+\begin_inset Formula $\Lambda_{s'd'}$
 \end_inset
 
  < 
-\begin_inset Formula $\wedge_{sd}$
+\begin_inset Formula $\varLambda_{sd}$
 \end_inset
 
 , and 1 in otherwise.
@@ -958,16 +968,9 @@ Objetive function:
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $Minimize\,f\left(x\right)\,=\,\left[f_{1}\,+\,f_{2}\,+\,f_{3}\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-Minimize\,f\left(x\right)\,=\,\left[f_{1}\,+\,f_{2}\,+\,f_{3}\right]\label{eq:func_obj}
+Minimize\,f\left(x\right)\,=\,f_{1}\,+\,f_{2}\,+\,f_{3}\label{eq:func_obj}
 \end{equation}
 
 \end_inset
@@ -1008,7 +1011,7 @@ The Spectrum use:
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-f_{1}\,=\,\frac{\underset{\forall sd}{max}\left(\wedge_{sd}\,+\,\alpha_{sd}\right)}{spectrum\_max}\label{eq:uso_espectro_func}
+f_{1}\,\geqslant\,\frac{\underset{\forall sd}{max}\left(\varLambda_{sd}\,+\,\alpha_{sd}\right)}{spectrum\_max}\label{eq:uso_espectro_func}
 \end{equation}
 
 \end_inset
@@ -1023,7 +1026,7 @@ The total cost:
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-f_{2}\,=\,\frac{\sum_{sd}\sum_{p}\left(\alpha_{p}^{sd}\,*\,dist_{p}^{sd}\,*\,x_{p}^{sd}\right)}{cost\_max}\label{eq:total_costo_func}
+f_{2}\,\geqslant\,\frac{\sum_{sd}\sum_{p}\left(\alpha_{p}^{sd}\,*\,dist_{p}^{sd}\,*\,x_{p}^{sd}\right)}{cost\_max}\label{eq:total_costo_func}
 \end{equation}
 
 \end_inset
@@ -1051,7 +1054,7 @@ The distance:
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-f_{3}\,=\,\frac{\sum_{sd}\sum_{p}\left(dist_{p}^{sd}\,*\,x_{p}^{sd}\right)}{dist\_max}\label{eq:distancia_max_func}
+f_{3}\,\geqslant\,\frac{\sum_{sd}\sum_{p}\left(dist_{p}^{sd}\,*\,x_{p}^{sd}\right)}{dist\_max}\label{eq:distancia_max_func}
 \end{equation}
 
 \end_inset
@@ -1099,7 +1102,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\wedge{}_{sd}\,+\,\alpha_{sd}\,*\,x_{p}^{sd}\,+\,GB\,-\,\wedge{}_{s'd''}\,\leq\,\left(F_{total}\,+\,GB\right)\,*\,\left(1\,-\,\delta_{sd,s'd'}\,+\,2\,-\,x_{p}^{sd}\,-\,x_{p'}^{s'd''}\right)\label{eq:restriccion2}
+\varLambda{}_{sd}\,+\,\alpha_{sd}\,*\,x_{p}^{sd}\,+\,GB\,-\,\varLambda{}_{s'd''}\,\leq\,\left(F_{total}\,+\,GB\right)\,*\,\left(1\,-\,\delta_{sd,s'd'}\,+\,2\,-\,x_{p}^{sd}\,-\,x_{p'}^{s'd''}\right)\label{eq:restriccion2}
 \end{equation}
 
 \end_inset
@@ -1123,7 +1126,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\wedge{}_{s'd''}\,+\,\alpha_{s'd''}\,*\,x_{p'}^{s'd''}\,+\,GB\,-\,\wedge{}_{sd'}\,\leq\,\left(F_{total}\,+\,GB\right)\,*\,\left(1\,-\,\delta_{s'd'',sd}\,+\,2\,-\,x_{p}^{sd}\,-\,x_{p'}^{s'd''}\right)\label{eq:restriccion3}
+\varLambda{}_{s'd''}\,+\,\alpha_{s'd''}\,*\,x_{p'}^{s'd''}\,+\,GB\,-\,\varLambda{}_{sd'}\,\leq\,\left(F_{total}\,+\,GB\right)\,*\,\left(1\,-\,\delta_{s'd'',sd}\,+\,2\,-\,x_{p}^{sd}\,-\,x_{p'}^{s'd''}\right)\label{eq:restriccion3}
 \end{equation}
 
 \end_inset
@@ -1171,7 +1174,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\wedge{}_{s'd''}\,-\,\wedge{}_{sd}\,<\,F_{total}\,*\,\delta_{sd,s'd''}\label{eq:restriccion5_func}
+\varLambda{}_{s'd''}\,-\,\varLambda{}_{sd}\,<\,F_{total}\,*\,\delta_{sd,s'd''}\label{eq:restriccion5_func}
 \end{equation}
 
 \end_inset
@@ -1195,7 +1198,7 @@ status open
 \color none
 \begin_inset Formula 
 \begin{equation}
-\wedge{}_{sd}\,-\,\wedge{}_{s'd''}\,<\,F_{total}\,*\text{\,}\delta_{sd,s'd''}\label{eq:restriccion6_func}
+\varLambda{}_{sd}\,-\,\varLambda{}_{s'd''}\,<\,F_{total}\,*\text{\,}\delta_{sd,s'd''}\label{eq:restriccion6_func}
 \end{equation}
 
 \end_inset
@@ -1227,7 +1230,8 @@ noprefix "false"
 
 \end_inset
 
- represents the maximum spectrum used.
+ represents the maximum spectrum used plus the total cost plus the distance
+ all normalized.
  The constraints 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1266,12 +1270,12 @@ On the other hand, we have that, for all request
 \begin_inset Formula $sd,s'd'$
 \end_inset
 
- and the paths
+ and the paths 
 \begin_inset Formula $p\,\epsilon\,P_{sd}$
 \end_inset
 
  and 
-\begin_inset Formula $p\,\epsilon\,P_{s'd''}$
+\begin_inset Formula $p'\,\epsilon\,P_{s'd''}$
 \end_inset
 
  with 
@@ -1279,7 +1283,7 @@ On the other hand, we have that, for all request
 \end_inset
 
  and 
-\begin_inset Formula $p\text{'}$
+\begin_inset Formula $p'$
 \end_inset
 
 sharing at least one common link 
@@ -1296,47 +1300,7 @@ noprefix "false"
 
 \end_inset
 
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:restriccion2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:restriccion3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:restriccion4_func"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:restriccion5_func"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
+, to 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:restriccion6_func"
@@ -1381,8 +1345,8 @@ noprefix "false"
 
 \end_inset
 
-ensure that the portions of spectrum that are assigned to connections that
- use paths that share a common link do not overlap and are adjacent.
+ ensure that the portions of spectrum that are assigned to connections that
+ use paths that share a common link do not overlap.
  
 \end_layout
 
@@ -1392,7 +1356,7 @@ Also, for all requests
 \end_inset
 
 that have 
-\begin_inset Formula $p\,\epsilon\,P_{s'd''}$
+\begin_inset Formula $p\,\epsilon\,P_{sd'}$
 \end_inset
 
 , with 
@@ -1442,32 +1406,32 @@ noprefix "false"
 \end_inset
 
  means that the initial frequency 
-\begin_inset Formula $\land_{sd}$
+\begin_inset Formula $\varLambda_{sd}$
 \end_inset
 
  is smaller than the initial frequency 
-\begin_inset Formula $\land_{s'd'}$
+\begin_inset Formula $\varLambda_{s'd'}$
 \end_inset
 
-, that is, 
-\begin_inset Formula $\land_{sd}\,<\land_{s'd''}$
+, in other case 
+\begin_inset Formula $\delta_{sd,s'd''}\,=0$
+\end_inset
+
+ that is, 
+\begin_inset Formula $\varLambda_{sd}\,<\varLambda_{s'd''}$
 \end_inset
 
 , o 
 \begin_inset Formula $\delta_{s'd'',sd}\,=1$
 \end_inset
 
- , in which case 
-\begin_inset Formula $\land_{sd}>\land_{s'd''}$
-\end_inset
-
 .
  Note that 
-\begin_inset Formula $\land_{sd}$
+\begin_inset Formula $\varLambda_{sd}$
 \end_inset
 
  and 
-\begin_inset Formula $\land_{s'd''}$
+\begin_inset Formula $\varLambda_{s'd''}$
 \end_inset
 
  are always bounded superiorly by 
@@ -1478,11 +1442,27 @@ noprefix "false"
 \begin_inset Formula $F_{total}$
 \end_inset
 
+.
  
 \end_layout
 
 \begin_layout Section
-Multi-objective Genetic Algorimth (MOGA)
+Multi-objective Genetic Algorimth 
+\end_layout
+
+\begin_layout Standard
+The Multiobjetive Evolutionary Algorithm based on weighted sum is called
+ Multiobjective Genetic Algorithm (MOGA) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "algoritmos_evolutivos"
+literal "false"
+
+\end_inset
+
+.
+ MOGA es an extension of an Genetic Algorithm (GA) considering several objetive
+ functions.
 \end_layout
 
 \begin_layout Standard
@@ -1502,7 +1482,7 @@ In this implementation, the objective is to find the route and the set of
 \end_layout
 
 \begin_layout Standard
-The parts of the implementation of the MOGA proposed in 
+The parts of the implementation of the MOGA published in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "engopt"
@@ -1510,19 +1490,7 @@ literal "false"
 
 \end_inset
 
- are described in detail, given in the Algorithms, below.
-\end_layout
-
-\begin_layout Standard
-The parts of the implementation of the MOGA proposed in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "engopt"
-literal "false"
-
-\end_inset
-
- are described in detail, given in Algorithms 
+ are described in detail, given in the Algorithms 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "moga_alg1"
@@ -1532,27 +1500,7 @@ noprefix "false"
 
 \end_inset
 
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "moga_evaluacionPoblacion"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- y 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "moga_evaluacionIndividuo"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, are described in detail below.
+.
 \end_layout
 
 \begin_layout Standard
@@ -1876,6 +1824,155 @@ name "moga_evaluacionIndividuo"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Initial Population
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "moga_alg1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the first step is to initialize the population.
+ The MOGA starts with an initial population of chromosomes, defined as follows:
+ The algorithm deals with the requests in a determined order, which was
+ taken from a work previously presented in the literature 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "capucho2013ilp"
+literal "false"
+
+\end_inset
+
+.
+ In this work, the order is as follows: applications can be requested from
+ highest to lowest, defined by the highest possible cost of the application,
+ the first 30% of said list was attended in the first place, while 70% The
+ rest is attended at random.
+ This order is represented by the positions of the genes in the chromosome
+ and by all the current events in the execution of the algorithm.
+ Then, the routes and FS are randomly assigned to the demands, taking into
+ account the previously defined order.
+ Each chromosome encodes a valid solution.
+\end_layout
+
+\begin_layout Subsection
+Population Evaluation 
+\end_layout
+
+\begin_layout Standard
+After initializing or evolving the population, this population is evaluated,
+ as observed in step 2 and 8 of Algorithm 2.
+ In this work, a MOGA is proposed by means of a weighted sum, in which three
+ objectives to be minimized are considered.
+ To implement the weighted sum of the 3 objective functions, the same weight
+ was used for each function, since the objective of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "engopt"
+literal "false"
+
+\end_inset
+
+ is to show the behavior of a heuristic for the resolution of the RSA problem
+ considering more than one value to be optimized, and not the importance
+ of each proposed value.
+\end_layout
+
+\begin_layout Standard
+The objective functions to be minimized are the distance traveled, the maximum
+ FS used, and the total cost.
+ With the aim of driving the search towards better solutions, the weighted
+ sum of the objective functions is used as the Fitness value of the implementati
+on, normalizing said values.
+\end_layout
+
+\begin_layout Standard
+Finally, the fitness value is calculated as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f\,=\,f_{1}\,+\,f_{2}\,+\,f_{3}\label{eq:func_obj-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the individuals with the best tness value (values less than
+\begin_inset Formula $f$
+\end_inset
+
+, by the minimization) will be selected for the next generation.
+ In order to perform the weighted sum, it should be mentioned that the values
+ 
+\begin_inset Formula $f_{1},\,f_{2}\,and\,f_{3}$
+\end_inset
+
+ they are normalized values of the objective functions, presented in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:uso_espectro_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:total_costo_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:distancia_max_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ respectively.
+ This process is observed in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "moga_evaluacionPoblacion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "moga_evaluacionIndividuo"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section

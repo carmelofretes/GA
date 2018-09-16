@@ -89,8 +89,8 @@ MOTIVATION
 The emergence of the interest in elastic optical networks (EON) comes from
  the constant increase in network traffic and the need to increase the capacity
  and performance of the sections in the transmission networks.
- At present, the transport technology used in optical networks is wavelength
- multiplexing (WDM).
+ At present, the transport technology used in optical networks is Wavelength
+ Division Multiplexing (WDM).
  This technology is capable of transporting multiple channels in the same
  fiber, based on carriers of different wavelengths.
  The implication of this technology is that channels that have a reduced
@@ -124,13 +124,12 @@ The calculating of an elastic optical routing has two parts: (a) optical
 In WDM networks, the algorithms for routing planning and wavelength assignment
  seek a physical route through the network and assign a wavelength for the
  transport of that channel.
- The selection of that wavelength is conditioned to be the same during the
- route of the physical route, so that in this way it is not necessary to
- use wavelength converters in any jump.
- This condition is called a continuity condition (continuity constraint).
- In EON, apart from this condition, there is a new condition that is that
- of contiguity in the spectrum (contiguity constraint).
- This last condition means that the frequencies slots that occupy the channel
+ The selection of that wavelength is conditioned to be the same spectrum
+ during the route of the physical route, so that in this way it is not necessary
+ to use wavelength converters in any jump.
+ This condition is called a continuity condition constraint.
+ In EON, apart from this condition, contiguity constraint is necessary.
+ This last condition means that the frequencys slots that occupy the channel
  must be together in the spectrum.
  For that, the routing and spectrum assignment (RSA) problem is more challenge
  than routing in WDM networks and is the more important problem in EON managemen
@@ -139,15 +138,16 @@ t.
 \end_layout
 
 \begin_layout Standard
-For the resolution of the numerous problems that have multiple objectives,
- a good meta-heuristic for this type of problems are the evolutionary algorithms
- (EA - Evolutionary Algorithm).
+To solve numerous problems that have multiple objectives, a good meta-heuristic
+ for this type of problems are the evolutionary algorithms (EA - Evolutionary
+ Algorithm) {BUSCAR REFERENCIA}.
  Traditional EA are customized to adapt to multi-objective problems, through
  the use of specialized fitness functions and the introduction of methods
  to promote the diversity of the solution.
  There are general approaches to the optimization of multiple objectives.
  One is to combine the individual objective functions in a single compound
- function or move all, except one of them for the set of constraints.
+ function or move all, except one of them for the set of constraints: weighted
+ sum base optimization.
  The next approach is to determine a whole set of optimal Pareto solutions
  or a representative subset.
  An optimal set of Pareto is a set of solutions that are not dominated with
@@ -181,7 +181,8 @@ literal "true"
  The MOEA optimizes: (a) the spectrum used, and (b) the total cost, subject
  to the constraints of continuity, contiguity, and spectrum conflict imposed
  by the EON layer.
- 
+ Further an exact method and Multiobjetive Evolutionary Algorithm based
+ on weighted sum is proposed.
 \end_layout
 
 \begin_layout Standard
@@ -198,17 +199,16 @@ Our work is organized in the following way; in section 2 is explained EON
 \end_layout
 
 \begin_layout Section
-OBJETIVE 
+OBJECTIVE 
 \end_layout
 
 \begin_layout Subsection
-GENERAL OBJECTIVES
+GENERAL OBJECTIVE
 \end_layout
 
 \begin_layout Itemize
-Design and implement an exact model and a meta-heuristic, based on Multi-Objecti
-ve optimization of weighted sum and find the pareto set of the best solutions
- to solve the RSA problem given a list of offline demands point-to-point.
+To design competitive Evolutionary Algorithms in Multiobjective optimization
+ context to solve the RSA problem given a list of offline demands point-to-point.
 \end_layout
 
 \begin_layout Subsection
@@ -216,30 +216,22 @@ SPECIFIC OBJECTIVES
 \end_layout
 
 \begin_layout Itemize
-Design and implement an exact model that obtains the optimal result in networks
- of low complexity.
+To design an exact model based on Integer Linear Programming that obtains
+ the optimal result in a Multiobjective context.
  
 \end_layout
 
 \begin_layout Itemize
-Design and implement a meta-heuristic that obtains promising results in
- more complex networks in an acceptable computational time.
- 
+To design Multiobjective Algorithm based on weighted sum approach.
 \end_layout
 
 \begin_layout Itemize
-Compare the proposed meta-heuristic with an exact model published in the
- literature.
+To design a Multiobjective Algorithm based on pareto approach.
 \end_layout
 
 \begin_layout Itemize
-Implement an Evolutionary Algorithm model to obtain optimal pareto fronts
- for the RSA problem.
-\end_layout
-
-\begin_layout Itemize
-Analysis of the Evolutionary Algorithm proposed with a model published in
- the literature.
+To perform test to verify the viability of the proposed algorithms against
+ the state-of-the-art algorithms.
 \end_layout
 
 \begin_layout Section
@@ -247,29 +239,30 @@ WORK ORGANIZATION
 \end_layout
 
 \begin_layout Standard
-The present work has been organized as follows: The first part or Chapter
- 2 is structured as follows: definitions of an Elastic Optical Network and
- the RSA problem are presented, we present the related works and the pareto
- front concept.
+The present work has been organized as follows: 
+\end_layout
+
+\begin_layout Standard
+Chapter 2 is structured as follows: definitions of an Elastic Optical Network,
+ the RSA problem related works and the Multiobjective Optimizaction concept
+ are presented.
+\end_layout
+
+\begin_layout Standard
+Chapter 3 presents the problem statement, where it is established the mono
+ objective formulation of an exact model (ILP); a mono-objective meta-heuristic
+ based on the weighted sum and a pure multi-objective meta-heuristic.
  
 \end_layout
 
 \begin_layout Standard
-Chapter 3 presents the problem statement, where we present the mono objective
- formulation of an exact model (ILP); a mono-objective metaheuristica (MOGA)
- based on the weighted sum and a pure multi-objective metaheuristica where
- we find the pareto set of the best solutions.
+Chapter 4 presents the experimental test and the results obtained, conclusions
+ and future work.
  
 \end_layout
 
 \begin_layout Standard
-In chapter 4 we present the experimental evidence and the results obtained,
- conclusions and future work.
- 
-\end_layout
-
-\begin_layout Standard
-Finally, we present the appendices and the bibliographical references.
+Finally, the appendices and the bibliographical references are added.
 \end_layout
 
 \end_body

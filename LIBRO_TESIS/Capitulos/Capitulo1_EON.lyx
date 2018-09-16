@@ -107,9 +107,9 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
-The need to give the network a greater capacity to adapt to the needs of
- transmission and increase the capacity and performance of the central sections
- and as the demand for network traffic grows, the new paradigm that we call
+The need to give the network a greater capacity to adapt to transmission
+ requirements, increase the capacity, performance of the central sections,
+ as the demand for network traffic grows, the new paradigm that we call
  elastic optical networks is born.
  We can define the EON as an OTN (Optical Transport Network) where all the
  equipment and the control plane can handle optical channels of variable
@@ -118,7 +118,15 @@ The need to give the network a greater capacity to adapt to the needs of
  The traditional optical network based on WDM divides the spectrum into
  separate channels.
  The separation between adjacent channels is between 50 GHz and 100 GHz
- which is specified by the ITU.
+ which is specified by the ITU 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "itu-t-694-1"
+literal "false"
+
+\end_inset
+
+.
  The separation between channels is very large and if each channel contains
  a low bandwidth used and there is no traffic in that free gap, much of
  the spectrum is wasted.
@@ -155,7 +163,7 @@ literal "false"
 \end_inset
 
 , for a division of the flexible optical spectrum called flexi-grid, for
- which the optical spectrum of the C band (1530-1565 nm) was defined, which
+ which the optical spectrum of the C band (1530-1565 nm) was defined, it
  is divided into FS (Frequency Slots) of fixed sizes of 6.25, 12.5, 25 and
  50 GHz 
 \begin_inset CommandInset citation
@@ -166,14 +174,24 @@ literal "false"
 \end_inset
 
  and in addition a central frequency (CF, Central Frequency) is assigned
- to each elastic optical path (EOP - Elastic Optical Path) that must coincide
- with the beginning or the end of these slots existing differences in a
- fixed grid scheme and a flexible grid scheme In the case of the fixed grid
- scheme, we can observe the inefficient use of spectrum due to the fixed
- division that has the 50 GHz spectrum between each CF's, and if we observe
- the scheme of flexible grids can be noticed the free spectrum obtained
- thanks to the fine granularity that it offers and that allows to assign
- in a flexible way only the required bandwidth.
+ to each elastic optical path (EOP - Elastic Optical Path)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+ligthpath
+\end_layout
+
+\end_inset
+
+ that must coincide with the beginning or the end of these slots existing
+ differences in a fixed grid scheme and a flexible grid scheme.
+ In the case of the fixed grid scheme, we can observe the inefficient use
+ of spectrum due to the fixed division that has the 50 GHz spectrum between
+ each CF's.
+ If we observe the scheme of flexible grids can be noticed the free spectrum
+ obtained thanks to the fine granularity that it offers and that allows
+ to assign in a flexible way only the required bandwidth.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -185,23 +203,31 @@ noprefix "false"
 \end_inset
 
 : a) Fixed grid spectrum assignment scheme, b) Flexible grid spectrum assignment
- scheme
+ scheme.
 \end_layout
 
 \begin_layout Standard
 The problem of RSA in Elastic Optical Networks is similar to the problem
- of Routing and Wavelength Assignment (RSA) in networks based on WDM.
- The difference between them (RSA and RWA) is the ability to flexibly assign
- the frequency spectrum.
+ of Routing and Wavelength Assignment (RWA) in networks based on WDM.
+ The difference between them is the ability to flexibly assign the frequency
+ spectrum.
  The RSA is classified into two types: Online/Dynamic and Offline/Static
- traffic.
+ traffic 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rsa:offline-online"
+literal "false"
+
+\end_inset
+
+.
  In the case of the offline RSA problem, the list of all transmission requests
  is already entered as input, in order to proceed with the analysis and
  resolution with this input data.
- For the RSA online problem, the analysis and resolution is done as the
+ For the online RSA problem, the analysis and resolution is done as the
  requests arrive dynamically.
- In the first problem are can be applied optimization strategies; while
- in second one are usually developed heuristics.
+ In the first problem can be applied optimization strategies; while in second
+ one heuristic is usually developed.
  
 \end_layout
 
@@ -225,7 +251,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-a) Fixed grid spectrum scheme, b) Flexible grid spectrum assigment scheme
+a) Fixed grid spectrum scheme, b) Flexible grid spectrum assigment scheme.
 \end_layout
 
 \end_inset
@@ -246,12 +272,12 @@ name "fixed_grid_flex_grid_figure"
 \end_layout
 
 \begin_layout Section
-ROUTING SPECTRUM ALLOCATION (RSA)
+ROUTING SPECTRUM ALLOCATION
 \end_layout
 
 \begin_layout Standard
-The RSA problem can be attacked as routing resolution and allocation of
- spectrum iterative together 
+The RSA problem can be addressed as routing resolution and spectrum allocation
+ iterative 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Christodoulopoulos2011"
@@ -260,7 +286,7 @@ literal "false"
 \end_inset
 
 .
- In this approach the problem RSA, the greatest difficulty emerge, is the
+ In this approach the RSA problem, the greatest difficulty emerge, is the
  large number of conditions that poses the problem.
  This introduces greater computational complexity when calculating the optimal
  path for each request, in turn optimizing the allocation of spectrum, which
@@ -269,58 +295,39 @@ literal "false"
 
 \begin_layout Standard
 The RSA problem in elastic optical networks is equivalent to the problem
- RWA networks based on optical WDM networks.
+ RWA networks.
  The difference between these two technologies is the ability of the elastic
  networks to an assignment of flexible spectrum to meet the data rate requested,
- where a set of contiguous grooves of the spectrum is assigned to a connection,
- while in WDM networks is flexible assigns a channel to the application
- size.
- The assigned spectrum slots must always be together to satisfy the constraint
- of contiguity of the spectrum.
+ where a set of contiguous slots of the spectrum is assigned to a connection.
  The following restrictions are taken into account when calculating the
  routing and spectrum allocation.
 \end_layout
 
 \begin_layout Standard
-• Restriction continuity of spectrum.
+• Spectrum Continuity.
  That means the same spectral allocation of resources on each link along
  a canal route.
- 
-\end_layout
-
-\begin_layout Standard
-Restriction and elastic WDM networks.
+ Restriction on WDM and EON.
  
 \end_layout
 
 \begin_layout Standard
 • Spectrum contiguity (or adjacency).
- Constraint ensures that the subcarriers are adjacent to each other on a
- channel.
- 
-\end_layout
-
-\begin_layout Standard
-Restriction on elastic networks.
- 
+ The subcarriers are adjacent to each other on a channel.
+ Restriction on EON.
 \end_layout
 
 \begin_layout Standard
 • Spectral Conflict.
  It is defined as spectrum allocation for non-overlapping of different channels
  on the same fiber.
- 
+ Restriction on WDM and EON.
 \end_layout
 
 \begin_layout Standard
-Restriction on WMD and elastic networks.
- 
-\end_layout
-
-\begin_layout Standard
-Basically RSA algorithms are concerned to allocate a contiguous fraction
- of spectrum for each connection request subject to the above restrictions.
- We see example in Figure 
+Basically RSA algorithms are concerned to allocate a fraction of optical
+ spectrum for each connection request subject to the above restrictions.
+ We see an example in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "rsa_problem_figure"
@@ -338,15 +345,15 @@ literal "false"
 
 \end_inset
 
-, as the constraints are met for a solution in elastic nets.
+, as the constraints are met for a solution.
  A connection request from node 1 to node 4 that requires 2 adjoining slots
- to transmit data, we see the first figure in the 1-2-4 nodes, use the link
- 1 and link 4 slots are available for the requirement in the link 1, but
- in the link 4 there is only one slot available, then this does not meet
- the condition of contiguity.
- The following figure shows the 1-2-3-4 node, use the link 1, link 2 and
- link 3, to establish a route, and we see that in the three link's meet
- contiguity condition since the slots are they found together in three links.
+ to transmit data, we see the first figure in the 1-2-4 nodes, use the links
+ 1 and 4, there is 4 slots available in the link 1, but in the link 4 there
+ is only one slot available, then this does not meet the condition of contiguity.
+ The following figure shows the 1-2-3-4 node, use the links 1, 2 and 3,
+ to establish a route.
+ We see that in the three link's meet contiguity condition since the slots
+ are they found together in three links.
  
 \end_layout
 
@@ -370,7 +377,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Restrictions continuity and contiguity
+Continuity and contiguity restrictions.
 \end_layout
 
 \end_inset
@@ -404,7 +411,7 @@ literal "false"
 \end_inset
 
 , it has been treated with several techniques, exact and heuristic, both
- for dynamic traffic and for static traffic.
+ for dynamic and static traffic.
  Among the exact techniques are the ILP, while among the heuristics are
  optimizations with Colony of Bees (BCO, Bee Colony Optimization) 
 \begin_inset CommandInset citation
@@ -454,12 +461,12 @@ literal "false"
 \end_inset
 
  an ILP model was proposed to minimize the use of the spectrum to serve
- a traffic matrix in an EON.
+ a traffic matrix.
  The authors propose a method that divides the problem into two sub-problems,
  the first is the routing and the second is the spectrum assignment and
  solves them sequentially, using a route-based approach.
- They also propose a heuristic algorithm that serves the connections one
- by one sequentially.
+ They also propose a heuristic algorithm that serves the connections one-by-one
+ sequentially.
  Then in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -470,14 +477,22 @@ literal "false"
 
 , the authors extend their previous results including consideration of modulatio
 n level.
- With this new consideration, a new problem was defined routing, modulation
+ With this new consideration, a new problem was defined teh routing, modulation
  level and spectrum assignment (RMLSA), being outside the scope of this
  work.
  Other problems such as 
 \shape italic
 Fragmentation Aware and Dynamic Traffic
 \shape default
- are also not considered.
+ are also not considered 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "engopt"
+literal "false"
+
+\end_inset
+
+.
  Another ILP formulation and the proof that the RSA problem is a NP-complete
  problem can be found in 
 \begin_inset CommandInset citation
@@ -557,8 +572,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In this work it is developed a pure multi-objective approach to calculate
- a Pareto front.
+In this work it is developed multi-objective approach to calculate a Pareto
+ front.
  This approach is an extension of the work presented in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -609,9 +624,7 @@ PARETO FRONT CONCEPTS
 \end_layout
 
 \begin_layout Standard
-In this section we define the concept of dominance and Pareto front for
- multi-objective problem solutions.
- It is said that the solutions of a problem with multiple objectives are
+It is said that the solutions of a problem with multiple objectives are
  optimal because no other solution is superior to them when all the objectives
  and restrictions are taken into account at the same time.
  It can be said that no objective can be improved without degrading the
@@ -663,16 +676,15 @@ noprefix "false"
 \begin_inset Formula $x^{2}$
 \end_inset
 
-if the following conditions are met: 1) the solution 
+ if the following conditions are met: 1) the solution 
 \begin_inset Formula $x^{1}$
 \end_inset
 
-is not worse than 
+ is not worse than 
 \begin_inset Formula $x^{2}$
 \end_inset
 
- in all the objectives.
- 2) The solution 
+ in all the objectives, 2) the solution 
 \begin_inset Formula $x^{1}$
 \end_inset
 
@@ -681,8 +693,8 @@ is not worse than
 \end_inset
 
 in at least one objective.
- In Multi-objective Optimization is seeking to calculate the set of non-dominate
- solutions on the edge of the feasible region.
+ In Multi-objective Optimization Problem (MOP) is seeking to calculate the
+ set of non-dominate solutions on the edge of the feasible region.
  
 \end_layout
 
@@ -707,8 +719,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Optimal Pareto Fronts for the same solution space in four situations of
- optimization with two objectives.
+The black lines indicates the Optimal Pareto Fronts for the same solution
+ space in four situations of optimization with two objectives.
 \end_layout
 
 \end_inset

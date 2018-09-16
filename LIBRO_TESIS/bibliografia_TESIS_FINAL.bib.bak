@@ -167,7 +167,7 @@
 @InProceedings{rsa:enfoque4,
   author       = {Klinkowski, Miros{\l}aw},
   title        = {A genetic algorithm for solving RSA problem in elastic optical networks with dedicated path protection},
-  booktitle    = {International Joint Conference CISIS’12-ICEUTE{\'{}} 12-SOCO{\'{}} 12 Special Sessions},
+  booktitle    = {International Joint Conference CISIS 12-ICEUTE 12-SOCO 12 Special Sessions},
   year         = {2013},
   organization = {Springer},
   pages        = {167--176},
@@ -229,6 +229,17 @@
   pages     = {B17--B25},
   journal   = {Journal of Optical Communications and Networking},
   publisher = {Optical Society of America},
+}
+
+@Article{rsa:offline-online,
+  author    = {Castro, Alberto and Velasco, Luis and Ruiz, Marc and Klinkowski, Miros{\l}Aw and Fern{\'a}Ndez-Palacios, Juan Pedro and Careglio, Davide},
+  title     = {Dynamic routing and spectrum (re) allocation in future flexgrid optical networks},
+  year      = {2012},
+  volume    = {56},
+  number    = {12},
+  pages     = {2869--2883},
+  journal   = {Computer Networks},
+  publisher = {Elsevier},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}

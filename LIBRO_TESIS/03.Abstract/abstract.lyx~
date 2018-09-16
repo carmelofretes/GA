@@ -1,10 +1,10 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass article
+\textclass book
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -21,12 +21,15 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -49,6 +52,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -57,7 +61,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -70,65 +77,57 @@
 
 \begin_body
 
-\begin_layout Abstract
-
-\end_layout
-
-\begin_layout Standard
-Keywords: Routing and Spectrum Assignment, Elastic Optical Networks, Multi-objec
-tive Optimization, Evolutionary Algorithms.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Phantom HPhantom
-status open
-
-\begin_layout Plain Layout
-\begin_inset space \textvisiblespace{}
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 The increase in network traffic and the need to increase the capacity and
  performance of the stretches of transport networks, born the interest in
  elastic networks.
  At present, the optical transport technology used in optical networks is
  Wavelength Division Multiplexing (WDM); this technology has the capacity
- to transport, route and assign (Routing Wavelength Assigment) multiple
+ to transport, route and assign RWA (Routing Wavelength Assigment) multiple
  channels in a same fiber based on carriers of different wavelengths.
  This implies that channels with little demand than the maximum supported,
  underutilize resources.
- Therefore, the flexibility of the spectral grid would be the solution,
- allowing transmission, routing and allocation.
- (RSA - Rounting and Spectrum Allocation) of channels with variable bandwidth
- that adjust to the demand.
+ Therefore, the flexibility of the spectral grid (elastic optical) would
+ be the solution, allowing transmission, routing and allocation (RSA - Rounting
+ and Spectrum Allocation) of channels with variable bandwidth that adjust
+ to the demand.
  In WDM networks, routing planning and wavelength allocation algorithms
- (RWA) search for a physical route through the network and assign a wavelength
- for transport, the selection of that wavelength is conditioned to be the
- same during the route of the physical route, this condition is called a
- condition of continuity.
+ (RWA) search for a physical route through network and assign a wavelength
+ for transport.
+ The wavelength selection is conditioned to be the same spectrum during
+ the route of the physical route, this condition is called continuity.
  In the elastic optical networks, the algorithms of routing planning and
  spectrum allocation (RSA), apart from the aforementioned condition, there
  is a new condition, which is the condition of contiguity in the spectrum.
- This condition stipulates that the frequencies slots that occupy each channel
+ This condition stipulates that the frequencys slots that occupy each channel
  must be together in the spectrum.
- The RSA problem can be attacked as routing and spectrum allocation together.
- With this approach to the RSA problem, the greatest difficulty that arises
- is the large number of conditions posed by the problem; a greater computational
- complexity is introduced when calculating the optimal path for each request
+ The RSA problem can be approached as routing and spectrum allocation.
+ With this approach the greatest difficulty that arises is the large number
+ of conditions posed by the problem; a greater computational complexity
+ is introduced when calculating the optimal ligth path for each request
  while optimizing the spectrum allocation.
- The heuristic proposed in this paper is a multiobjective evolutionary algorithm
- that determines a set of optimal Pareto solutions that are not dominated
- with respect to the others for the RSA problem.
- The different tests performed with this algorithm show promising results
- with respect to the paper presented in [16].
+ In consequence this work propose heuristic strategies based on Evolutionary
+ Algorithm (EA).
+ Basicaly two EA's are developed: Multiobjetive Genetic Algorithm (MOGA)
+ and Multiobjetive Evolutionary Algorithm (MOEA).
+ MOGA and MOEA are a weighted sum and a pareto multiobjective optimization
+ approaches respectively.
+ 
+\end_layout
+
+\begin_layout Standard
+Different tests performed with these algorithms show promising results with
+ respect a Integer Linear Programming (ILP) solutions and heuristics of
+ the state of the art.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "moga-rsa-dao"
+literal "false"
+
+\end_inset
+
+.
  
 \end_layout
 

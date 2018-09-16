@@ -101,26 +101,22 @@ The increase in network traffic and the need to increase the capacity and
  is a new condition, which is the condition of contiguity in the spectrum.
  This condition stipulates that the frequencys slots that occupy each channel
  must be together in the spectrum.
- The RSA problem can be approached as routing and spectrum allocation joint
- exact strategies.
+ The RSA problem can be approached as routing and spectrum allocation.
  With this approach the greatest difficulty that arises is the large number
  of conditions posed by the problem; a greater computational complexity
  is introduced when calculating the optimal ligth path for each request
  while optimizing the spectrum allocation.
  In consequence this work propose heuristic strategies based on Evolutionary
  Algorithm (EA).
- Basicaly two EA's are developed: Multiobjetive Genetic Algorithm (MOGA)
- and Multiobjetive Evolutionary Algorithm (MOEA).
- MOGA and MOEA are a weighted sum and a pareto multiobjective optimization
- approaches respectively.
+ Basically two EA's are developed: Multiobjetive Genetic Algorithm (MOGA)
+ are a weighted sum and Multiobjetive Evolutionary Algorithm (MOEA) are
+ a pareto Multiobjective optimization approaches respectively.
  
 \end_layout
 
 \begin_layout Standard
-Different tests performed with these algorithms show promising results with
- respect a Integer Linear Programming (ILP) solutions and heuristics of
- the state of the art.
- 
+The different tests performed with this algorithm show promising results
+ with respect to the paper presented in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "moga-rsa-dao"
